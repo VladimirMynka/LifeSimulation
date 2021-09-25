@@ -1,12 +1,12 @@
 ﻿namespace LifeSimulation.myCs
 {
-    public enum Defaults
+    public static class Defaults
     {
-        NutritionalValue = 10,
-        SeedPeriod = 5,
-        PlantTeenagePeriod = 20,
-        PlantDieAge = 60,
-        AnimalHealth = 100,
-        AnimalSatiety = 100
+        public const int NutritionalValue = 10;
+        public const int SeedPeriod = 5;
+        public const int PlantTeenagePeriod = 20;
+        public const int PlantDieAge = 60;
+        public const int AnimalHealth = 100;
+        public const int AnimalSatiety = 100;
     }
 }

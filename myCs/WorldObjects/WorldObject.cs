@@ -1,9 +1,11 @@
 ﻿
+using LifeSimulation.myCs.WorldObjects.Plants;
+
 namespace LifeSimulation.myCs.WorldObjects
 {
     public abstract class WorldObject
     {
-        protected int color;
+        public readonly int color;
         protected Cell cell;
         protected World world;
 
@@ -12,14 +14,14 @@ namespace LifeSimulation.myCs.WorldObjects
             color = newColor;
             cell = keeper;
             world = keeper.World;
+
+            if (this.GetType() == typeof(Plant)) cell.CurrentObjects[0] = this;
+            else cell.CurrentObjects[1] = this;
         }
 
-        public virtual void Update()
-        {
-            
-        }
+        public virtual void Update() { }
 
-        protected virtual void SetColor(int newColor)
+        protected void SetColor(int newColor)
         {
             cell.SetColor(newColor);
             color = newColor;

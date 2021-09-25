@@ -5,6 +5,8 @@ namespace LifeSimulation.myCs
     public class World
     {
         private Cell[][] _cells;
+        public readonly int Lenght;
+        public readonly int Width;
         public static Random Random = new Random();
 
         public World()

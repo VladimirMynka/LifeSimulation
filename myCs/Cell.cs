@@ -5,19 +5,20 @@ namespace LifeSimulation.myCs
     public class Cell
     {
         public World World;
+        public readonly int[] Coords;
         public WorldObject[] CurrentObjects;
         private int _color;
         private bool _isLocked;
         public int DefaultColor;
 
-        public Cell(World world, int color = 0, bool isLocked = false)
+        public Cell(World world, int[] coords, int color = 0, bool isLocked = false)
         {
             World = world;
+            Coords = coords;
             DefaultColor = color;
             _color = color;
             _isLocked = isLocked;
             CurrentObjects = new WorldObject[2];
-                aaaaaaaaaa
         }
 
         public void Update()

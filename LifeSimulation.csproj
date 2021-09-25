@@ -58,8 +58,8 @@
     <Compile Include="myCs\World.cs" />
     <Compile Include="myCs\WorldObjects\Animal.cs" />
     <Compile Include="myCs\WorldObjects\Kind.cs" />
-    <Compile Include="myCs\WorldObjects\Plant.cs" />
-    <Compile Include="myCs\WorldObjects\PlantStage.cs" />
+    <Compile Include="myCs\WorldObjects\Plants\Plant.cs" />
+    <Compile Include="myCs\WorldObjects\Plants\PlantStage.cs" />
     <Compile Include="myCs\WorldObjects\WorldObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
