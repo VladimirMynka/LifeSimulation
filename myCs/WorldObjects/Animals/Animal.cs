@@ -37,7 +37,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             if (!IsHungry())
             {
                 Plant();
-                AddHealth(3);
+                AddHealth(20);
             }
             else AddHealth(-3);
 
@@ -49,8 +49,10 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             if (!NeedsFood())
             {
                 Walk();
+                _targets = null;
                 return;
             }
+            Eat(cell.CurrentObjects[0] as Plant);
             if (_targets == null || _targets.Count == 0)
             {
                 Walk();
@@ -172,7 +174,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private void Plant()
         {
             if (cell.CurrentObjects[0] != null) return;
-            var chance = _satiety / 2;
+            var chance = _satiety / 5;
             var random = World.Random.Next(0, _maxSatiety);
             if (random < chance)
                 new Plant(cell);

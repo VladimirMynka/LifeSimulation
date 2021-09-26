@@ -8,8 +8,8 @@ namespace LifeSimulation.myCs
     public class World
     {
         public const int PixelSize = 1;
-        private const int AnimalsNormalCount = 5000;
-        private const int PlantsNormalCount = 2000;
+        private const int AnimalsNormalCount = 2000;
+        private const int PlantsNormalCount = 1000;
 
         private Cell[][] _cells;
         public readonly int Length;
