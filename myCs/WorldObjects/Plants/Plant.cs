@@ -8,7 +8,7 @@
         public int NutritionalValue;
 
         public Plant(Cell keeper, 
-            int newColor = 0, 
+            int newColor = Colors.Plant1Const, 
             int nutVal = (int) Defaults.NutritionalValue, 
             int[] transAges = null) 
             : base(keeper, newColor)

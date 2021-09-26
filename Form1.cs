@@ -14,6 +14,8 @@ namespace LifeSimulation
     public partial class Form1 : Form
     {
         private World _world;
+        private Bitmap _bitmap;
+        private Graphics _graphics;
         public Form1()
         {
             InitializeComponent();
@@ -25,21 +27,19 @@ namespace LifeSimulation
             timer1.Interval = 1000;
             timer1.Tick += new EventHandler(Update);
             timer1.Enabled = true;
+            
+            _bitmap = new Bitmap(1000, 1000);
+            _graphics = Graphics.FromImage(_bitmap);
+            _world = new World(1000, 1000, _graphics);
         }
 
         private void Update(object sender, EventArgs e)
         {
-            Invalidate();
+            if (_world == null) return;
+            _graphics = Graphics.FromImage(_bitmap);
+            _world.Update();
+            pictureBox1.Image = _bitmap;
         }
 
-
-        private void OnPaint(object sender, PaintEventArgs e)
-        {
-            if (_world == null)
-            {
-                _world = new World(10, 10, e.Graphics);
-            }
-            else _world.Update(e.Graphics);
-        }
     }
 }

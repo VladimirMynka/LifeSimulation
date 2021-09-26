@@ -5,15 +5,14 @@ namespace LifeSimulation.myCs
 {
     public class Cell
     {
-        public World World;
+        public readonly World World;
         public readonly int[] Coords;
         public WorldObject[] CurrentObjects;
         private int _color;
         private bool _isLocked;
         public int DefaultColor;
-        private Graphics _graphics;
 
-        public Cell(World world, Graphics graphics, int[] coords, int color = 0, bool isLocked = false)
+        public Cell(World world, int[] coords, int color = 0, bool isLocked = false)
         {
             World = world;
             Coords = coords;
@@ -21,9 +20,8 @@ namespace LifeSimulation.myCs
             _color = color;
             _isLocked = isLocked;
             CurrentObjects = new WorldObject[2];
-            _graphics = graphics;
             
-            _graphics.FillRectangle(Colors.GetBrush(color),
+            World.Graphics.FillRectangle(Colors.GetBrush(color),
                 new Rectangle(
                     World.PixelSize * Coords[0], 
                     World.PixelSize * Coords[1],
@@ -31,17 +29,17 @@ namespace LifeSimulation.myCs
                     World.PixelSize));
         }
 
-        public void Update(Graphics g)
+        public void Update()
         {
-            _graphics = g;
             if (CurrentObjects[0] != null) CurrentObjects[0].Update();
             if (CurrentObjects[1] != null) CurrentObjects[1].Update();
+            
         }
 
         public void SetColor(int color)
         {
             _color = color;
-            _graphics.FillRectangle(Colors.GetBrush(color),
+            World.Graphics.FillRectangle(Colors.GetBrush(color),
                 new Rectangle(
                     World.PixelSize * Coords[0], 
                     World.PixelSize * Coords[1],
@@ -51,7 +49,7 @@ namespace LifeSimulation.myCs
         
         public void ThrowOffColor()
         {
-            _color = DefaultColor;
+            SetColor(DefaultColor);
         }
 
         public void Lock()
