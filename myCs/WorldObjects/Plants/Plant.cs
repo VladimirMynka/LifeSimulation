@@ -68,6 +68,7 @@
             var x = localCoords[0] + cell.Coords[0];
             var y = localCoords[1] + cell.Coords[1];
             var neighCell = world.GetCell(x, y);
+            if (neighCell == null) return;
             if (neighCell.CurrentObjects[0] != null) return;
             else new Plant(neighCell, color, NutritionalValue, _transitionalAges);
         }

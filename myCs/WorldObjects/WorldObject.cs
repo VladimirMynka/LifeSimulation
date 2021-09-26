@@ -5,7 +5,7 @@ namespace LifeSimulation.myCs.WorldObjects
 {
     public abstract class WorldObject
     {
-        public readonly int color;
+        protected int color;
         protected Cell cell;
         protected World world;
 
@@ -21,10 +21,9 @@ namespace LifeSimulation.myCs.WorldObjects
 
         public virtual void Update() { }
 
-        protected void SetColor(int newColor)
+        public int GetColor()
         {
-            cell.SetColor(newColor);
-            color = newColor;
+            return color;
         }
     }
 }

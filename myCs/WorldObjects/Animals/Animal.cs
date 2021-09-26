@@ -1,7 +1,8 @@
-﻿using System.IO;
+﻿using System.Collections;
+using System.Collections.Generic;
 using LifeSimulation.myCs.WorldObjects.Plants;
 
-namespace LifeSimulation.myCs.WorldObjects
+namespace LifeSimulation.myCs.WorldObjects.Animals
 {
     public class Animal : WorldObject
     {
@@ -9,16 +10,24 @@ namespace LifeSimulation.myCs.WorldObjects
         private int _maxHealth;
         private int _satiety;
         private int _maxSatiety;
-        private int[] mainTarget;
-        private int[] target;
+        private int[] _mainTarget;
+        private readonly int _visibleArea;
+        private Stack<int[]> _targets;
         
         
         public Animal(Cell keeper, 
             int newColor = 0,
             int maxHealth = Defaults.AnimalHealth,
-            int maxSatiety = Defaults.AnimalSatiety) : base(keeper, newColor)
+            int maxSatiety = Defaults.AnimalSatiety,
+            int visibleArea = Defaults.AnimalVisibleArea) : base(keeper, newColor)
         {
+            _health = maxHealth;
+            _maxHealth = maxHealth;
+            _satiety = maxSatiety;
+            _maxSatiety = maxSatiety;
+            _visibleArea = visibleArea;
             
+            GoTo(keeper);
         }
 
         public override void Update()
@@ -31,22 +40,23 @@ namespace LifeSimulation.myCs.WorldObjects
             else AddHealth(-1);
             
             if (CantLive()) Die();
-            if (NeedsFood())
+            if (!NeedsFood()) return;
+            if (_targets.Peek() == null)
             {
-                if (target == null)
-                {
-                    Walk();
-                    SearchMeal();
-                }
-                else GoToTarget();
+                Walk();
+                SearchMeal();
             }
-            
-            
+            else GoToTarget();
         }
 
         private bool IsHungry()
         {
             return (_satiety <= _maxSatiety / 3);
+        }
+
+        private bool NeedsFood()
+        {
+            return (_health < _maxHealth);
         }
 
         private bool CantLive()
@@ -64,6 +74,7 @@ namespace LifeSimulation.myCs.WorldObjects
         {
             _satiety += delta;
             if (_satiety > _maxSatiety) _satiety = _maxSatiety;
+            if (_satiety < 0) _satiety = 0;
         }
 
         private void Walk()
@@ -74,17 +85,43 @@ namespace LifeSimulation.myCs.WorldObjects
 
         private void GoToTarget()
         {
-            var directionVector = Direction.GetDirectionVector(target);
-            Step(target);
+            var directionVector = Direction.GetDirectionVector(_targets.Peek());
+            var thereIsBarrier = Step(directionVector);
+            if (cell.Coords == _targets.Peek()) _targets.Pop();
+            if (thereIsBarrier) FindBypass(directionVector);
+        }
+
+        private void FindBypass(int[] directionVector)
+        {
+            int[] normalVector = Direction.GetNormalDirection(directionVector);
+            for (int i = 1; i < _visibleArea; i++)
+            {
+                int x = cell.Coords[0] + i * normalVector[0] + directionVector[0];
+                int y = cell.Coords[1] + i * normalVector[1] + directionVector[1];
+                if (CheckAndPushTarget(x, y)) return;
+                
+                x = cell.Coords[0] - i * normalVector[0] + directionVector[0];
+                y = cell.Coords[1] - i * normalVector[1] + directionVector[1];
+                if (CheckAndPushTarget(x, y)) return;
+            }
+        }
+
+        private bool CheckAndPushTarget(int x, int y)
+        {
+            var newCell = world.GetCell(x, y);
+            if (newCell == null || newCell.CheckLocked()) return false;
+            _targets.Push(new int[]{x, y});
+            return true;
+
         }
 
         private void SearchMeal()
         {
-            for (int i = cell.Coords[0] - 50; i < cell.Coords[0] + 50; i++)
+            for (int i = cell.Coords[0] - _visibleArea; i < cell.Coords[0] + _visibleArea; i++)
             {
                 if (i < 0) continue;
-                if (i > world.Lenght) break;
-                for (int j = cell.Coords[1] - 50; j < cell.Coords[1] + 50; j++)
+                if (i > world.Length) break;
+                for (int j = cell.Coords[1] - _visibleArea; j < cell.Coords[1] + _visibleArea; j++)
                 {
                     if (j < 0) continue;
                     if (j > world.Width) break;
@@ -92,24 +129,28 @@ namespace LifeSimulation.myCs.WorldObjects
                     var plant = newCell.CurrentObjects[0] as Plant;
                     if (plant == null) continue;
                     if (!plant.CheckItsAdult()) continue;
-                    mainTarget = new[]{i, j};
+                    _mainTarget = new[]{i, j};
+                    _targets = new Stack<int[]>();
+                    _targets.Push(_mainTarget);
                     return;
                 }
             }
         }
 
-        private void Step(int[] directionVector)
+        private bool Step(int[] directionVector)
         {
             var x = cell.Coords[0] + directionVector[0];
             var y = cell.Coords[1] + directionVector[1];
             var newCell = world.GetCell(x, y);
-            if (newCell == null) return;
-            if (newCell.CheckLocked()) return;
+            if (newCell == null) return false;
+            if (newCell.CheckLocked()) return false;
             else
             {
                 GoAway();
                 GoTo(newCell);
             }
+
+            return true;
         }
 
         private void Eat(Plant meal)
@@ -137,7 +178,7 @@ namespace LifeSimulation.myCs.WorldObjects
         private void GoAway()
         {
             if (cell.CurrentObjects[0] == null) cell.ThrowOffColor();
-            else cell.SetColor(cell.CurrentObjects[0].color);
+            else cell.SetColor(cell.CurrentObjects[0].GetColor());
             cell.CurrentObjects[1] = null;
             cell.Unlock();
             cell = null;

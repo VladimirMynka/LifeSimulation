@@ -8,5 +8,6 @@
         public const int PlantDieAge = 60;
         public const int AnimalHealth = 100;
         public const int AnimalSatiety = 100;
+        public const int AnimalVisibleArea = 20;
     }
 }
