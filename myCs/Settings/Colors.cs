@@ -15,6 +15,10 @@ namespace LifeSimulation.myCs
         public const int DiedPlant1Const = 8;
         public const int Tree1Const = 9;
         public const int Poisonous1Const = 10;
+        public const int NormalFruit1Const = 11;
+        public const int PoisonousFruit1Const = 12;
+        public const int UneatableFruit1Const = 13;
+        public const int RotFruit1Const = 14;
 
         public static Brush White = Brushes.Khaki;
         public static Brush Black = Brushes.Black;//Brushes.Bisque;
@@ -27,6 +31,10 @@ namespace LifeSimulation.myCs
         public static Brush DiedPlant1 = Brushes.Green;
         public static Brush Tree1 = Brushes.Brown;
         public static Brush Poisonous1 = Brushes.Olive;
+        public static Brush NormalFruit1 = Brushes.Gold;
+        public static Brush PoisonousFruit1 = Brushes.Red;
+        public static Brush UneatableFruit1 = Brushes.Chocolate;
+        public static Brush RotFruit1 = Brushes.Tomato;
 
 
         public static Brush GetBrush(int colorIndex)
@@ -44,6 +52,10 @@ namespace LifeSimulation.myCs
                 case DiedPlant1Const: return DiedPlant1;
                 case Tree1Const: return Tree1;
                 case Poisonous1Const: return Poisonous1;
+                case NormalFruit1Const: return NormalFruit1;
+                case PoisonousFruit1Const: return PoisonousFruit1;
+                case UneatableFruit1Const: return UneatableFruit1;
+                case RotFruit1Const: return RotFruit1;
                 default: return White;
             }
         }

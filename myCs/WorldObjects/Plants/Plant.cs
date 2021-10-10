@@ -88,7 +88,16 @@
             var neighCell = world.GetCell(x, y);
             if (neighCell == null) return;
             if (neighCell.CurrentObjects[0] != null) return;
-            else new Plant(neighCell, color, isEatable, Effect, NutritionalValue, transitionalAges);
+
+            if (World.Random.Next(2) == 0)
+                new Plant(neighCell, color, isEatable, Effect, NutritionalValue, transitionalAges);
+            else
+            {
+                var fruitColor = Colors.NormalFruit1Const;
+                if (!isEatable) fruitColor = Colors.UneatableFruit1Const;
+                else if (Effect == Effect.None) fruitColor = Colors.NormalFruit1Const;
+                new Fruit(neighCell, fruitColor, isEatable, Effect);
+            }
         }
     }
 }

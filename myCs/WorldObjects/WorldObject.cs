@@ -18,7 +18,8 @@ namespace LifeSimulation.myCs.WorldObjects
             world = keeper.World;
             evenCycle = false;
 
-            if (this.GetType() == typeof(Plant)) cell.CurrentObjects[0] = this;
+            if (this.GetType() == typeof(Plant) 
+            || this.GetType() == typeof(Fruit)) cell.CurrentObjects[0] = this;
             else cell.CurrentObjects[1] = this;
         }
 

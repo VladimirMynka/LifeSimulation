@@ -8,6 +8,9 @@
         public const int PlantDieAge = 60;
         public const int PlantRotAge = 100;
         public const int ReproduceChance = 100;
+
+        public const int FruitLivePeriod = 20;
+        public const int FruitRotAge = 30;
         
         public const int AnimalHealth = 100;
         public const int AnimalHealthRegeneration = 12;

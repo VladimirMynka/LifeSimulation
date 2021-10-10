@@ -59,6 +59,7 @@
     <Compile Include="myCs\WorldObjects\Animals\Animal.cs" />
     <Compile Include="myCs\WorldObjects\Plants\AbstractPlant.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Effect.cs" />
+    <Compile Include="myCs\WorldObjects\Plants\Fruit.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plant.cs" />
     <Compile Include="myCs\WorldObjects\Plants\PlantStage.cs" />
     <Compile Include="myCs\WorldObjects\WorldObject.cs" />
