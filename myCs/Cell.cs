@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using LifeSimulation.myCs.WorldObjects;
 
 namespace LifeSimulation.myCs
@@ -12,7 +13,10 @@ namespace LifeSimulation.myCs
         private bool _isLocked;
         public int DefaultColor;
 
-        public Cell(World world, int[] coords, int color = 0, bool isLocked = false)
+        private readonly Drawer _drawer;
+        public bool evenCycle;
+
+        public Cell(World world, Drawer drawer, int[] coords, int color = 0, bool isLocked = false)
         {
             World = world;
             Coords = coords;
@@ -20,31 +24,33 @@ namespace LifeSimulation.myCs
             _color = color;
             _isLocked = isLocked;
             CurrentObjects = new WorldObject[2];
+            _drawer = drawer;
+            evenCycle = false;
             
-            World.Graphics.FillRectangle(Colors.GetBrush(color),
-                new Rectangle(
-                    World.PixelSize * Coords[0], 
-                    World.PixelSize * Coords[1],
-                    World.PixelSize,
-                    World.PixelSize));
+            drawer.AddCell(new CellDrawer(Coords[0], Coords[1], color));
         }
 
-        public void Update()
+        public void Update(bool updateInAnyKeys)
         {
-            if (CurrentObjects[0] != null) CurrentObjects[0].Update();
-            if (CurrentObjects[1] != null) CurrentObjects[1].Update();
-            
+            bool checkSmth = false;
+            evenCycle = !evenCycle;
+            if (CurrentObjects[0] != null && evenCycle == CurrentObjects[0].evenCycle)
+            {
+                CurrentObjects[0].Update();
+                checkSmth = true;
+            }
+            if (CurrentObjects[1] != null && evenCycle == CurrentObjects[1].evenCycle)
+            {
+                CurrentObjects[1].Update();
+                checkSmth = true;
+            }
+            if (updateInAnyKeys || checkSmth) 
+                _drawer.AddCell(new CellDrawer(Coords[0], Coords[1], _color));
         }
 
         public void SetColor(int color)
         {
             _color = color;
-            World.Graphics.FillRectangle(Colors.GetBrush(color),
-                new Rectangle(
-                    World.PixelSize * Coords[0], 
-                    World.PixelSize * Coords[1],
-                    World.PixelSize,
-                    World.PixelSize));
         }
         
         public void ThrowOffColor()

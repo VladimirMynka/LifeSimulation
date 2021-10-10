@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using LifeSimulation.myCs;
 
@@ -16,6 +10,8 @@ namespace LifeSimulation
         private World _world;
         private Bitmap _bitmap;
         private Graphics _graphics;
+        private Drawer _drawer;
+        private bool _updateAll = false;
         public Form1()
         {
             InitializeComponent();
@@ -30,16 +26,46 @@ namespace LifeSimulation
             
             _bitmap = new Bitmap(1000, 1000);
             _graphics = Graphics.FromImage(_bitmap);
-            _world = new World(1000, 1000, _graphics);
+            _drawer = new Drawer(_graphics);
+            _world = new World(1000, 1000, _drawer);
+            _drawer.Update();
         }
 
         private void Update(object sender, EventArgs e)
         {
             if (_world == null) return;
             _graphics = Graphics.FromImage(_bitmap);
-            _world.Update();
+            _drawer.UpdateGraphics(_graphics);
+            _world.Update(_updateAll);
+            _updateAll = false;
+            _drawer.Update();
             pictureBox1.Image = _bitmap;
         }
 
+        private void pixelSizeInput_TextChanged(object sender, EventArgs e)
+        {
+            _drawer.PixelSize = Convert.ToInt32(pixelSizeInput.Text);
+            _drawer.ConfigureOffsets();
+            _updateAll = true;
+        }
+
+        private void offsetLeftInput_TextChanged(object sender, EventArgs e)
+        {
+            _drawer.OffsetLeft = Convert.ToInt32(offsetLeftInput.Text);
+            _drawer.ConfigureOffsets();
+            _updateAll = true;
+        }
+        
+        private void offsetTopInput_TextChanged(object sender, EventArgs e)
+        {
+            _drawer.OffsetTop = Convert.ToInt32(offsetTopInput.Text);
+            _drawer.ConfigureOffsets();
+            _updateAll = true;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            timer1.Interval = Convert.ToInt32(timeoutInput.Text);
+        }
     }
 }

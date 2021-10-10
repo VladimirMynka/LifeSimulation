@@ -9,17 +9,23 @@ namespace LifeSimulation.myCs.WorldObjects
         protected Cell cell;
         protected World world;
 
+        public bool evenCycle;
+
         protected WorldObject(Cell keeper, int newColor = 0)
         {
             color = newColor;
             cell = keeper;
             world = keeper.World;
+            evenCycle = false;
 
             if (this.GetType() == typeof(Plant)) cell.CurrentObjects[0] = this;
             else cell.CurrentObjects[1] = this;
         }
 
-        public virtual void Update() { }
+        public virtual void Update()
+        {
+            evenCycle = !evenCycle;
+        }
 
         public int GetColor()
         {

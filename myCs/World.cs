@@ -7,8 +7,7 @@ namespace LifeSimulation.myCs
 {
     public class World
     {
-        public const int PixelSize = 1;
-        private const int AnimalsNormalCount = 2000;
+        private const int AnimalsNormalCount = 10000;
         private const int PlantsNormalCount = 1000;
 
         private Cell[][] _cells;
@@ -16,14 +15,14 @@ namespace LifeSimulation.myCs
         public readonly int Width;
         public static Random Random = new Random();
 
-        public Graphics Graphics;
+        private Drawer _drawer;
 
-        public World(int length, int width, Graphics g)
+        public World(int length, int width, Drawer drawer)
         {
             Length = length;
             Width = width;
             _cells = new Cell[length][];
-            Graphics = g;
+            _drawer = drawer;
 
             for (int i = 0; i < length; i++)
             {
@@ -31,6 +30,7 @@ namespace LifeSimulation.myCs
                 for (int j = 0; j < width; j++)
                 {
                     _cells[i][j] = new Cell(this,
+                        drawer,
                         new[]{i, j}, 
                         Random.Next(2), 
                         false);
@@ -50,11 +50,11 @@ namespace LifeSimulation.myCs
             return _cells[x][y];
         }
 
-        public void Update()
+        public void Update(bool updateAll)
         {
             foreach (var cellLine in _cells)
                 foreach (var cell in cellLine)
-                    cell.Update();
+                    cell.Update(updateAll);
         }
 
         private Cell GetRandomNotLockedCell()

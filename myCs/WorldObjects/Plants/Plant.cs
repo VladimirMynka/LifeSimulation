@@ -17,6 +17,7 @@
             _stage = PlantStage.Seed;
             NutritionalValue = nutVal;
             _transitionalAges = transAges;
+            color = World.Random.Next(Colors.Plant1Const, Colors.Plant3Const + 1);
 
             if (_transitionalAges != null) return;
             _transitionalAges = new int[3];
@@ -27,6 +28,7 @@
 
         public override void Update()
         {
+            base.Update();
             _age++;
             if (_age > _transitionalAges[(int)_stage])
             {

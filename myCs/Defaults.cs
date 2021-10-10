@@ -2,8 +2,8 @@
 {
     public static class Defaults
     {
-        public const int NutritionalValue = 50;
-        public const int SeedPeriod = 15;
+        public const int NutritionalValue = 10;
+        public const int SeedPeriod = 5;
         public const int PlantTeenagePeriod = 20;
         public const int PlantDieAge = 60;
         public const int AnimalHealth = 100;

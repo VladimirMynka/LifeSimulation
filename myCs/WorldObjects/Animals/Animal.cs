@@ -33,6 +33,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         public override void Update()
         {
+            base.Update();
             AddSatiety(-3);
             if (!IsHungry())
             {
@@ -129,25 +130,34 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         private void SearchMeal()
         {
-            for (int i = cell.Coords[0] - _visibleArea; i < cell.Coords[0] + _visibleArea; i++)
+            for (int i = 0; i < _visibleArea; i++)
             {
-                if (i < 0) continue;
-                if (i >= world.Length) break;
-                for (int j = cell.Coords[1] - _visibleArea; j < cell.Coords[1] + _visibleArea; j++)
+                for (int j = 0; j < _visibleArea; j++)
                 {
-                    if (j < 0) continue;
-                    if (j >= world.Width) break;
-                    var newCell = world.GetCell(i, j);
-                    var plant = newCell.CurrentObjects[0] as Plant;
-                    if (plant == null) continue;
-                    if (!plant.CheckItsAdult()) continue;
-                    
-                    _mainTarget = new[]{i, j};
-                    _targets = new Stack<int[]>();
-                    _targets.Push(_mainTarget);
-                    return;
+                    if (CheckAndAddPlant(cell.Coords[0] + i, cell.Coords[1] + j) ||
+                        CheckAndAddPlant(cell.Coords[0] + i, cell.Coords[1] - j) ||
+                        CheckAndAddPlant(cell.Coords[0] - i, cell.Coords[1] + j) ||
+                        CheckAndAddPlant(cell.Coords[0] - i, cell.Coords[1] - j)
+                    ) return;
                 }
             }
+        }
+
+        private bool CheckAndAddPlant(int x, int y)
+        {
+            if (x < 0 || y < 0 || x >= world.Width || y >= world.Length) return false;
+            var newCell = world.GetCell(x, y);
+            var plant = newCell.CurrentObjects[0] as Plant;
+            if (plant == null || plant.CheckItsAdult()) return false;
+            UpdateMainTarget(x, y);
+            return true;
+        }
+
+        private void UpdateMainTarget(int i, int j)
+        {
+            _mainTarget = new[]{i, j};
+            _targets = new Stack<int[]>();
+            _targets.Push(_mainTarget);
         }
 
         private bool Step(int[] directionVector)

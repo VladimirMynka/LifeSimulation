@@ -53,9 +53,11 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="myCs\Cell.cs" />
+    <Compile Include="myCs\CellDrawer.cs" />
     <Compile Include="myCs\Colors.cs" />
     <Compile Include="myCs\Defaults.cs" />
     <Compile Include="myCs\Direction.cs" />
+    <Compile Include="myCs\Drawer.cs" />
     <Compile Include="myCs\World.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animal.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plant.cs" />
