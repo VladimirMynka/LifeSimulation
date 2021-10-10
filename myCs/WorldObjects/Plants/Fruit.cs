@@ -38,14 +38,19 @@
         private void GrowToDyingStage()
         {
             stage = PlantStage.Died;
-            color = Colors.DiedPlant1Const;
+            color = Colors.RotFruit1Const;
             if (cell.CurrentObjects[1] == null) cell.SetColor(color);
         }
 
         private void RotAtAll()
         {
+            var thisCell = cell;
             Die();
-            new Plant(cell, color, isEatable, Effect);
+            
+            var plantColor = Colors.Plant1Const;
+            if (!isEatable) plantColor = Colors.Tree1Const;
+            else if (Effect == Effect.Heart) plantColor = Colors.Poisonous1Const;
+            new Plant(thisCell, plantColor, isEatable, Effect);
         }
     }
 }

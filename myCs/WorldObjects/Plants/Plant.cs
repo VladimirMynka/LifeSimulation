@@ -95,7 +95,7 @@
             {
                 var fruitColor = Colors.NormalFruit1Const;
                 if (!isEatable) fruitColor = Colors.UneatableFruit1Const;
-                else if (Effect == Effect.None) fruitColor = Colors.NormalFruit1Const;
+                else if (Effect == Effect.Heart) fruitColor = Colors.PoisonousFruit1Const;
                 new Fruit(neighCell, fruitColor, isEatable, Effect);
             }
         }

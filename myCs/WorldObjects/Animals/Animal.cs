@@ -36,13 +36,13 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         public override void Update()
         {
             base.Update();
-            AddSatiety(Defaults.AnimalSatietyDestruction);
+            AddSatiety(-Defaults.AnimalSatietyDestruction);
             if (!IsHungry())
             {
                 Plant();
                 AddHealth(Defaults.AnimalHealthRegeneration);
             }
-            else AddHealth(Defaults.AnimalHealthDestruction);
+            else AddHealth(-Defaults.AnimalHealthDestruction);
 
             if (CantLive())
             {
@@ -190,7 +190,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
                     AddSatiety(meal.NutritionalValue);
                     break;
                 case Effect.Heart:
-                    AddHealth(-meal.NutritionalValue);
+                    AddHealth(-5 * meal.NutritionalValue);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
