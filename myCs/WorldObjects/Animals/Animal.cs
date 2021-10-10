@@ -11,16 +11,18 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private int _maxHealth;
         private int _satiety;
         private int _maxSatiety;
-        private int[] _mainTarget;
+        private AbstractPlant _mainTarget;
         private readonly int _visibleArea;
         private Stack<int[]> _targets;
         
         
-        public Animal(Cell keeper, 
+        public Animal(
+            Cell keeper, 
             int newColor = Colors.Animal1Const,
             int maxHealth = Defaults.AnimalHealth,
             int maxSatiety = Defaults.AnimalSatiety,
-            int visibleArea = Defaults.AnimalVisibleArea) : base(keeper, newColor)
+            int visibleArea = Defaults.AnimalVisibleArea
+            ) : base(keeper, newColor)
         {
             _health = maxHealth;
             _maxHealth = maxHealth;
@@ -28,19 +30,19 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             _maxSatiety = maxSatiety;
             _visibleArea = visibleArea;
             
-            GoTo(keeper);
+            GoToCell(keeper);
         }
 
         public override void Update()
         {
             base.Update();
-            AddSatiety(-3);
+            AddSatiety(Defaults.AnimalSatietyDestruction);
             if (!IsHungry())
             {
                 Plant();
-                AddHealth(20);
+                AddHealth(Defaults.AnimalHealthRegeneration);
             }
-            else AddHealth(-3);
+            else AddHealth(Defaults.AnimalHealthDestruction);
 
             if (CantLive())
             {
@@ -53,8 +55,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
                 _targets = null;
                 return;
             }
-            Eat(cell.CurrentObjects[0] as Plant);
-            if (_targets == null || _targets.Count == 0)
+            Eat(cell.CurrentObjects[0] as AbstractPlant);
+            if (_targets == null || _targets.Count == 0 || _mainTarget == null)
             {
                 Walk();
                 SearchMeal();
@@ -98,9 +100,14 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         private void GoToTarget()
         {
-            var directionVector = Direction.GetDirectionVector(_targets.Peek());
+            var target = _targets.Peek();
+            var directionVector = Direction.GetDirectionVector(new[]{
+                target[0] - cell.Coords[0],
+                target[1] - cell.Coords[1]
+            });
             var thereIsBarrier = Step(directionVector);
-            if (cell.Coords == _targets.Peek()) _targets.Pop();
+            if (cell.Coords[0] == _targets.Peek()[0] &&
+                cell.Coords[1] == _targets.Peek()[1]) _targets.Pop();
             if (thereIsBarrier) FindBypass(directionVector);
         }
 
@@ -134,10 +141,10 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             {
                 for (int j = 0; j < _visibleArea; j++)
                 {
-                    if (CheckAndAddPlant(cell.Coords[0] + i, cell.Coords[1] + j) ||
+                    if (CheckAndAddPlant(cell.Coords[0] - i, cell.Coords[1] - j) ||
                         CheckAndAddPlant(cell.Coords[0] + i, cell.Coords[1] - j) ||
                         CheckAndAddPlant(cell.Coords[0] - i, cell.Coords[1] + j) ||
-                        CheckAndAddPlant(cell.Coords[0] - i, cell.Coords[1] - j)
+                        CheckAndAddPlant(cell.Coords[0] + i, cell.Coords[1] + j)
                     ) return;
                 }
             }
@@ -147,17 +154,17 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             if (x < 0 || y < 0 || x >= world.Width || y >= world.Length) return false;
             var newCell = world.GetCell(x, y);
-            var plant = newCell.CurrentObjects[0] as Plant;
-            if (plant == null || plant.CheckItsAdult()) return false;
-            UpdateMainTarget(x, y);
+            var plant = newCell.CurrentObjects[0] as AbstractPlant;
+            if (plant == null || !plant.IsEatable()) return false;
+            UpdateMainTarget(plant, x, y);
             return true;
         }
 
-        private void UpdateMainTarget(int i, int j)
+        private void UpdateMainTarget(AbstractPlant plant, int i, int j)
         {
-            _mainTarget = new[]{i, j};
+            _mainTarget = plant;
             _targets = new Stack<int[]>();
-            _targets.Push(_mainTarget);
+            _targets.Push(new[]{i, j});
         }
 
         private bool Step(int[] directionVector)
@@ -168,26 +175,38 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             if (newCell == null) return false;
             if (newCell.CheckLocked()) return false;
             GoAway();
-            GoTo(newCell);
+            GoToCell(newCell);
 
             return true;
         }
 
-        private void Eat(Plant meal)
+        private void Eat(AbstractPlant meal)
         {
             if (meal == null) return;
-            if (!meal.CheckItsAdult()) return;
-            AddSatiety(meal.NutritionalValue);
+            if (!meal.IsEatable()) return;
+            switch (meal.Effect)
+            {
+                case Effect.None:
+                    AddSatiety(meal.NutritionalValue);
+                    break;
+                case Effect.Heart:
+                    AddHealth(-meal.NutritionalValue);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             meal.Die();
         }
 
         private void Plant()
         {
             if (cell.CurrentObjects[0] != null) return;
-            var chance = _satiety / 5;
+            var chance = _satiety * Defaults.AnimalPlantProbability / 100;
             var random = World.Random.Next(0, _maxSatiety);
             if (random < chance)
-                new Plant(cell);
+            {
+                world.AddPlant(cell);
+            }
         }
 
         private void Die()
@@ -197,9 +216,9 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         private void GoAway()
         {
-            var onThisCellPlant = cell.CurrentObjects[0] as Plant;
+            var plantOnThisCell = cell.CurrentObjects[0] as Plant;
             
-            if (onThisCellPlant == null || !onThisCellPlant.CheckItsAdult()) 
+            if (plantOnThisCell == null || !plantOnThisCell.CheckItsAdult()) 
                 cell.ThrowOffColor();
             else 
                 cell.SetColor(cell.CurrentObjects[0].GetColor());
@@ -209,7 +228,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             cell = null;
         }
 
-        private void GoTo(Cell newCell)
+        private void GoToCell(Cell newCell)
         {
             if (newCell == null) return;
             newCell.Lock();

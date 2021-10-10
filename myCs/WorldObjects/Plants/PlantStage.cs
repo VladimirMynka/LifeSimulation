@@ -4,6 +4,7 @@
     {
         Seed,
         CanBeEaten,
-        CanBeMother
+        CanBeMother,
+        Died
     }
 }

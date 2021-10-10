@@ -15,6 +15,7 @@ namespace LifeSimulation.myCs
 
         private readonly Drawer _drawer;
         public bool evenCycle;
+        private bool checkUpdated;
 
         public Cell(World world, Drawer drawer, int[] coords, int color = 0, bool isLocked = false)
         {
@@ -32,25 +33,27 @@ namespace LifeSimulation.myCs
 
         public void Update(bool updateInAnyKeys)
         {
-            bool checkSmth = false;
             evenCycle = !evenCycle;
             if (CurrentObjects[0] != null && evenCycle == CurrentObjects[0].evenCycle)
             {
                 CurrentObjects[0].Update();
-                checkSmth = true;
             }
             if (CurrentObjects[1] != null && evenCycle == CurrentObjects[1].evenCycle)
             {
                 CurrentObjects[1].Update();
-                checkSmth = true;
             }
-            if (updateInAnyKeys || checkSmth) 
+
+            if (updateInAnyKeys || checkUpdated)
+            {
                 _drawer.AddCell(new CellDrawer(Coords[0], Coords[1], _color));
+                checkUpdated = false;
+            }
         }
 
         public void SetColor(int color)
         {
             _color = color;
+            checkUpdated = true;
         }
         
         public void ThrowOffColor()

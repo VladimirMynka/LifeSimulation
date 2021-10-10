@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using LifeSimulation.myCs.WorldObjects.Animals;
 using LifeSimulation.myCs.WorldObjects.Plants;
 
@@ -7,7 +6,7 @@ namespace LifeSimulation.myCs
 {
     public class World
     {
-        private const int AnimalsNormalCount = 10000;
+        private const int AnimalsNormalCount = 20000;
         private const int PlantsNormalCount = 1000;
 
         private Cell[][] _cells;
@@ -84,8 +83,27 @@ namespace LifeSimulation.myCs
 
         private void AddPlant(int x, int y)
         {
-            var randColor = Random.Next(Colors.Plant1Const, Colors.Plant3Const + 1);
-            new Plant(GetCell(x, y), randColor);
+            AddPlant(GetCell(x, y));
+        }
+        
+        public void AddPlant(Cell cell)
+        {
+            var color = Colors.Plant1Const;
+            var isEatable = true;
+            var effect = Effect.None;
+            
+            if (Random.Next(0, 2) == 1)
+            {
+                isEatable = false;
+                color = Colors.Tree1Const;
+            }
+            else if (Random.Next(0, 2) == 1)
+            {
+                effect = Effect.Heart;
+                color = Colors.Poisonous1Const;
+            }
+            
+            new Plant(cell, color, isEatable, effect);
         }
 
     }

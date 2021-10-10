@@ -1,70 +1,86 @@
 ﻿namespace LifeSimulation.myCs.WorldObjects.Plants
 {
-    public class Plant : WorldObject
+    public class Plant : AbstractPlant
     {
-        private int _age;
-        private PlantStage _stage;
-        private readonly int[] _transitionalAges;
-        public int NutritionalValue;
-
-        public Plant(Cell keeper, 
-            int newColor = Colors.Plant1Const, 
-            int nutVal = (int) Defaults.NutritionalValue, 
-            int[] transAges = null) 
-            : base(keeper, newColor)
+        
+        public Plant(
+            Cell keeper, 
+            int newColor = Colors.Plant1Const,
+            bool isEatable = true,
+            Effect effect = Effect.None,
+            int nutVal = Defaults.NutritionalValue, 
+            int[] transAges = null
+            ) : base(
+            keeper, 
+            newColor,
+            isEatable,
+            effect,
+            nutVal,
+            transAges
+            )
         {
-            _age = 0;
-            _stage = PlantStage.Seed;
-            NutritionalValue = nutVal;
-            _transitionalAges = transAges;
-            color = World.Random.Next(Colors.Plant1Const, Colors.Plant3Const + 1);
-
-            if (_transitionalAges != null) return;
-            _transitionalAges = new int[3];
-            _transitionalAges[0] = (int) Defaults.SeedPeriod;
-            _transitionalAges[1] = (int) Defaults.PlantTeenagePeriod;
-            _transitionalAges[2] = (int) Defaults.PlantDieAge;
+            if (transitionalAges != null) return;
+            transitionalAges = new int[4];
+            transitionalAges[0] = Defaults.SeedPeriod;
+            transitionalAges[1] = Defaults.PlantTeenagePeriod;
+            transitionalAges[2] = Defaults.PlantDieAge;
+            transitionalAges[3] = Defaults.PlantRotAge;
         }
 
         public override void Update()
         {
             base.Update();
-            _age++;
-            if (_age > _transitionalAges[(int)_stage])
+            if (age > transitionalAges[(int)stage])
             {
-                if (_stage == PlantStage.Seed) GrowToAdult();
-                if (_stage == PlantStage.CanBeEaten) GrowToMother();
-                else Die();
+                switch (stage)
+                {
+                    case PlantStage.Seed:
+                        GrowToAdult();
+                        break;
+                    case PlantStage.CanBeEaten:
+                        GrowToMother();
+                        break;
+                    case PlantStage.CanBeMother:
+                        GrowToDyingStage();
+                        break;
+                    case PlantStage.Died:
+                        Die();
+                        break;
+                    default:
+                        Die();
+                        break;
+                }
             }
 
-            if (_stage == PlantStage.CanBeMother) Reproduce();
+            if (stage == PlantStage.CanBeMother) Reproduce();
         }
 
-        public void Die()
-        {
-            if (cell.CurrentObjects[1] == null) cell.ThrowOffColor();
-            cell.CurrentObjects[0] = null;
-        }
-        
         public bool CheckItsAdult()
         {
-            return (_stage != PlantStage.Seed); 
+            return (stage != PlantStage.Seed); 
         }
 
         private void GrowToAdult()
         {
-            _stage = PlantStage.CanBeEaten;
+            stage = PlantStage.CanBeEaten;
             if (cell.CurrentObjects[1] == null) cell.SetColor(color);
         }
 
         private void GrowToMother()
         {
-            _stage = PlantStage.CanBeMother;
+            stage = PlantStage.CanBeMother;
+        }
+
+        private void GrowToDyingStage()
+        {
+            stage = PlantStage.Died;
+            color = Colors.DiedPlant1Const;
+            if (cell.CurrentObjects[1] == null) cell.SetColor(color);
         }
 
         private void Reproduce()
         {
-            if (World.Random.Next(100) < 80) return;
+            if (World.Random.Next(100) > Defaults.ReproduceChance) return;
 
             var localCoords = Direction.GetRandomDirectionVector();
             var x = localCoords[0] + cell.Coords[0];
@@ -72,7 +88,7 @@
             var neighCell = world.GetCell(x, y);
             if (neighCell == null) return;
             if (neighCell.CurrentObjects[0] != null) return;
-            else new Plant(neighCell, color, NutritionalValue, _transitionalAges);
+            else new Plant(neighCell, color, isEatable, Effect, NutritionalValue, transitionalAges);
         }
     }
 }
