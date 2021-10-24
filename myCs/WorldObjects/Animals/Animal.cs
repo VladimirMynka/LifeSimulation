@@ -21,11 +21,17 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             components.Add(new HealthComponent(this, maxHealth));
             components.Add(new EaterComponent(this, mealType, maxSatiety));
             components.Add(new EatableComponent(this, MealType.FreshMeat, Effect.None));
+            
             if (isMale)
                 components.Add(new MaleMatingComponent(this));
             else 
                 components.Add(new FemaleMatingComponent(this));
+            
+            if (mealType == MealType.Plant)
+                components.Add(new PlanterComponent(this));
+            
             Start();
+
         }
     }
 }

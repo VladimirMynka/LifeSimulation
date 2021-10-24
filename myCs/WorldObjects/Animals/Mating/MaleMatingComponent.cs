@@ -14,6 +14,12 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             
         }
 
+        public override void Start()
+        {
+            base.Start();
+            _moving = GetComponent<MovingComponent>();
+        }
+
         public override void Update()
         {
             base.Update();

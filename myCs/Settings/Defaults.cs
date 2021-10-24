@@ -15,9 +15,9 @@
         
         public const int AnimalHealth = 100;
         public const int AnimalHealthRegeneration = 5;
-        public const int AnimalHealthDestruction = 30;
+        public const int AnimalHealthDestruction = 3;
         public const int AnimalSatiety = 100;
-        public const int AnimalSatietyDestruction = 20;
+        public const int AnimalSatietyDestruction = 2;
         public const int AnimalVisibleArea = 10;
         public const int AnimalPlantProbability = 30;
 
