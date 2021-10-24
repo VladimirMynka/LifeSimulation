@@ -2,24 +2,24 @@
 {
     public abstract class WorldObjectComponent
     {
-        protected WorldObject worldObject;
+        public WorldObject WorldObject;
         protected readonly World.World world;
 
         protected WorldObjectComponent(WorldObject owner)
         {
-            worldObject = owner;
+            WorldObject = owner;
             world = owner.world;
         }
 
         public T GetComponent<T>() where T : WorldObjectComponent
         {
-            return worldObject.GetComponent<T>();
+            return WorldObject.GetComponent<T>();
         }
 
         public void Destroy()
         {
             OnDestroy();
-            worldObject.RemoveComponent(this);
+            WorldObject.RemoveComponent(this);
         }
         
         public virtual void Start()

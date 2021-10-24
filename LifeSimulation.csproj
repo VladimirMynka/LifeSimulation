@@ -64,8 +64,11 @@
     <Compile Include="myCs\WorldObjects\Animals\MaleMatingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\MatingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\MovingComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\MovingToTargetState.cs" />
     <Compile Include="myCs\WorldObjects\Animals\PlanterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\PregnantComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\SpeedState.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\WalkingState.cs" />
     <Compile Include="myCs\WorldObjects\EatableComponent.cs" />
     <Compile Include="myCs\WorldObjects\HealthComponent.cs" />
     <Compile Include="myCs\WorldObjects\MealType.cs" />

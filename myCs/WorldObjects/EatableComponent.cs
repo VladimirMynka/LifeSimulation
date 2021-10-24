@@ -18,7 +18,7 @@ namespace LifeSimulation.myCs.WorldObjects
         public void BeEatenBy(EaterComponent eater)
         {
             ApplyEffect(eater);
-            worldObject.Destroy();
+            WorldObject.Destroy();
         }
 
         private void ApplyEffect(EaterComponent target)

@@ -28,7 +28,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         private void BecomePregnant()
         {
-            worldObject.AddComponent(new PregnantComponent(worldObject));
+            WorldObject.AddComponent(new PregnantComponent(WorldObject));
         }
     }
 }

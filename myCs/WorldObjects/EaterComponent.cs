@@ -68,7 +68,7 @@ namespace LifeSimulation.myCs.WorldObjects
 
         private EatableComponent GetMeal()
         {
-            var cell = worldObject.Cell;
+            var cell = WorldObject.Cell;
             foreach (var inCellObject in cell.CurrentObjects)
             {
                 var meal = inCellObject.GetComponent<EatableComponent>();

@@ -17,7 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects
         public override void Start()
         {
             base.Start();
-            _eatableComponent = worldObject.GetComponent<EatableComponent>();
+            _eatableComponent = WorldObject.GetComponent<EatableComponent>();
         }
 
         public override void Update()
@@ -29,7 +29,7 @@ namespace LifeSimulation.myCs.WorldObjects
         {
             if (World.World.Random.Next(100) > Defaults.ReproduceChance) return;
 
-            var neighCell = worldObject.Cell.GetRandomNeighbour();
+            var neighCell = WorldObject.Cell.GetRandomNeighbour();
             if (neighCell.CurrentObjects.Any(neighObject => neighObject is Plant || neighObject is Fruit))
                 return;
 

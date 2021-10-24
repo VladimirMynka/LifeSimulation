@@ -19,7 +19,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
             base.Start();
             if (_effect != Effect.Uneatable)
             {
-                worldObject.AddComponent(new EatableComponent(worldObject, MealType.Plant, _effect));
+                WorldObject.AddComponent(new EatableComponent(WorldObject, MealType.Plant, _effect));
             }
         }
 
@@ -58,7 +58,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         
         private void GrowToDyingStage()
         {
-            worldObject.Color = Colors.RotFruit1Const;
+            WorldObject.Color = Colors.RotFruit1Const;
         }
     }
 }

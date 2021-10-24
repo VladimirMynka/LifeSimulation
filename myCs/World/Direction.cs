@@ -41,6 +41,21 @@ namespace LifeSimulation.myCs.World
                 coords2[1] - coords1[0]
             });
         }
+        public static int[] GetOrthogonalDirection(int[] vector)
+        {
+            var normalVector = GetNormalDirection(vector);
+            if (normalVector[0] == normalVector[1] && normalVector[0] != 0)
+                normalVector[1] = 0;
+            return normalVector;
+        }
+        
+        public static int[] GetOrthogonalDirection(int[] coords1, int[] coords2)
+        {
+            return GetOrthogonalDirection(new[]{
+                coords2[0] - coords1[0],
+                coords2[1] - coords1[0]
+            });
+        }
 
         public static int GetDirectionByVector(int[] vector)
         {

@@ -17,7 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         public override void Start()
         {
             base.Start();
-            eaterComponent = worldObject.GetComponent<EaterComponent>();
+            eaterComponent = WorldObject.GetComponent<EaterComponent>();
         }
 
         public override void Update()

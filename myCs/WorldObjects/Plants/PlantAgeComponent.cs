@@ -71,18 +71,18 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         {
             if (_effect != Effect.Uneatable)
             {
-                worldObject.AddComponent(new EatableComponent(worldObject, MealType.Plant, _effect));
+                WorldObject.AddComponent(new EatableComponent(WorldObject, MealType.Plant, _effect));
             }
         }
         
         private void GrowToMother()
         {
-            worldObject.AddComponent(new PlantReproducerComponent(worldObject));
+            WorldObject.AddComponent(new PlantReproducerComponent(WorldObject));
         }
         
         private void GrowToDyingStage()
         {
-            worldObject.Color = Colors.DiedPlant1Const;
+            WorldObject.Color = Colors.DiedPlant1Const;
         }
     }
 }

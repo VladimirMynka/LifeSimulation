@@ -17,7 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects
         public override void Update()
         {
             if (CantLive())
-                worldObject.Destroy();
+                WorldObject.Destroy();
         }
 
         private bool CantLive()

@@ -102,7 +102,5 @@ namespace LifeSimulation.myCs.WorldObjects
         {
             return Color;
         }
-        
-        
     }
 }

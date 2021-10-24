@@ -31,7 +31,7 @@
             _stageIndex++;
             if (ageStage == AgeStage.Died)
             {
-                worldObject.Destroy();
+                WorldObject.Destroy();
                 return;
             }
             ageStage = getAgeStageByIndex(_stageIndex);

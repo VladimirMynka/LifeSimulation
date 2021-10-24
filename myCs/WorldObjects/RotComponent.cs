@@ -14,7 +14,7 @@ namespace LifeSimulation.myCs.WorldObjects
         public override void Start()
         {
             base.Start();
-            _eatableComponent = worldObject.GetComponent<EatableComponent>();
+            _eatableComponent = WorldObject.GetComponent<EatableComponent>();
         }
 
         protected override void OnDestroy()
@@ -25,11 +25,11 @@ namespace LifeSimulation.myCs.WorldObjects
         private void SpawnPlant()
         {
             if (_eatableComponent == null)
-                PlantsSpawner.SpawnUneatablePlant(worldObject.Cell);
+                PlantsSpawner.SpawnUneatablePlant(WorldObject.Cell);
             else if (_eatableComponent.IsPoisonous())
-                PlantsSpawner.SpawnPoisonousPlant(worldObject.Cell);
+                PlantsSpawner.SpawnPoisonousPlant(WorldObject.Cell);
             else
-                PlantsSpawner.SpawnNormalPlant(worldObject.Cell);
+                PlantsSpawner.SpawnNormalPlant(WorldObject.Cell);
         }
     }
 }

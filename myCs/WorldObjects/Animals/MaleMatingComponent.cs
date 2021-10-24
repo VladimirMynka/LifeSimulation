@@ -6,6 +6,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
     public class MaleMatingComponent : MatingComponent
     {
         private FemaleMatingComponent _partner;
+        private MovingComponent _moving;
         
         public MaleMatingComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) 
             : base(owner, ticksToMating)
@@ -16,8 +17,13 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         public override void Update()
         {
             base.Update();
-            if (eaterComponent.IsHungry()) return;
+            if (eaterComponent.IsHungry())
+            {
+                _partner = null;
+                return;
+            }
             if (_partner == null) SearchPartner();
+            if (_partner != null) _moving.SetTarget(_partner.WorldObject, true);
         }
 
         private void SearchPartner()
@@ -57,11 +63,17 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
                 var partner = wo.GetComponent<FemaleMatingComponent>();
                 if (partner == null) continue;
                 if (CanMateWith(partner)) break;
-                _partner = partner;
+                SetPartner(partner);
                 
                 return true;
             }
             return false;
+        }
+
+        private void SetPartner(FemaleMatingComponent partner)
+        {
+            partner.Partner = this;
+            _partner = partner;
         }
 
         private bool CanMateWith(FemaleMatingComponent partner)

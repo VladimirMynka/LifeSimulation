@@ -22,8 +22,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         public override void Start()
         {
             base.Start();
-            eaterComponent = worldObject.GetComponent<EaterComponent>();
-            cell = worldObject.Cell;
+            eaterComponent = WorldObject.GetComponent<EaterComponent>();
+            cell = WorldObject.Cell;
             visibility = Defaults.AnimalVisibleArea;
         }
 

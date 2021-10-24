@@ -16,7 +16,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         public override void Start()
         {
             base.Start();
-            _eaterComponent = worldObject.GetComponent<EaterComponent>();
+            _eaterComponent = WorldObject.GetComponent<EaterComponent>();
         }
 
         public override void Update()
@@ -27,7 +27,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         private void PlantSeed()
         {
-            if (worldObject.Cell.CurrentObjects.Any(neighObject => neighObject is Plant || neighObject is Fruit))
+            if (WorldObject.Cell.CurrentObjects.Any(neighObject => neighObject is Plant || neighObject is Fruit))
             {
                 return;
             }
@@ -35,7 +35,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             var random = World.World.Random.Next(0, _eaterComponent.MaxSatiety);
             if (random < chance)
             {
-                world.AddPlant(worldObject.Cell);
+                world.AddPlant(WorldObject.Cell);
             }
         }
     }
