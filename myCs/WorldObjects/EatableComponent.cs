@@ -1,6 +1,4 @@
-﻿using System;
-using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.Animals;
+﻿using LifeSimulation.myCs.Settings;
 
 namespace LifeSimulation.myCs.WorldObjects
 {

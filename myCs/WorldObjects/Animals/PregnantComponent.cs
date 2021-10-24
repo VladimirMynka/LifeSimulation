@@ -8,7 +8,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         protected EaterComponent eaterComponent;
         private int _ticksToBirthday;
 
-        public PregnantComponent(WorldObject owner, int ticksToBirthday = Defaults.AnimalNormalTicksToMating) 
+        public PregnantComponent(WorldObject owner, int ticksToBirthday = Defaults.PregnantPeriod) 
             : base(owner)
         {
             _ticksToBirthday = ticksToBirthday;
@@ -31,7 +31,24 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         protected override void OnDestroy()
         {
-            
+            if (eaterComponent == null) 
+                return;
+            bool childIsMale = (World.World.Random.Next(2) == 1);
+            switch (eaterComponent.MealType)
+            {
+                case MealType.Plant:
+                    AnimalsSpawner.SpawnHerbivoreAnimal(WorldObject.Cell, childIsMale);
+                    return;
+                case MealType.AllTypes:
+                    AnimalsSpawner.SpawnOmnivoreAnimal(WorldObject.Cell, childIsMale);
+                    return;
+                case MealType.FreshMeat:
+                    AnimalsSpawner.SpawnPredatorAnimal(WorldObject.Cell, childIsMale);
+                    return;
+                case MealType.DeadMeat:
+                    AnimalsSpawner.SpawnScavengerAnimal(WorldObject.Cell, childIsMale);
+                    return;
+            }
         }
     }
 }

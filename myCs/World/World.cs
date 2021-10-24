@@ -56,7 +56,46 @@ namespace LifeSimulation.myCs.World
 
         private void AddAnimal(int x, int y)
         {
-            AnimalsSpawner.SpawnNormalAnimal(GetCell(x, y));
+            AddAnimal(GetCell(x, y));
+        }
+        
+        private void AddAnimal(Cell cell)
+        {
+            foreach (var wo in cell.CurrentObjects)
+            {
+                if (wo is Animal) return;
+            }
+        
+            switch (Random.Next(8))
+            {
+                case 0:
+                    AnimalsSpawner.SpawnOmnivoreAnimalMale(cell);
+                    return;
+                case 1:
+                    AnimalsSpawner.SpawnOmnivoreAnimalFemale(cell);
+                    return;
+                case 2:
+                    AnimalsSpawner.SpawnPredatorAnimalMale(cell);
+                    return;
+                case 3:
+                    AnimalsSpawner.SpawnPredatorAnimalFemale(cell);
+                    return;
+                case 4:
+                    AnimalsSpawner.SpawnHerbivoreAnimalMale(cell);
+                    return;
+                case 5:
+                    AnimalsSpawner.SpawnHerbivoreAnimalFemale(cell);
+                    return;
+                case 6:
+                    AnimalsSpawner.SpawnScavengerAnimalMale(cell);
+                    return;
+                case 7:
+                    AnimalsSpawner.SpawnScavengerAnimalFemale(cell);
+                    return;
+
+                default:
+                    return;
+            }
         }
 
         private void AddPlant(int x, int y)

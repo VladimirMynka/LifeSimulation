@@ -7,11 +7,18 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
     public class FemaleMatingComponent : MatingComponent
     {
         public MaleMatingComponent Partner;
+        private MovingComponent _moving;
         
         public FemaleMatingComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) 
             : base(owner, ticksToMating)
         {
             
+        }
+        
+        public override void Update()
+        {
+            base.Update();
+            if (Partner != null) _moving.SetTarget(Partner.WorldObject, false);
         }
 
         public bool IsEaterOfType(MealType type)

@@ -1,5 +1,6 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldObjects.Animals;
 
 namespace LifeSimulation.myCs.WorldObjects
 {
@@ -9,6 +10,12 @@ namespace LifeSimulation.myCs.WorldObjects
         public readonly int MaxSatiety;
         public MealType MealType;
         private HealthComponent _health;
+
+        private EatableComponent _mealTarget;
+        private MovingComponent _moving;
+
+        private int _visibility;
+        private Cell _cell;
 
         public EaterComponent(WorldObject owner, MealType mealType, int satiety) : base(owner)
         {
@@ -20,13 +27,18 @@ namespace LifeSimulation.myCs.WorldObjects
         public override void Start()
         {
             _health = GetComponent<HealthComponent>();
+            _moving = GetComponent<MovingComponent>();
+            _cell = WorldObject.Cell;
+            _visibility = Defaults.AnimalVisibleArea;
         }
 
         public override void Update()
         {
             AddSatiety(-Defaults.AnimalSatietyDestruction);
             ChangeHealth();
-            if (IsHungry()) EatSmth();
+            if (!IsHungry()) return;
+            EatSmth();
+            if (_mealTarget == null) SearchMeal();
         }
 
         public void AddSatiety(int delta)
@@ -61,9 +73,65 @@ namespace LifeSimulation.myCs.WorldObjects
                 meal.BeEatenBy(this);
         }
 
+        private void SearchMeal()
+        {
+            var x = _cell.Coords[0];
+            var y = _cell.Coords[1];
+            for (var i = 0; i < _visibility; i++)
+            {
+                for (var j = 0; j < _visibility; j++)
+                {
+                    var currentCell = world.GetCell(x + i, y + j);
+                    if (TakeMealFrom(currentCell)) 
+                        return;
+                    if (j != 0)
+                    {
+                        currentCell = world.GetCell(x + i, y - j);
+                        if (TakeMealFrom(currentCell))
+                            return;
+                    }
+                    if (i == 0) continue;
+                    currentCell = world.GetCell(x - i, y + j);
+                    if (TakeMealFrom(currentCell)) 
+                        return;
+                    if (j == 0) continue;
+                    currentCell = world.GetCell(x - i, y - j);
+                    if (TakeMealFrom(currentCell))
+                        return;
+                }
+            }
+        }
+
+        private bool TakeMealFrom(Cell checkingCell)
+        {
+            if (checkingCell == null) return false;
+            foreach (var wo in checkingCell.CurrentObjects)
+            {
+                var meal = wo.GetComponent<EatableComponent>();
+                if (meal == null) continue;
+                if (!CheckIEatIt(meal)) continue;
+                SetMeal(meal);
+                
+                return true;
+            }
+            return false;
+        }
+
+        private void SetMeal(EatableComponent meal)
+        {
+            _mealTarget = meal;
+            bool isPlant = (meal.MealType == MealType.Plant);
+            _moving.SetTarget(meal.WorldObject, isPlant);
+        }
+
         private bool CheckIEatIt(EatableComponent meal)
         {
-            return (meal != null && (MealType == MealType.AllTypes || meal.MealType == MealType));
+            if (meal == null) 
+                return false; 
+            if (MealType != MealType.AllTypes && meal.MealType == MealType) 
+                return false;
+            var eater = meal.GetComponent<EaterComponent>();
+            return eater == null || eater.MealType != MealType;
         }
 
         private EatableComponent GetMeal()

@@ -62,7 +62,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             {
                 var partner = wo.GetComponent<FemaleMatingComponent>();
                 if (partner == null) continue;
-                if (CanMateWith(partner)) break;
+                if (!CanMateWith(partner)) break;
                 SetPartner(partner);
                 
                 return true;
