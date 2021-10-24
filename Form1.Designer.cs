@@ -122,12 +122,9 @@
         private System.Windows.Forms.TextBox offsetTopInput;
 
         private System.Windows.Forms.TextBox offsetLeftInput;
-        private System.Windows.Forms.TextBox offsetTop;
 
         private System.Windows.Forms.TextBox pixelSizeInput;
-
-        private System.Windows.Forms.TextBox textBox1;
-
+        
         private System.Windows.Forms.PictureBox pictureBox1;
 
         private System.Windows.Forms.Timer timer1;

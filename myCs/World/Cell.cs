@@ -1,30 +1,29 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Linq;
+using LifeSimulation.myCs.Drawer;
 using LifeSimulation.myCs.WorldObjects;
 
-namespace LifeSimulation.myCs
+namespace LifeSimulation.myCs.World
 {
     public class Cell
     {
         public readonly World World;
         public readonly int[] Coords;
-        public WorldObject[] CurrentObjects;
+        public List<WorldObject> CurrentObjects;
         private int _color;
-        private bool _isLocked;
         public int DefaultColor;
 
-        private readonly Drawer _drawer;
+        private readonly Drawer.Drawer _drawer;
         public bool evenCycle;
-        private bool checkUpdated;
+        private bool _wereUpdated;
 
-        public Cell(World world, Drawer drawer, int[] coords, int color = 0, bool isLocked = false)
+        public Cell(World world, Drawer.Drawer drawer, int[] coords, int color = 0)
         {
             World = world;
             Coords = coords;
             DefaultColor = color;
             _color = color;
-            _isLocked = isLocked;
-            CurrentObjects = new WorldObject[2];
+            CurrentObjects = new List<WorldObject>();
             _drawer = drawer;
             evenCycle = false;
             
@@ -34,26 +33,41 @@ namespace LifeSimulation.myCs
         public void Update(bool updateInAnyKeys)
         {
             evenCycle = !evenCycle;
-            if (CurrentObjects[0] != null && evenCycle == CurrentObjects[0].evenCycle)
+            foreach (var worldObject in CurrentObjects)
             {
-                CurrentObjects[0].Update();
-            }
-            if (CurrentObjects[1] != null && evenCycle == CurrentObjects[1].evenCycle)
-            {
-                CurrentObjects[1].Update();
+                if (evenCycle == worldObject.evenCycle)
+                    worldObject.Update();
             }
 
-            if (updateInAnyKeys || checkUpdated)
-            {
-                _drawer.AddCell(new CellDrawer(Coords[0], Coords[1], _color));
-                checkUpdated = false;
-            }
+            if (!updateInAnyKeys && !_wereUpdated) return;
+            _drawer.AddCell(new CellDrawer(Coords[0], Coords[1], _color));
+            _wereUpdated = false;
+        }
+
+        public void AddObject(WorldObject addingObject)
+        {
+            CurrentObjects.Add(addingObject);
+            UpdateColor();
+        }
+
+        public void RemoveObject(WorldObject removingObject)
+        {
+            CurrentObjects.Remove(removingObject);
+            UpdateColor();
+        }
+
+        private void UpdateColor()
+        {
+            if (CurrentObjects.Count == 0)
+                ThrowOffColor();
+            else 
+                SetColor(CurrentObjects.Last().Color);
         }
 
         public void SetColor(int color)
         {
             _color = color;
-            checkUpdated = true;
+            _wereUpdated = true;
         }
         
         public void ThrowOffColor()
@@ -61,20 +75,11 @@ namespace LifeSimulation.myCs
             SetColor(DefaultColor);
         }
 
-        public void Lock()
+        public Cell GetRandomNeighbour()
         {
-            _isLocked = true;
+            var localCoords = Direction.GetRandomDirectionVector();
+            var neighCell = World.GetCell(localCoords[0] + Coords[0], localCoords[1] + Coords[1]);
+            return neighCell ?? World.GetCell(localCoords[0] - Coords[0], localCoords[1] - Coords[1]);
         }
-
-        public void Unlock()
-        {
-            _isLocked = false;
-        }
-
-        public bool CheckLocked()
-        {
-            return _isLocked;
-        }
-
     }
 }

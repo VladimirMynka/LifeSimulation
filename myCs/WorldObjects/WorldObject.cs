@@ -1,36 +1,91 @@
-﻿
-using LifeSimulation.myCs.WorldObjects.Plants;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using LifeSimulation.myCs.World;
 
 namespace LifeSimulation.myCs.WorldObjects
 {
     public abstract class WorldObject
     {
-        protected int color;
-        protected Cell cell;
-        protected World world;
+        public int Color;
+        public Cell Cell;
+        protected internal World.World world;
+        protected List<WorldObjectComponent> components;
 
         public bool evenCycle;
 
         protected WorldObject(Cell keeper, int newColor = 0)
         {
-            color = newColor;
-            cell = keeper;
+            Color = newColor;
+            Cell = keeper;
             world = keeper.World;
             evenCycle = false;
+            components = new List<WorldObjectComponent>();
 
-            if (this.GetType() == typeof(Plant) 
-            || this.GetType() == typeof(Fruit)) cell.CurrentObjects[0] = this;
-            else cell.CurrentObjects[1] = this;
+            Cell.CurrentObjects.Add(this);
+        }
+        
+        public void Start()
+        {
+            foreach (var component in components)
+            {
+                component.Start();
+            }
         }
 
-        public virtual void Update()
+        public void Update()
         {
             evenCycle = !evenCycle;
+            foreach (var component in components)
+            {
+                component.Update();
+            }
+        }
+
+        public void Destroy()
+        {
+            Cell.CurrentObjects.Remove(this);
+            Cell = null;
+            foreach (var component in components)
+            {
+                component.Destroy();
+            }
+        }
+
+        public bool DestroyComponent<T>() where T : WorldObjectComponent
+        {
+            var destroyingComponent = GetComponent<T>();
+            if (destroyingComponent == null) 
+                return false;
+            destroyingComponent.Destroy();
+            return true;
+        }
+
+        public void AddComponent<T>(T component) where T : WorldObjectComponent
+        {
+            components.Add(component);
+            component.Start();
+        }
+
+        public bool RemoveComponent<T>(T component) where T : WorldObjectComponent
+        {
+            return components.Remove(component);
+        }
+        
+        public T GetComponent<T>() where T : WorldObjectComponent
+        {
+            foreach (var component in components)
+            {
+                if (component is T) 
+                    return component as T;
+            }
+            return null;
         }
 
         public int GetColor()
         {
-            return color;
+            return Color;
         }
+        
+        
     }
 }

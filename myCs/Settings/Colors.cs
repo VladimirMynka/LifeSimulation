@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace LifeSimulation.myCs
+namespace LifeSimulation.myCs.Settings
 {
     public static class Colors
     {
@@ -13,8 +13,8 @@ namespace LifeSimulation.myCs
         public const int Animal2Const = 6;
         public const int Animal3Const = 7;
         public const int DiedPlant1Const = 8;
-        public const int Tree1Const = 9;
-        public const int Poisonous1Const = 10;
+        public const int UneatablePlant1Const = 9;
+        public const int PoisonousPlant1Const = 10;
         public const int NormalFruit1Const = 11;
         public const int PoisonousFruit1Const = 12;
         public const int UneatableFruit1Const = 13;
@@ -29,8 +29,8 @@ namespace LifeSimulation.myCs
         public static Brush Animal2 = Brushes.Blue;//Brushes.Goldenrod;
         public static Brush Animal3 = Brushes.Blue;//Brushes.OrangeRed;
         public static Brush DiedPlant1 = Brushes.Green;
-        public static Brush Tree1 = Brushes.Brown;
-        public static Brush Poisonous1 = Brushes.Olive;
+        public static Brush UneatablePlant1 = Brushes.Brown;
+        public static Brush PoisonousPlant1 = Brushes.Olive;
         public static Brush NormalFruit1 = Brushes.Gold;
         public static Brush PoisonousFruit1 = Brushes.Red;
         public static Brush UneatableFruit1 = Brushes.Chocolate;
@@ -50,8 +50,8 @@ namespace LifeSimulation.myCs
                 case Animal2Const: return Animal2;
                 case Animal3Const: return Animal3;
                 case DiedPlant1Const: return DiedPlant1;
-                case Tree1Const: return Tree1;
-                case Poisonous1Const: return Poisonous1;
+                case UneatablePlant1Const: return UneatablePlant1;
+                case PoisonousPlant1Const: return PoisonousPlant1;
                 case NormalFruit1Const: return NormalFruit1;
                 case PoisonousFruit1Const: return PoisonousFruit1;
                 case UneatableFruit1Const: return UneatableFruit1;

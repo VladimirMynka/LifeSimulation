@@ -1,4 +1,4 @@
-﻿namespace LifeSimulation.myCs
+﻿namespace LifeSimulation.myCs.Drawer
 {
     public class CellDrawer
     {

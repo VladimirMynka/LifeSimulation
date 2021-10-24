@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LifeSimulation.myCs
+namespace LifeSimulation.myCs.World
 {
     public static class Direction
     {
@@ -31,7 +31,15 @@ namespace LifeSimulation.myCs
 
         public static int[] GetDirectionVector(int[] vector)
         {
-            return new[]{Sign(vector[0]), Sign(vector[1])};
+            return GetDirectionVector(GetDirectionByVector(vector));
+        }
+
+        public static int[] GetDirectionVector(int[] coords1, int[] coords2)
+        {
+            return GetDirectionVector(new[]{
+                coords2[0] - coords1[0],
+                coords2[1] - coords1[0]
+            });
         }
 
         public static int GetDirectionByVector(int[] vector)
@@ -59,6 +67,11 @@ namespace LifeSimulation.myCs
             if (value < 0) return -1;
             if (value > 0) return 1;
             return 0;
+        }
+
+        public static bool CheckEqual(int[] vector1, int[] vector2)
+        {
+            return (vector1[0] == vector2[0]) && (vector1[1] == vector2[1]);
         }
     }
 }

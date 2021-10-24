@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using LifeSimulation.myCs.Settings;
 
-namespace LifeSimulation.myCs
+namespace LifeSimulation.myCs.Drawer
 {
     public class Drawer
     {
@@ -93,7 +94,7 @@ namespace LifeSimulation.myCs
             }
         }
 
-        public void Clear()
+        public void ClearList()
         {
             _updatingCells = new List<CellDrawer>();
         }
@@ -101,7 +102,7 @@ namespace LifeSimulation.myCs
         public void UpdateGraphics(Graphics graphics)
         {
             _graphics = graphics;
-            Clear();
+            ClearList();
         }
 
         public void AddCell(CellDrawer cell)

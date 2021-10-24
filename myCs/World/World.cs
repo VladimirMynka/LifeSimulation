@@ -1,38 +1,36 @@
 ﻿using System;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.Animals;
 using LifeSimulation.myCs.WorldObjects.Plants;
 
-namespace LifeSimulation.myCs
+namespace LifeSimulation.myCs.World
 {
     public class World
     {
-        private const int AnimalsNormalCount = 20000;
-        private const int PlantsNormalCount = 1000;
+        private const int AnimalsNormalCount = 2000;
+        private const int PlantsNormalCount = 500;
 
-        private Cell[][] _cells;
+        private readonly Cell[][] _cells;
         public readonly int Length;
         public readonly int Width;
         public static Random Random = new Random();
 
-        private Drawer _drawer;
-
-        public World(int length, int width, Drawer drawer)
+        public World(int length, int width, Drawer.Drawer drawer)
         {
             Length = length;
             Width = width;
             _cells = new Cell[length][];
-            _drawer = drawer;
 
             for (int i = 0; i < length; i++)
             {
                 _cells[i] = new Cell[width];
                 for (int j = 0; j < width; j++)
                 {
-                    _cells[i][j] = new Cell(this,
+                    _cells[i][j] = new Cell(
+                        this,
                         drawer,
-                        new[]{i, j}, 
-                        Random.Next(2), 
-                        false);
+                        new[]{i, j}
+                    );
 
                     int rand = Random.Next(length * width);
                     if (rand < AnimalsNormalCount) AddAnimal(i, j);
@@ -52,33 +50,13 @@ namespace LifeSimulation.myCs
         public void Update(bool updateAll)
         {
             foreach (var cellLine in _cells)
-                foreach (var cell in cellLine)
-                    cell.Update(updateAll);
-        }
-
-        private Cell GetRandomNotLockedCell()
-        {
-            var random = new Random();
-            int x = random.Next(_cells.Length);
-            int y = random.Next(_cells[1].Length);
-            bool isLocked = _cells[x][y].CheckLocked();
-            int i = 0;
-
-            while (isLocked && i < _cells.Length)
-            {
-                x = random.Next(_cells.Length);
-                y = random.Next(_cells[1].Length);
-                isLocked = _cells[x][y].CheckLocked();
-                i++;
-            }
-
-            return _cells[x][y];
+            foreach (var cell in cellLine)
+                cell.Update(updateAll);
         }
 
         private void AddAnimal(int x, int y)
         {
-            var randColor = Random.Next(Colors.Animal1Const, Colors.Animal3Const + 1);
-            new Animal(GetCell(x, y), randColor);
+            AnimalsSpawner.SpawnNormalAnimal(GetCell(x, y));
         }
 
         private void AddPlant(int x, int y)
@@ -88,22 +66,20 @@ namespace LifeSimulation.myCs
         
         public void AddPlant(Cell cell)
         {
-            var color = Colors.Plant1Const;
-            var isEatable = true;
-            var effect = Effect.None;
-            
-            if (Random.Next(0, 2) == 1)
+            switch (Random.Next(3))
             {
-                isEatable = false;
-                color = Colors.Tree1Const;
+                case 0:
+                    PlantsSpawner.SpawnNormalPlant(cell);
+                    return;
+                case 1:
+                    PlantsSpawner.SpawnPoisonousPlant(cell);
+                    return;
+                case 2:
+                    PlantsSpawner.SpawnUneatablePlant(cell);
+                    return;
+                default:
+                    return;
             }
-            else if (Random.Next(0, 2) == 1)
-            {
-                effect = Effect.Heart;
-                color = Colors.Poisonous1Const;
-            }
-            
-            new Plant(cell, color, isEatable, effect);
         }
 
     }

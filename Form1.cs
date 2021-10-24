@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using LifeSimulation.myCs;
+using LifeSimulation.myCs.Drawer;
+using LifeSimulation.myCs.World;
 
 namespace LifeSimulation
 {
@@ -12,7 +14,7 @@ namespace LifeSimulation
         private Graphics _graphics;
         private Drawer _drawer;
         private bool _updateAll = false;
-        private bool pause = false;
+        private bool _pause = false;
         public Form1()
         {
             InitializeComponent();
@@ -34,7 +36,7 @@ namespace LifeSimulation
 
         private void Update(object sender, EventArgs e)
         {
-            if (_world == null || pause) return;
+            if (_world == null || _pause) return;
             _graphics = Graphics.FromImage(_bitmap);
             _drawer.UpdateGraphics(_graphics);
             _world.Update(_updateAll);
@@ -104,14 +106,14 @@ namespace LifeSimulation
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (pause)
+            if (_pause)
             {
-                pause = false;
+                _pause = false;
                 button1.Text = "pause";
             }
             else
             {
-                pause = true;
+                _pause = true;
                 button1.Text = "play";
             }
         }
