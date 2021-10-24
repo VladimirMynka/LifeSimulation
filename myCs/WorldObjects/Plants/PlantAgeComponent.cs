@@ -8,7 +8,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         {
             ageStage = AgeStage.Child;
             transitionalAges = transAges;
-            if (transitionalAges.Length == 4) return;
+            if (transitionalAges != null && transitionalAges.Length == 4) return;
             transitionalAges = new int[4];
             transitionalAges[0] = Defaults.SeedPeriod;
             transitionalAges[1] = Defaults.PlantTeenagePeriod;
@@ -69,8 +69,6 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         
         private void GrowToAdult()
         {
-            if (worldObject.Cell.CurrentObjects[1] == null) 
-                worldObject.Cell.SetColor(worldObject.Color);
             if (_effect != Effect.Uneatable)
             {
                 worldObject.AddComponent(new EatableComponent(worldObject, MealType.Plant, _effect));
@@ -85,7 +83,6 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         private void GrowToDyingStage()
         {
             worldObject.Color = Colors.DiedPlant1Const;
-            if (worldObject.Cell.CurrentObjects[1] == null) worldObject.Cell.SetColor(worldObject.Color);
         }
     }
 }

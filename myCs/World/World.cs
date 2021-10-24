@@ -66,6 +66,11 @@ namespace LifeSimulation.myCs.World
         
         public void AddPlant(Cell cell)
         {
+            foreach (var wo in cell.CurrentObjects)
+            {
+                if (wo is Plant || wo is Fruit) return;
+            }
+            
             switch (Random.Next(3))
             {
                 case 0:

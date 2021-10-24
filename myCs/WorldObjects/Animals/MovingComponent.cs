@@ -47,7 +47,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private void Step()
         {
             var cell = GetCell(GetDirection());
-            GoToCell(cell);
+            if (cell != null) 
+                GoToCell(cell);
         }
 
         private Cell GetCell(int[] localCoords)

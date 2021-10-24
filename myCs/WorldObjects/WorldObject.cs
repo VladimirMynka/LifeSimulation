@@ -10,8 +10,11 @@ namespace LifeSimulation.myCs.WorldObjects
         public Cell Cell;
         protected internal World.World world;
         protected List<WorldObjectComponent> components;
+        private List<WorldObjectComponent> _removingComponents;
+        private List<WorldObjectComponent> _addingComponents;
 
         public bool evenCycle;
+        private bool _isDestroyed = false;
 
         protected WorldObject(Cell keeper, int newColor = 0)
         {
@@ -20,8 +23,10 @@ namespace LifeSimulation.myCs.WorldObjects
             world = keeper.World;
             evenCycle = false;
             components = new List<WorldObjectComponent>();
+            _removingComponents = new List<WorldObjectComponent>();
+            _addingComponents = new List<WorldObjectComponent>();
 
-            Cell.CurrentObjects.Add(this);
+            Cell.AddObject(this);
         }
         
         public void Start()
@@ -38,17 +43,30 @@ namespace LifeSimulation.myCs.WorldObjects
             foreach (var component in components)
             {
                 component.Update();
+                if (_isDestroyed) return;
+            }
+
+            foreach (var component in _removingComponents)
+            {
+                components.Remove(component);
+            }
+
+            foreach (var component in _addingComponents)
+            {
+                components.Add(component);
+                component.Start();
             }
         }
 
         public void Destroy()
         {
-            Cell.CurrentObjects.Remove(this);
-            Cell = null;
+            _isDestroyed = true;
             foreach (var component in components)
             {
                 component.Destroy();
             }
+            Cell.RemoveObject(this);
+            Cell = null;
         }
 
         public bool DestroyComponent<T>() where T : WorldObjectComponent
@@ -62,13 +80,12 @@ namespace LifeSimulation.myCs.WorldObjects
 
         public void AddComponent<T>(T component) where T : WorldObjectComponent
         {
-            components.Add(component);
-            component.Start();
+            _addingComponents.Add(component);
         }
 
-        public bool RemoveComponent<T>(T component) where T : WorldObjectComponent
+        public void RemoveComponent<T>(T component) where T : WorldObjectComponent
         {
-            return components.Remove(component);
+            _removingComponents.Add(component);
         }
         
         public T GetComponent<T>() where T : WorldObjectComponent

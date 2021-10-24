@@ -8,7 +8,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         {
             ageStage = AgeStage.Child;
             transitionalAges = transAges;
-            if (transitionalAges.Length == 2) return;
+            if (transitionalAges != null && transitionalAges.Length == 2) return;
             transitionalAges = new int[2];
             transitionalAges[0] = Defaults.FruitLivePeriod;
             transitionalAges[1] = Defaults.FruitRotAge;
@@ -58,9 +58,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         
         private void GrowToDyingStage()
         {
-            ageStage = AgeStage.Died;
             worldObject.Color = Colors.RotFruit1Const;
-            if (worldObject.Cell.CurrentObjects[1] == null) worldObject.Cell.SetColor(worldObject.Color);
         }
     }
 }

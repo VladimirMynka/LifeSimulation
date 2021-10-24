@@ -15,11 +15,11 @@
         
         public const int AnimalHealth = 100;
         public const int AnimalHealthRegeneration = 5;
-        public const int AnimalHealthDestruction = 3;
+        public const int AnimalHealthDestruction = 30;
         public const int AnimalSatiety = 100;
-        public const int AnimalSatietyDestruction = 1;
+        public const int AnimalSatietyDestruction = 20;
         public const int AnimalVisibleArea = 10;
-        public const int AnimalPlantProbability = 0;
+        public const int AnimalPlantProbability = 30;
 
         public const int AnimalNormalTicksToMating = 10;
         public const int TicksToStep = 1;

@@ -10,6 +10,8 @@ namespace LifeSimulation.myCs.World
         public readonly World World;
         public readonly int[] Coords;
         public List<WorldObject> CurrentObjects;
+        private List<WorldObject> _removingObjects;
+        private List<WorldObject> _addingObjects;
         private int _color;
         public int DefaultColor;
 
@@ -24,6 +26,8 @@ namespace LifeSimulation.myCs.World
             DefaultColor = color;
             _color = color;
             CurrentObjects = new List<WorldObject>();
+            _removingObjects = new List<WorldObject>();
+            _addingObjects = new List<WorldObject>();
             _drawer = drawer;
             evenCycle = false;
             
@@ -39,6 +43,22 @@ namespace LifeSimulation.myCs.World
                     worldObject.Update();
             }
 
+            foreach (var worldObject in _removingObjects)
+            {
+                CurrentObjects.Remove(worldObject);
+            }
+
+            foreach (var worldObject in _addingObjects)
+            {
+                CurrentObjects.Add(worldObject);
+            }
+            
+            if (_removingObjects.Count != 0 || _addingObjects.Count != 0)
+                UpdateColor();
+
+            _removingObjects.Clear();
+            _addingObjects.Clear();
+
             if (!updateInAnyKeys && !_wereUpdated) return;
             _drawer.AddCell(new CellDrawer(Coords[0], Coords[1], _color));
             _wereUpdated = false;
@@ -46,14 +66,12 @@ namespace LifeSimulation.myCs.World
 
         public void AddObject(WorldObject addingObject)
         {
-            CurrentObjects.Add(addingObject);
-            UpdateColor();
+            _addingObjects.Add(addingObject);
         }
 
         public void RemoveObject(WorldObject removingObject)
         {
-            CurrentObjects.Remove(removingObject);
-            UpdateColor();
+            _removingObjects.Add(removingObject);
         }
 
         private void UpdateColor()
@@ -78,8 +96,20 @@ namespace LifeSimulation.myCs.World
         public Cell GetRandomNeighbour()
         {
             var localCoords = Direction.GetRandomDirectionVector();
-            var neighCell = World.GetCell(localCoords[0] + Coords[0], localCoords[1] + Coords[1]);
-            return neighCell ?? World.GetCell(localCoords[0] - Coords[0], localCoords[1] - Coords[1]);
+            if (localCoords[0] == 0 && localCoords[1] == 0)
+                localCoords[0] = 1;
+            
+            var neighCell = World.GetCell(Coords[0] + localCoords[0], Coords[1] + localCoords[1]);
+            if (neighCell != null)
+                return neighCell;
+            neighCell = World.GetCell(Coords[0] - localCoords[0], Coords[1] - localCoords[1]);
+            if (neighCell != null)
+                return neighCell;
+            neighCell = World.GetCell(Coords[0] + localCoords[0], Coords[1] - localCoords[1]);
+            if (neighCell != null)
+                return neighCell;
+            neighCell = World.GetCell(Coords[0] - localCoords[0], Coords[1] + localCoords[1]);
+            return neighCell;
         }
     }
 }

@@ -51,6 +51,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         private bool TakePartnerFrom(Cell checkingCell)
         {
+            if (checkingCell == null) return false;
             foreach (var wo in checkingCell.CurrentObjects)
             {
                 var partner = wo.GetComponent<FemaleMatingComponent>();
