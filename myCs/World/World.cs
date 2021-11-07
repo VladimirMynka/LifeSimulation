@@ -2,13 +2,15 @@
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.Animals;
 using LifeSimulation.myCs.WorldObjects.Plants;
+using LifeSimulation.myCs.WorldObjects.Plants.Fruits;
+using LifeSimulation.myCs.WorldObjects.Plants.Plants;
 
 namespace LifeSimulation.myCs.World
 {
     public class World
     {
-        private const int AnimalsNormalCount = 2000;
-        private const int PlantsNormalCount = 500;
+        private const int AnimalsNormalCount = 3000;
+        private const int PlantsNormalCount = 1500;
 
         private readonly Cell[][] _cells;
         public readonly int Length;
@@ -47,11 +49,15 @@ namespace LifeSimulation.myCs.World
             return _cells[x][y];
         }
 
-        public void Update(bool updateAll)
+        public void Update(bool updateAll = false)
         {
             foreach (var cellLine in _cells)
-            foreach (var cell in cellLine)
-                cell.Update(updateAll);
+                foreach (var cell in cellLine)
+                    cell.Update();
+            
+            foreach (var cellLine in _cells)
+                foreach (var cell in cellLine)
+                    cell.AfterUpdate(updateAll);
         }
 
         private void AddAnimal(int x, int y)

@@ -1,10 +1,18 @@
-﻿using LifeSimulation.myCs.Settings;
+﻿using System.Drawing;
+using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Plants
+namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 {
     public class FruitAgeComponent : AgeComponent
     {
-        public FruitAgeComponent(WorldObject owner, Effect effect, int[] transAges = null) : base(owner)
+        private DrawableComponent _drawableComponent;
+        public FruitAgeComponent(
+            WorldObject owner, 
+            Effect effect, 
+            Image image,
+            int layer,
+            int[] transAges = null) : base(owner, effect, image, layer)
         {
             ageStage = AgeStage.Child;
             transitionalAges = transAges;
@@ -17,9 +25,10 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         public override void Start()
         {
             base.Start();
-            if (_effect != Effect.Uneatable)
+            _drawableComponent = new DrawableComponent(WorldObject, image, layer);
+            if (effect != Effect.Uneatable)
             {
-                WorldObject.AddComponent(new EatableComponent(WorldObject, MealType.Plant, _effect));
+                WorldObject.AddComponent(new EatableComponent(WorldObject, MealType.Plant, effect));
             }
         }
 
@@ -30,7 +39,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
                 GrowToDyingStage();
         }
 
-        protected override int getStageIndex(AgeStage stage)
+        protected override int GetStageIndex(AgeStage stage)
         {
             switch (stage)
             {
@@ -43,7 +52,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
             }
         }
 
-        protected override AgeStage getAgeStageByIndex(int index)
+        protected override AgeStage GetAgeStageByIndex(int index)
         {
             switch (index)
             {
@@ -58,7 +67,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         
         private void GrowToDyingStage()
         {
-            WorldObject.Color = Colors.RotFruit1Const;
+            //WorldObject.Color = Colors.RotFruit1Const;
         }
     }
 }

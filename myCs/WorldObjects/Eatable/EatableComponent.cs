@@ -1,6 +1,7 @@
 ﻿using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.Animals;
 
-namespace LifeSimulation.myCs.WorldObjects
+namespace LifeSimulation.myCs.WorldObjects.Eatable
 {
     public class EatableComponent : WorldObjectComponent
     {

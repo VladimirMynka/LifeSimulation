@@ -1,8 +1,8 @@
-﻿using System.Drawing;
-using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.World;
+﻿using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.Animals.Moving;
+using LifeSimulation.myCs.WorldObjects.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Animals
+namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 {
     public class FemaleMatingComponent : MatingComponent
     {

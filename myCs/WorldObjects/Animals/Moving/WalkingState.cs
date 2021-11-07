@@ -1,4 +1,4 @@
-﻿namespace LifeSimulation.myCs.WorldObjects.Animals
+﻿namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
 {
     public enum WalkingState
     {

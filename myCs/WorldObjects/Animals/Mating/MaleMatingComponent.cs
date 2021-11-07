@@ -1,7 +1,8 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldObjects.Animals.Moving;
 
-namespace LifeSimulation.myCs.WorldObjects.Animals
+namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 {
     public class MaleMatingComponent : MatingComponent
     {

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using LifeSimulation.myCs.Settings;
+﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
 
-namespace LifeSimulation.myCs.WorldObjects.Animals
+namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
 {
     public class MovingComponent : WorldObjectComponent
     {
         private int _ticksToStep;
         public int Pace;
         public int RunPace;
-        private Stack<int[]> _targets;
         private WorldObject _target;
 
         private Cell _cell;
@@ -29,7 +26,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             _ticksToStep = Defaults.TicksToStep;
             Pace = Defaults.TicksToStep;
             RunPace = Pace / 2;
-            _targets = new Stack<int[]>();
             _walkingState = walkingState;
             _movingToTargetState = movingState;
         }
@@ -44,9 +40,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             base.Update();
             TryStep();
-            if (_target == null) return;
-            _targets.Clear();
-            _targets.Push(_target.Cell.Coords);
         }
 
         private void TryStep()
@@ -96,41 +89,31 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private void UpdateTickWhenSlowDown()
         {
             _ticksToStep = --_lastPace;
-            if (_ticksToStep <= Pace)
-            {
-                _speedState = SpeedState.Walk;
-                _ticksToStep = Pace;
-            }
+            if (_ticksToStep > Pace) 
+                return;
+            _speedState = SpeedState.Walk;
+            _ticksToStep = Pace;
         }
         
         private void UpdateTickWhenSlowUp()
         {
             _ticksToStep = ++_lastPace;
-            if (_ticksToStep >= RunPace)
-            {
-                _speedState = SpeedState.Run;
-                _ticksToStep = Pace;
-            }
+            if (_ticksToStep < RunPace)
+                return;
+            _speedState = SpeedState.Run;
+            _ticksToStep = Pace;
         }
 
         private void Step()
         {
+            DeleteTargetIfAchieved();
+
             var direction = GetDirection();
             var cell = GetCell(direction);
             if (cell == null) 
                 return;
             GoToCell(cell);
             _lastDirection = direction;
-            if (_targets.Count != 0 && CheckTargetAchieved())
-            {
-                _targets.Pop();
-                if (_targets.Count == 0) _speedState = SpeedState.SlowDown;
-            }
-
-            if (CheckDynamicTargetAchieved())
-            {
-                _target = null;
-            }
         }
 
         private Cell GetCell(int[] localCoords)
@@ -143,9 +126,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         private int[] GetDirection()
         {
-            if (_targets.Count != 0)
-                return GetDirectionToTarget();
-            return GetRandomDirection();
+            return _target != null ? GetDirectionToTarget() : GetRandomDirection();
         }
 
         private int[] GetDirectionToTarget()
@@ -153,9 +134,9 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             switch (_movingToTargetState)
             {
                 case MovingToTargetState.OrthogonalMoving:
-                    return Direction.GetOrthogonalDirection(_cell.Coords, _targets.Peek());
+                    return Direction.GetOrthogonalDirection(_cell.Coords, _target.Cell.Coords);
                 default:
-                    return Direction.GetDirectionVector(_cell.Coords, _targets.Peek());
+                    return Direction.GetDirectionVector(_cell.Coords, _target.Cell.Coords);
             }
         }
 
@@ -216,14 +197,20 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             return direction;
         }
 
-        public bool CheckTargetAchieved()
+        public void DeleteTargetIfAchieved()
         {
-            return _targets.Count != 0 && Direction.CheckEqual(WorldObject.Cell.Coords, _targets.Peek());
+            if (!CheckTargetMustBeDeleted())
+                return;
+            _target = null;
+            _speedState = SpeedState.SlowDown;
         }
         
-        public bool CheckDynamicTargetAchieved()
+        public bool CheckTargetMustBeDeleted()
         {
-            return (_target != null && Direction.CheckEqual(WorldObject.Cell.Coords, _target.Cell.Coords));
+            if (_target == null) 
+                return false;
+            return _target.Cell == null || 
+                   Direction.CheckEqual(WorldObject.Cell.Coords, _target.Cell.Coords);
         }
 
         private void GoAway()
@@ -235,23 +222,14 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             GoAway();
             WorldObject.Cell = cell;
+            _cell = cell;
             cell.AddObject(WorldObject);
         }
 
         public void SetTarget(WorldObject target, bool targetIsDynamic)
         {
-            if (targetIsDynamic)
-            {
                 _target = target;
                 _speedState = SpeedState.SlowUp;
-            }
-            else
-                BuildRoute(target.Cell);
-        }
-
-        private void BuildRoute(Cell targetCell)
-        {
-            _targets.Push(targetCell.Coords);
         }
     }
 }

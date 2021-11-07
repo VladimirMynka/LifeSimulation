@@ -6,7 +6,6 @@ namespace LifeSimulation.myCs.WorldObjects
 {
     public abstract class WorldObject
     {
-        public int Color;
         public Cell Cell;
         protected internal World.World world;
         protected List<WorldObjectComponent> components;
@@ -16,9 +15,8 @@ namespace LifeSimulation.myCs.WorldObjects
         public bool evenCycle;
         private bool _isDestroyed = false;
 
-        protected WorldObject(Cell keeper, int newColor = 0)
+        protected WorldObject(Cell keeper)
         {
-            Color = newColor;
             Cell = keeper;
             world = keeper.World;
             evenCycle = false;
@@ -96,11 +94,6 @@ namespace LifeSimulation.myCs.WorldObjects
                     return component as T;
             }
             return null;
-        }
-
-        public int GetColor()
-        {
-            return Color;
         }
     }
 }

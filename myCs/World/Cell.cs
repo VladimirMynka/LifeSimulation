@@ -1,40 +1,35 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using LifeSimulation.myCs.Drawer;
+﻿using System;
+using System.Collections.Generic;
 using LifeSimulation.myCs.WorldObjects;
 
 namespace LifeSimulation.myCs.World
 {
-    public class Cell
+    public class Cell : IComparable
     {
         public readonly World World;
         public readonly int[] Coords;
         public List<WorldObject> CurrentObjects;
-        private List<WorldObject> _removingObjects;
-        private List<WorldObject> _addingObjects;
-        private int _color;
-        public int DefaultColor;
+        private readonly List<WorldObject> _removingObjects;
+        private readonly List<WorldObject> _addingObjects;
 
-        private readonly Drawer.Drawer _drawer;
+        public readonly Drawer.Drawer Drawer;
         public bool evenCycle;
         private bool _wereUpdated;
 
-        public Cell(World world, Drawer.Drawer drawer, int[] coords, int color = 0)
+        public Cell(World world, Drawer.Drawer drawer, int[] coords)
         {
             World = world;
             Coords = coords;
-            DefaultColor = color;
-            _color = color;
             CurrentObjects = new List<WorldObject>();
             _removingObjects = new List<WorldObject>();
             _addingObjects = new List<WorldObject>();
-            _drawer = drawer;
+            Drawer = drawer;
             evenCycle = false;
             
-            drawer.AddCell(new CellDrawer(Coords[0], Coords[1], color));
+            drawer.AddCell(this);
         }
 
-        public void Update(bool updateInAnyKeys)
+        public void Update()
         {
             evenCycle = !evenCycle;
             foreach (var worldObject in CurrentObjects)
@@ -42,26 +37,32 @@ namespace LifeSimulation.myCs.World
                 if (evenCycle == worldObject.evenCycle)
                     worldObject.Update();
             }
+            ApplyChanges();
+        }
 
+        public void AfterUpdate(bool updateInAnyKeys)
+        {
+            if (!updateInAnyKeys && !_wereUpdated) return;
+            Drawer.AddCell(this);
+            _wereUpdated = false;
+        }
+
+        public void ApplyChanges()
+        {
             foreach (var worldObject in _removingObjects)
             {
                 CurrentObjects.Remove(worldObject);
             }
-
             foreach (var worldObject in _addingObjects)
             {
                 CurrentObjects.Add(worldObject);
             }
             
             if (_removingObjects.Count != 0 || _addingObjects.Count != 0)
-                UpdateColor();
+                _wereUpdated = true;
 
             _removingObjects.Clear();
             _addingObjects.Clear();
-
-            if (!updateInAnyKeys && !_wereUpdated) return;
-            _drawer.AddCell(new CellDrawer(Coords[0], Coords[1], _color));
-            _wereUpdated = false;
         }
 
         public void AddObject(WorldObject addingObject)
@@ -73,26 +74,7 @@ namespace LifeSimulation.myCs.World
         {
             _removingObjects.Add(removingObject);
         }
-
-        private void UpdateColor()
-        {
-            if (CurrentObjects.Count == 0)
-                ThrowOffColor();
-            else 
-                SetColor(CurrentObjects.Last().Color);
-        }
-
-        public void SetColor(int color)
-        {
-            _color = color;
-            _wereUpdated = true;
-        }
         
-        public void ThrowOffColor()
-        {
-            SetColor(DefaultColor);
-        }
-
         public Cell GetRandomNeighbour()
         {
             var localCoords = Direction.GetRandomDirectionVector();
@@ -110,6 +92,24 @@ namespace LifeSimulation.myCs.World
                 return neighCell;
             neighCell = World.GetCell(Coords[0] - localCoords[0], Coords[1] + localCoords[1]);
             return neighCell;
+        }
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+
+            var otherCell = obj as Cell;
+            if (otherCell == null) 
+                throw new ArgumentException("Object is not a Cell");
+            for (var i = 0; i < 2; i++)
+            {
+                if (this.Coords[i] > otherCell.Coords[i])
+                    return 1;
+                else if (this.Coords[i] < otherCell.Coords[i])
+                    return -1;
+            }
+            return 0;
         }
     }
 }

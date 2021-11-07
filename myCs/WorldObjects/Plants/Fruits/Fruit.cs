@@ -1,14 +1,21 @@
-﻿using LifeSimulation.myCs.Settings;
+﻿using System.Drawing;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldObjects.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Plants
+namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 {
     public class Fruit : WorldObject
     {
-        public Fruit(Cell keeper, Effect effect = Effect.None, int color = Colors.NormalFruit1Const, int[] transAges = null) 
-            : base(keeper, color)
+        public Fruit(
+            Cell keeper, 
+            Image image,
+            int layer,
+            Effect effect = Effect.None,
+            int[] transAges = null) 
+            : base(keeper)
         {
-            components.Add(new FruitAgeComponent(this, effect, transAges));
+            components.Add(new FruitAgeComponent(this, effect, image, layer, transAges));
             components.Add(new RotComponent(this));
             Start();
         }

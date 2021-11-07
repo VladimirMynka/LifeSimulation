@@ -1,7 +1,7 @@
-﻿using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.Plants;
+﻿using LifeSimulation.myCs.WorldObjects.Eatable;
+using LifeSimulation.myCs.WorldObjects.Plants.Plants;
 
-namespace LifeSimulation.myCs.WorldObjects
+namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 {
     public class RotComponent : WorldObjectComponent
     {

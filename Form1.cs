@@ -52,7 +52,7 @@ namespace LifeSimulation
                 var newSize = int.Parse(pixelSizeInput.Text);
                 if (newSize <= 0) return;
                 _drawer.PixelSize = newSize;
-                _drawer.ConfigureOffsets();
+                _drawer.DrawOffsets();
                 _updateAll = true;
             }
             catch
@@ -67,7 +67,7 @@ namespace LifeSimulation
             {
                 if (offsetLeftInput.Text == "") return;
                 _drawer.OffsetLeft = Convert.ToInt32(offsetLeftInput.Text);
-                _drawer.ConfigureOffsets();
+                _drawer.DrawOffsets();
                 _updateAll = true;
             }
             catch
@@ -82,7 +82,7 @@ namespace LifeSimulation
             {
                 if (offsetTopInput.Text == "") return;
                 _drawer.OffsetTop = Convert.ToInt32(offsetTopInput.Text);
-                _drawer.ConfigureOffsets();
+                _drawer.DrawOffsets();
                 _updateAll = true;
             }
             catch

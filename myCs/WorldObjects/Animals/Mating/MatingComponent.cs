@@ -1,7 +1,7 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
 
-namespace LifeSimulation.myCs.WorldObjects.Animals
+namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 {
     public abstract class MatingComponent : WorldObjectComponent
     {

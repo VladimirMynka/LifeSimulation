@@ -3,6 +3,8 @@ using System.Linq;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects.Plants;
+using LifeSimulation.myCs.WorldObjects.Plants.Fruits;
+using LifeSimulation.myCs.WorldObjects.Plants.Plants;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals
 {

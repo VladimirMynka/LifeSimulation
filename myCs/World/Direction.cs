@@ -14,6 +14,9 @@ namespace LifeSimulation.myCs.World
         public const int Bottom = 7;
         public const int BottomRight = 8;
 
+        private static readonly int[][] Vectors = new int[9][];
+        
+
         public static int GetRandomDirection()
         {
             return World.Random.Next(9);
@@ -26,7 +29,8 @@ namespace LifeSimulation.myCs.World
 
         public static int[] GetDirectionVector(int direction)
         {
-            return new[]{direction / 3 - 1, direction % 3 - 1};
+            return Vectors[direction] ?? 
+                   (Vectors[direction] = new[]{direction / 3 - 1, direction % 3 - 1});
         }
 
         public static int[] GetDirectionVector(int[] vector)

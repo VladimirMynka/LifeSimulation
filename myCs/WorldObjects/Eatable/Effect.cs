@@ -1,4 +1,4 @@
-﻿namespace LifeSimulation.myCs.WorldObjects
+﻿namespace LifeSimulation.myCs.WorldObjects.Eatable
 {
     public enum Effect
     {

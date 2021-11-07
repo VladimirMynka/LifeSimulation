@@ -1,8 +1,9 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
-using LifeSimulation.myCs.WorldObjects.Animals;
+using LifeSimulation.myCs.WorldObjects.Animals.Moving;
+using LifeSimulation.myCs.WorldObjects.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects
+namespace LifeSimulation.myCs.WorldObjects.Animals
 {
     public class EaterComponent : WorldObjectComponent
     {
@@ -131,7 +132,8 @@ namespace LifeSimulation.myCs.WorldObjects
             if (MealType != MealType.AllTypes && meal.MealType == MealType) 
                 return false;
             var eater = meal.GetComponent<EaterComponent>();
-            return eater == null || eater.MealType != MealType;
+            return 
+                eater == null || eater.MealType != MealType;
         }
 
         private EatableComponent GetMeal()

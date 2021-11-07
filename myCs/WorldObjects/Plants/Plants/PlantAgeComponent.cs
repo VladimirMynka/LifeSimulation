@@ -1,13 +1,23 @@
-﻿using LifeSimulation.myCs.Settings;
+﻿using System.Drawing;
+using LifeSimulation.myCs.Drawer;
+using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Plants
+namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
 {
     public class PlantAgeComponent : AgeComponent
     {
-        public PlantAgeComponent(WorldObject owner, Effect effect, int[] transAges = null) : base(owner)
+        private DrawableComponent _drawableComponent;
+        public PlantAgeComponent(
+            WorldObject owner, 
+            Effect effect, 
+            Image image,
+            int layer,
+            int[] transAges = null) : base(owner, effect, image, layer)
         {
             ageStage = AgeStage.Child;
             transitionalAges = transAges;
+
             if (transitionalAges != null && transitionalAges.Length == 4) return;
             transitionalAges = new int[4];
             transitionalAges[0] = Defaults.SeedPeriod;
@@ -33,7 +43,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
             }
         }
 
-        protected override int getStageIndex(AgeStage stage)
+        protected override int GetStageIndex(AgeStage stage)
         {
             switch (stage)
             {
@@ -50,7 +60,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
             }
         }
 
-        protected override AgeStage getAgeStageByIndex(int index)
+        protected override AgeStage GetAgeStageByIndex(int index)
         {
             switch (index)
             {
@@ -69,9 +79,11 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         
         private void GrowToAdult()
         {
-            if (_effect != Effect.Uneatable)
+            _drawableComponent = new DrawableComponent(WorldObject, image, layer);
+            WorldObject.AddComponent(_drawableComponent);
+            if (effect != Effect.Uneatable)
             {
-                WorldObject.AddComponent(new EatableComponent(WorldObject, MealType.Plant, _effect));
+                WorldObject.AddComponent(new EatableComponent(WorldObject, MealType.Plant, effect));
             }
         }
         
@@ -82,7 +94,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants
         
         private void GrowToDyingStage()
         {
-            WorldObject.Color = Colors.DiedPlant1Const;
+            _drawableComponent.Image = Pictures.Plant;
         }
     }
 }

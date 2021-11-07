@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldObjects.Animals.Mating;
+using LifeSimulation.myCs.WorldObjects.Animals.Moving;
+using LifeSimulation.myCs.WorldObjects.Eatable;
 using LifeSimulation.myCs.WorldObjects.Plants;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals
@@ -10,13 +14,16 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
     {
         public Animal(
             Cell keeper,
-            int color = Colors.Animal1Const,
+            Image image,
+            int layer = 0,
             MealType mealType = MealType.AllTypes,
             bool isMale = true,
             int maxHealth = Defaults.AnimalHealth,
             int maxSatiety = Defaults.AnimalSatiety
-        ) : base(keeper, color)
+            
+        ) : base(keeper)
         {
+            components.Add(new DrawableComponent(this, image, layer));
             components.Add(new MovingComponent(this));
             components.Add(new HealthComponent(this, maxHealth));
             components.Add(new EaterComponent(this, mealType, maxSatiety));

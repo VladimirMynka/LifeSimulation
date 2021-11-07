@@ -52,8 +52,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="myCs\Drawer\CellDrawer.cs" />
+    <Compile Include="myCs\Drawer\ObjectDrawer.cs" />
     <Compile Include="myCs\Drawer\Drawer.cs" />
+    <Compile Include="myCs\Drawer\Pictures.cs" />
     <Compile Include="myCs\Settings\Colors.cs" />
     <Compile Include="myCs\Settings\Defaults.cs" />
     <Compile Include="myCs\WorldObjects\AgeStage.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="myCs\WorldObjects\Animals\Moving\SpeedState.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Moving\WalkingState.cs" />
     <Compile Include="myCs\WorldObjects\Animals\PlanterComponent.cs" />
+    <Compile Include="myCs\WorldObjects\DrawableComponent.cs" />
     <Compile Include="myCs\WorldObjects\Eatable\EatableComponent.cs" />
     <Compile Include="myCs\WorldObjects\Eatable\Effect.cs" />
     <Compile Include="myCs\WorldObjects\Eatable\MealType.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="myCs\WorldObjects\Plants\Plants\PlantAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plants\PlantReproducerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plants\PlantsSpawner.cs" />
+    <Compile Include="myCs\WorldObjects\Smells\Smell.cs" />
     <Compile Include="myCs\WorldObjects\WorldObjectComponent.cs" />
     <Compile Include="myCs\WorldObjects\WorldObject.cs" />
     <Compile Include="myCs\World\Cell.cs" />
@@ -116,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="sources\pictures\animal.png" />
+    <Content Include="sources\pictures\fruit.png" />
+    <Content Include="sources\pictures\plant.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
