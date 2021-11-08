@@ -8,11 +8,18 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
     {
         public MaleMatingComponent Partner;
         private MovingComponent _moving;
+        private bool _byEggs;
+        private int _pregnantPeriod;
         
-        public FemaleMatingComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) 
+        public FemaleMatingComponent(
+            WorldObject owner, 
+            int ticksToMating = Defaults.AnimalNormalTicksToMating,
+            bool byEggs = true,
+            int pregnantPeriod = Defaults.PregnantPeriod) 
             : base(owner, ticksToMating)
         {
-            
+            _byEggs = byEggs;
+            _pregnantPeriod = pregnantPeriod;
         }
 
         public override void Start()
@@ -41,7 +48,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 
         private void BecomePregnant()
         {
-            WorldObject.AddComponent(new PregnantComponent(WorldObject));
+            WorldObject.AddComponent(new PregnantComponent(WorldObject, _pregnantPeriod, _byEggs));
         }
     }
 }

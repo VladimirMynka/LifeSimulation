@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using LifeSimulation.myCs.Settings;
+﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 using LifeSimulation.myCs.WorldObjects.Plants.Fruits;
@@ -31,8 +30,13 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             if (World.World.Random.Next(100) > Defaults.ReproduceChance) return;
 
             var neighCell = WorldObject.Cell.GetRandomNeighbour();
-            if (neighCell.CurrentObjects.Any(neighObject => neighObject is Plant || neighObject is Fruit))
-                return;
+            foreach (var neighObject in neighCell.CurrentObjects)
+            {
+                if (neighObject is Plant || neighObject is Fruit)
+                {
+                    return;
+                }
+            }
 
             if (World.World.Random.Next(2) == 0)
                 SpawnPlant(neighCell);

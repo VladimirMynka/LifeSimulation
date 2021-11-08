@@ -60,8 +60,12 @@
     <Compile Include="myCs\WorldObjects\AgeStage.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animal.cs" />
     <Compile Include="myCs\WorldObjects\AgeComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\AnimalAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\AnimalSpawner.cs" />
     <Compile Include="myCs\WorldObjects\Animals\EaterComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Egg.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\EggComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\EggsSpawner.cs" />
     <Compile Include="myCs\WorldObjects\Animals\HealthComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Mating\FemaleMatingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Mating\MaleMatingComponent.cs" />
@@ -72,6 +76,8 @@
     <Compile Include="myCs\WorldObjects\Animals\Moving\SpeedState.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Moving\WalkingState.cs" />
     <Compile Include="myCs\WorldObjects\Animals\PlanterComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\RotMeat.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\RotMeatComponent.cs" />
     <Compile Include="myCs\WorldObjects\DrawableComponent.cs" />
     <Compile Include="myCs\WorldObjects\Eatable\EatableComponent.cs" />
     <Compile Include="myCs\WorldObjects\Eatable\Effect.cs" />
@@ -119,9 +125,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="sources\pictures\animal.png" />
+    <Content Include="sources\pictures\dead-plant.png" />
+    <Content Include="sources\pictures\egg.png" />
     <Content Include="sources\pictures\fruit.png" />
+    <Content Include="sources\pictures\herbivore.png" />
+    <Content Include="sources\pictures\meat.png" />
+    <Content Include="sources\pictures\omnivore.png" />
     <Content Include="sources\pictures\plant.png" />
+    <Content Include="sources\pictures\poisonous-plant.png" />
+    <Content Include="sources\pictures\predator.png" />
+    <Content Include="sources\pictures\scavenger.png" />
+    <Content Include="sources\pictures\uneatable-plant.png" />
+
+
+
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

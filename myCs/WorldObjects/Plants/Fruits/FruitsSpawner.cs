@@ -1,5 +1,4 @@
 ﻿using LifeSimulation.myCs.Drawer;
-using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 

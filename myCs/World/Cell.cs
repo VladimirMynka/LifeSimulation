@@ -42,7 +42,8 @@ namespace LifeSimulation.myCs.World
 
         public void AfterUpdate(bool updateInAnyKeys)
         {
-            if (!updateInAnyKeys && !_wereUpdated) return;
+            if (!updateInAnyKeys && !_wereUpdated) 
+                return;
             Drawer.AddCell(this);
             _wereUpdated = false;
         }
@@ -73,6 +74,11 @@ namespace LifeSimulation.myCs.World
         public void RemoveObject(WorldObject removingObject)
         {
             _removingObjects.Add(removingObject);
+        }
+
+        public void ReportAboutUpdating()
+        {
+            _wereUpdated = true;
         }
         
         public Cell GetRandomNeighbour()

@@ -41,7 +41,7 @@ namespace LifeSimulation.myCs.Drawer
 
         private void UpdateCell(Cell cell)
         {
-            Fill(cell.Coords[0], cell.Coords[1], Color.Khaki);
+            Fill(cell.Coords[0], cell.Coords[1], Brushes.Khaki);
             var drawables = GetDrawables(cell);
             drawables.Sort();
             DrawObjects(drawables, cell.Coords[0], cell.Coords[1]);
@@ -61,10 +61,10 @@ namespace LifeSimulation.myCs.Drawer
                 DrawPicture(x, y, drawable.Image);
         }
 
-        private void Fill(int x, int y, Color color)
+        private void Fill(int x, int y, Brush color)
         {
             _graphics.FillRectangle(
-                new SolidBrush(color), 
+                color, 
                 new Rectangle(
                     PixelSize * (x - OffsetLeft),
                     PixelSize * (y - OffsetTop),
@@ -72,7 +72,6 @@ namespace LifeSimulation.myCs.Drawer
                     PixelSize
                     )
                 );
-            
         }
 
         private void DrawPicture(int x, int y, Image image)
@@ -85,7 +84,8 @@ namespace LifeSimulation.myCs.Drawer
                     PixelSize,
                     PixelSize
                 )
-            );        }
+            );        
+        }
 
         public void DrawOffsets()
         {

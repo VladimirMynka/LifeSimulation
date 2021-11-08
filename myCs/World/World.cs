@@ -1,7 +1,5 @@
 ﻿using System;
-using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.Animals;
-using LifeSimulation.myCs.WorldObjects.Plants;
 using LifeSimulation.myCs.WorldObjects.Plants.Fruits;
 using LifeSimulation.myCs.WorldObjects.Plants.Plants;
 

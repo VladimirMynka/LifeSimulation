@@ -7,11 +7,22 @@ namespace LifeSimulation.myCs.Drawer
     {
         private static readonly string Path = Directory.GetCurrentDirectory() + @"\..\..\sources\pictures\";
         
-        public static Image Animal = Image.FromFile(Path + "animal.png");
+        public static Image Herbivore = Image.FromFile(Path + "herbivore.png");
+        public static Image Predator = Image.FromFile(Path + "predator.png");
+        public static Image Omnivore = Image.FromFile(Path + "omnivore.png");
+        public static Image Scavenger = Image.FromFile(Path + "scavenger.png");
+        public static Image Meat = Image.FromFile(Path + "meat.png");
+        public static Image Egg = Image.FromFile(Path + "egg.png");
+
         public static Image Plant = Image.FromFile(Path + "plant.png");
+        public static Image UneatablePlant = Image.FromFile(Path + "uneatable-plant.png");
+        public static Image PoisonousPlant = Image.FromFile(Path + "poisonous-plant.png");
+        public static Image DeadPlant = Image.FromFile(Path + "dead-plant.png");
+
         public static Image Fruit = Image.FromFile(Path + "fruit.png");
 
-        public static Color AnimalColor = GetAverage(Animal);
+
+        public static Color AnimalColor = GetAverage(Omnivore);
         public static Color PlantColor = GetAverage(Plant);
         public static Color FruitColor = GetAverage(Fruit);
         public static Color NoneColor = Color.Black;
@@ -21,7 +32,7 @@ namespace LifeSimulation.myCs.Drawer
             switch (name)
             {
                 case "Animal":
-                    return Animal;
+                    return Omnivore;
                 case "Plant":
                     return Plant;
                 case "Fruit":

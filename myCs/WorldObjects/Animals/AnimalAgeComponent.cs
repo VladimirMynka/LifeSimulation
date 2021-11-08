@@ -1,45 +1,42 @@
 ﻿using System.Drawing;
-using LifeSimulation.myCs.Drawer;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldObjects.Animals.Mating;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
+namespace LifeSimulation.myCs.WorldObjects.Animals
 {
-    public class FruitAgeComponent : AgeComponent
+    public class AnimalAgeComponent : AgeComponent
     {
-        private DrawableComponent _drawableComponent;
-        public FruitAgeComponent(
+        private readonly bool _isMale;
+        
+        public AnimalAgeComponent(
             WorldObject owner, 
             Effect effect, 
+            bool isMale,
             Image image,
             int layer,
             int[] transAges = null) : base(owner, effect, image, layer)
         {
+            _isMale = isMale;
             ageStage = AgeStage.Child;
             transitionalAges = transAges;
+
             if (transitionalAges != null && transitionalAges.Length == 2) return;
             transitionalAges = new int[2];
-            transitionalAges[0] = Defaults.FruitLivePeriod;
-            transitionalAges[1] = Defaults.FruitRotAge;
-        }
-
-        public override void Start()
-        {
-            base.Start();
-            _drawableComponent = new DrawableComponent(WorldObject, image, layer);
-            if (effect != Effect.Uneatable)
-            {
-                WorldObject.AddComponent(new EatableComponent(WorldObject, MealType.Plant, effect));
-            }
-            WorldObject.Cell.ReportAboutUpdating();
+            transitionalAges[0] = Defaults.AnimalTeenagePeriod;
+            transitionalAges[1] = Defaults.AnimalDiedAge;
         }
 
         protected override void NextStage()
         {
             base.NextStage();
-            if (ageStage == AgeStage.Died)
-                GrowToDyingStage();
+            switch (ageStage)
+            {
+                case AgeStage.Mother:
+                    GrowToMother();
+                    return;
+            }
         }
 
         protected override int GetStageIndex(AgeStage stage)
@@ -48,8 +45,10 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
             {
                 case AgeStage.Adult:
                     return 0;
-                case AgeStage.Died:
+                case AgeStage.Mother:
                     return 1;
+                case AgeStage.Died:
+                    return 2;
                 default:
                     return 0;
             }
@@ -62,17 +61,26 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
                 case 0:
                     return AgeStage.Adult;
                 case 1:
+                    return AgeStage.Mother;
+                case 2:
                     return AgeStage.Died;
                 default:
                     return AgeStage.Adult;
             }
         }
-        
-        private void GrowToDyingStage()
+
+        private void GrowToMother()
         {
-            _drawableComponent.Image = Pictures.Fruit;
-            if (WorldObject != null && WorldObject.Cell != null)
-                WorldObject.Cell.ReportAboutUpdating();
+            if (_isMale)
+                WorldObject.AddComponent(new MaleMatingComponent(WorldObject));
+            else 
+                WorldObject.AddComponent(new FemaleMatingComponent(WorldObject));
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            new RotMeat(WorldObject.Cell, image, layer);
         }
     }
 }

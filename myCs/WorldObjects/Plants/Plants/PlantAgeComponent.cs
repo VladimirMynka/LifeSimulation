@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Drawer;
 using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
@@ -8,6 +9,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
     public class PlantAgeComponent : AgeComponent
     {
         private DrawableComponent _drawableComponent;
+        private EatableComponent _eatableComponent;
         public PlantAgeComponent(
             WorldObject owner, 
             Effect effect, 
@@ -22,8 +24,8 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             transitionalAges = new int[4];
             transitionalAges[0] = Defaults.SeedPeriod;
             transitionalAges[1] = Defaults.PlantTeenagePeriod;
-            transitionalAges[2] = Defaults.PlantRotAge;
-            transitionalAges[3] = Defaults.PlantDieAge;
+            transitionalAges[2] = Defaults.PlantDieAge;
+            transitionalAges[3] = Defaults.PlantRotAge;
         }
 
         protected override void NextStage()
@@ -83,8 +85,10 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             WorldObject.AddComponent(_drawableComponent);
             if (effect != Effect.Uneatable)
             {
-                WorldObject.AddComponent(new EatableComponent(WorldObject, MealType.Plant, effect));
+                _eatableComponent = new EatableComponent(WorldObject, MealType.Plant, effect);
+                WorldObject.AddComponent(_eatableComponent);
             }
+            WorldObject.Cell.ReportAboutUpdating();
         }
         
         private void GrowToMother()
@@ -94,7 +98,13 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
         
         private void GrowToDyingStage()
         {
-            _drawableComponent.Image = Pictures.Plant;
+            _drawableComponent.Image = Pictures.DeadPlant;
+            if (effect != Effect.Uneatable)
+            {
+                WorldObject.RemoveComponent(_eatableComponent);
+            }
+            if (WorldObject != null && WorldObject.Cell != null)
+                WorldObject.Cell.ReportAboutUpdating();
         }
     }
 }

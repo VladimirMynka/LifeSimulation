@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using LifeSimulation.myCs.World;
 
 namespace LifeSimulation.myCs.WorldObjects
@@ -9,8 +8,8 @@ namespace LifeSimulation.myCs.WorldObjects
         public Cell Cell;
         protected internal World.World world;
         protected List<WorldObjectComponent> components;
-        private List<WorldObjectComponent> _removingComponents;
-        private List<WorldObjectComponent> _addingComponents;
+        private readonly List<WorldObjectComponent> _removingComponents;
+        private readonly List<WorldObjectComponent> _addingComponents;
 
         public bool evenCycle;
         private bool _isDestroyed = false;
