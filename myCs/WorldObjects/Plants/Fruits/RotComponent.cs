@@ -1,20 +1,13 @@
-﻿using LifeSimulation.myCs.WorldObjects.Eatable;
-using LifeSimulation.myCs.WorldObjects.Plants.Plants;
+﻿using LifeSimulation.myCs.WorldObjects.Plants.Plants;
 
 namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 {
     public class RotComponent : WorldObjectComponent
     {
-        private EatableComponent _eatableComponent;
-        public RotComponent(WorldObject owner) : base(owner)
+        private readonly CreatureType _creatureType;
+        public RotComponent(WorldObject owner, CreatureType creatureType) : base(owner)
         {
-            
-        }
-
-        public override void Start()
-        {
-            base.Start();
-            _eatableComponent = WorldObject.GetComponent<EatableComponent>();
+            _creatureType = creatureType;
         }
 
         protected override void OnDestroy()
@@ -24,12 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 
         private void SpawnPlant()
         {
-            if (_eatableComponent == null)
-                PlantsSpawner.SpawnUneatablePlant(WorldObject.Cell);
-            else if (_eatableComponent.IsPoisonous())
-                PlantsSpawner.SpawnPoisonousPlant(WorldObject.Cell);
-            else
-                PlantsSpawner.SpawnNormalPlant(WorldObject.Cell);
+            PlantsSpawner.SpawnPlantByType(WorldObject.Cell, _creatureType);
         }
     }
 }

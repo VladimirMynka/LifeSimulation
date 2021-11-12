@@ -10,12 +10,13 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
             Cell keeper, 
             Image image,
             int layer,
+            CreatureType creatureType,
             Effect effect = Effect.None,
             int[] transAges = null) 
             : base(keeper)
         {
-            components.Add(new FruitAgeComponent(this, effect, image, layer, transAges));
-            components.Add(new RotComponent(this));
+            components.Add(new FruitAgeComponent(this, creatureType, effect, image, layer, transAges));
+            components.Add(new RotComponent(this, creatureType));
             Start();
         }
     }

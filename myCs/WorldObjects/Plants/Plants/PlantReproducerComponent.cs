@@ -7,7 +7,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
 {
     public class PlantReproducerComponent : WorldObjectComponent
     {
-        private EatableComponent _eatableComponent;
+        private PlantAgeComponent _plantAgeComponent;
         
         public PlantReproducerComponent(WorldObject owner) : base(owner)
         {
@@ -17,7 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
         public override void Start()
         {
             base.Start();
-            _eatableComponent = WorldObject.GetComponent<EatableComponent>();
+            _plantAgeComponent = WorldObject.GetComponent<PlantAgeComponent>();
         }
 
         public override void Update()
@@ -46,22 +46,12 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
 
         private void SpawnPlant(Cell cell)
         {
-            if (_eatableComponent == null)
-                PlantsSpawner.SpawnUneatablePlant(cell);
-            else if (_eatableComponent.IsPoisonous())
-                PlantsSpawner.SpawnPoisonousPlant(cell);
-            else
-                PlantsSpawner.SpawnNormalPlant(cell);
+            PlantsSpawner.SpawnPlantByType(cell, _plantAgeComponent.CreatureType);
         }
 
         private void SpawnFruit(Cell cell)
         {
-            if (_eatableComponent == null)
-                FruitsSpawner.SpawnUneatableFruit(cell);
-            else if (_eatableComponent.IsPoisonous())
-                FruitsSpawner.SpawnPoisonousFruit(cell);
-            else
-                FruitsSpawner.SpawnNormalFruit(cell);
+            FruitsSpawner.SpawnFruitByType(cell, _plantAgeComponent.CreatureType);
         }
     }
 }

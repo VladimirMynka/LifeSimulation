@@ -6,19 +6,19 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 {
     public static class FruitsSpawner
     {
-        public static Fruit SpawnNormalFruit(Cell cell)
+        public static Fruit SpawnFruitByType(Cell cell, CreatureType creatureType)
         {
-            return new Fruit(cell, Pictures.Fruit, 2, Effect.None);
-        }
-
-        public static Fruit SpawnUneatableFruit(Cell cell)
-        {
-            return new Fruit(cell, Pictures.Fruit, 2, Effect.Uneatable);
-        }
-
-        public static Fruit SpawnPoisonousFruit(Cell cell)
-        {
-            return new Fruit(cell, Pictures.Fruit, 2, Effect.Heart);
+            switch (creatureType)
+            {
+                case CreatureType.EatableGreenPlant:
+                    return new Fruit(cell, Pictures.Fruit, 3, creatureType, Effect.None);
+                case CreatureType.PoisonousPurplePlant:
+                    return new Fruit(cell, Pictures.Fruit, 3, creatureType, Effect.Heart);
+                case CreatureType.UneatableBrownPlant:
+                    return new Fruit(cell, Pictures.Fruit, 3, creatureType, Effect.Uneatable);
+                default:
+                    return null;
+            }
         }
     }
 }

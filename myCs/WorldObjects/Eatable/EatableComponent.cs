@@ -6,10 +6,12 @@ namespace LifeSimulation.myCs.WorldObjects.Eatable
     public class EatableComponent : WorldObjectComponent
     {
         public MealType MealType;
+        public readonly CreatureType CreatureType;
         private readonly Effect _effect;
 
-        public EatableComponent(WorldObject owner, MealType mealType, Effect effect) : base(owner)
+        public EatableComponent(WorldObject owner, CreatureType creatureType, MealType mealType,  Effect effect) : base(owner)
         {
+            CreatureType = creatureType;
             MealType = mealType;
             _effect = effect;
         }

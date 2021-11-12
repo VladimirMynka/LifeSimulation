@@ -58,15 +58,16 @@
     <Compile Include="myCs\Settings\Colors.cs" />
     <Compile Include="myCs\Settings\Defaults.cs" />
     <Compile Include="myCs\WorldObjects\AgeStage.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\Animal.cs" />
     <Compile Include="myCs\WorldObjects\AgeComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\AnimalAgeComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\AnimalSpawner.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Animals\Animal.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalAgeComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalSpawner.cs" />
     <Compile Include="myCs\WorldObjects\Animals\EaterComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\Egg.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\EggComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\EggsSpawner.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Eggs\Egg.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Eggs\EggComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Eggs\EggsSpawner.cs" />
     <Compile Include="myCs\WorldObjects\Animals\HealthComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Humans\Human.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Mating\FemaleMatingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Mating\MaleMatingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Mating\MatingComponent.cs" />
@@ -76,8 +77,9 @@
     <Compile Include="myCs\WorldObjects\Animals\Moving\SpeedState.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Moving\WalkingState.cs" />
     <Compile Include="myCs\WorldObjects\Animals\PlanterComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\RotMeat.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\RotMeatComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\RotMeat\RotMeat.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\RotMeat\RotMeatComponent.cs" />
+    <Compile Include="myCs\WorldObjects\CreatureType.cs" />
     <Compile Include="myCs\WorldObjects\DrawableComponent.cs" />
     <Compile Include="myCs\WorldObjects\Eatable\EatableComponent.cs" />
     <Compile Include="myCs\WorldObjects\Eatable\Effect.cs" />
@@ -136,9 +138,6 @@
     <Content Include="sources\pictures\predator.png" />
     <Content Include="sources\pictures\scavenger.png" />
     <Content Include="sources\pictures\uneatable-plant.png" />
-
-
-
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

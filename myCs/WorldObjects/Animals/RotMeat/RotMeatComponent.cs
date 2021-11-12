@@ -1,4 +1,4 @@
-﻿namespace LifeSimulation.myCs.WorldObjects.Animals
+﻿namespace LifeSimulation.myCs.WorldObjects.Animals.RotMeat
 {
     public class RotMeatComponent : WorldObjectComponent
     {
@@ -14,6 +14,6 @@
             _ticksToRot--;
             if (_ticksToRot <= 0)
                 WorldObject.Destroy();
-        }
+        } 
     }
 }

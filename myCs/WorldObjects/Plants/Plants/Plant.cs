@@ -9,12 +9,13 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
         public Plant(
             Cell keeper, 
             Image image,
-            int layer,
+            CreatureType creatureType,
+            int layer = 0,
             Effect effect = Effect.None, 
             int[] transAges = null) 
             : base(keeper)
         {
-            components.Add(new PlantAgeComponent(this, effect, image, layer, transAges));
+            components.Add(new PlantAgeComponent(this, creatureType, effect, image, layer, transAges));
             Start();
         }
     }

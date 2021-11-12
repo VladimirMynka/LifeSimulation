@@ -8,8 +8,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
     {
         public MaleMatingComponent Partner;
         private MovingComponent _moving;
-        private bool _byEggs;
-        private int _pregnantPeriod;
+        private readonly bool _byEggs;
+        private readonly int _pregnantPeriod;
         
         public FemaleMatingComponent(
             WorldObject owner, 

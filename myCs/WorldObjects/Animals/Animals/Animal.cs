@@ -4,7 +4,7 @@ using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects.Animals.Moving;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Animals
+namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
 {
     public class Animal : WorldObject
     {
@@ -12,6 +12,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             Cell keeper,
             Image image,
             Image afterDiedImage,
+            CreatureType creatureType,
             int layer = 0,
             MealType mealType = MealType.AllTypes,
             bool isMale = true,
@@ -21,11 +22,11 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         ) : base(keeper)
         {
             components.Add(new DrawableComponent(this, image, layer));
-            components.Add(new AnimalAgeComponent(this, Effect.None, isMale, afterDiedImage, layer));
+            components.Add(new AnimalAgeComponent(this, creatureType, Effect.None, isMale, afterDiedImage, layer));
             components.Add(new MovingComponent(this));
             components.Add(new HealthComponent(this, maxHealth));
             components.Add(new EaterComponent(this, mealType, maxSatiety));
-            components.Add(new EatableComponent(this, MealType.FreshMeat, Effect.None));
+            components.Add(new EatableComponent(this, creatureType, MealType.FreshMeat, Effect.None));
 
             if (mealType == MealType.Plant)
                 components.Add(new PlanterComponent(this));

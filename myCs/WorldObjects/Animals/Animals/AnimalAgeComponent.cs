@@ -1,17 +1,18 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects.Animals.Mating;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Animals
+namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
 {
     public class AnimalAgeComponent : AgeComponent
     {
         private readonly bool _isMale;
+        private readonly CreatureType _creatureType;
         
         public AnimalAgeComponent(
-            WorldObject owner, 
+            WorldObject owner,
+            CreatureType creatureType,
             Effect effect, 
             bool isMale,
             Image image,
@@ -20,6 +21,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             _isMale = isMale;
             ageStage = AgeStage.Child;
+            _creatureType = creatureType;
             transitionalAges = transAges;
 
             if (transitionalAges != null && transitionalAges.Length == 2) return;
@@ -80,7 +82,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            new RotMeat(WorldObject.Cell, image, layer);
+            new RotMeat.RotMeat(WorldObject.Cell, image, _creatureType, layer);
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.Animals.Animals;
+using LifeSimulation.myCs.WorldObjects.Animals.Eggs;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 {
     public class PregnantComponent : WorldObjectComponent
     {
-        protected EaterComponent eaterComponent;
+        private EatableComponent _eatableComponent;
         private int _ticksToBirthday;
         private bool _byEggs;
 
@@ -21,7 +23,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         public override void Start()
         {
             base.Start();
-            eaterComponent = WorldObject.GetComponent<EaterComponent>();
+            _eatableComponent = WorldObject.GetComponent<EatableComponent>();
         }
 
         public override void Update()
@@ -43,45 +45,16 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 
         private void SpawnAnimal()
         {
-            if (eaterComponent == null) 
+            if (_eatableComponent == null) 
                 return;
-            bool childIsMale = (World.World.Random.Next(2) == 1);
-            switch (eaterComponent.MealType)
-            {
-                case MealType.Plant:
-                    AnimalsSpawner.SpawnHerbivoreAnimal(WorldObject.Cell, childIsMale);
-                    return;
-                case MealType.AllTypes:
-                    AnimalsSpawner.SpawnOmnivoreAnimal(WorldObject.Cell, childIsMale);
-                    return;
-                case MealType.FreshMeat:
-                    AnimalsSpawner.SpawnPredatorAnimal(WorldObject.Cell, childIsMale);
-                    return;
-                case MealType.DeadMeat:
-                    AnimalsSpawner.SpawnScavengerAnimal(WorldObject.Cell, childIsMale);
-                    return;
-            }
+            AnimalsSpawner.SpawnWithRandomGender(WorldObject.Cell, _eatableComponent.CreatureType);
         }
 
         private void SpawnEgg()
         {
-            if (eaterComponent == null) 
+            if (_eatableComponent == null) 
                 return;
-            switch (eaterComponent.MealType)
-            {
-                case MealType.Plant:
-                    EggsSpawner.SpawnHerbivoreEgg(WorldObject.Cell);
-                    return;
-                case MealType.AllTypes:
-                    EggsSpawner.SpawnOmnivoreEgg(WorldObject.Cell);
-                    return;
-                case MealType.FreshMeat:
-                    EggsSpawner.SpawnPredatorEgg(WorldObject.Cell);
-                    return;
-                case MealType.DeadMeat:
-                    EggsSpawner.SpawnScavengerEgg(WorldObject.Cell);
-                    return;
-            }
+            EggsSpawner.SpawnEggByType(WorldObject.Cell, _eatableComponent.CreatureType);
         }
     }
 }

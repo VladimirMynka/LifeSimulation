@@ -10,13 +10,16 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
     {
         private DrawableComponent _drawableComponent;
         private EatableComponent _eatableComponent;
+        public readonly CreatureType CreatureType;
         public PlantAgeComponent(
             WorldObject owner, 
+            CreatureType creatureType,
             Effect effect, 
             Image image,
             int layer,
             int[] transAges = null) : base(owner, effect, image, layer)
         {
+            CreatureType = creatureType;
             ageStage = AgeStage.Child;
             transitionalAges = transAges;
 
@@ -85,7 +88,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             WorldObject.AddComponent(_drawableComponent);
             if (effect != Effect.Uneatable)
             {
-                _eatableComponent = new EatableComponent(WorldObject, MealType.Plant, effect);
+                _eatableComponent = new EatableComponent(WorldObject, CreatureType, MealType.Plant, effect);
                 WorldObject.AddComponent(_eatableComponent);
             }
             WorldObject.Cell.ReportAboutUpdating();

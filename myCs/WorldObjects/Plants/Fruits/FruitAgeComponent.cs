@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Drawer;
 using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
@@ -9,8 +8,10 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
     public class FruitAgeComponent : AgeComponent
     {
         private DrawableComponent _drawableComponent;
+        private CreatureType _creatureType;
         public FruitAgeComponent(
             WorldObject owner, 
+            CreatureType creatureType,
             Effect effect, 
             Image image,
             int layer,
@@ -18,6 +19,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
         {
             ageStage = AgeStage.Child;
             transitionalAges = transAges;
+            _creatureType = creatureType;
             if (transitionalAges != null && transitionalAges.Length == 2) return;
             transitionalAges = new int[2];
             transitionalAges[0] = Defaults.FruitLivePeriod;
@@ -30,7 +32,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
             _drawableComponent = new DrawableComponent(WorldObject, image, layer);
             if (effect != Effect.Uneatable)
             {
-                WorldObject.AddComponent(new EatableComponent(WorldObject, MealType.Plant, effect));
+                WorldObject.AddComponent(new EatableComponent(WorldObject, _creatureType, MealType.Plant, effect));
             }
             WorldObject.Cell.ReportAboutUpdating();
         }

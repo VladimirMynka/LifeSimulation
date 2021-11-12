@@ -1,5 +1,6 @@
 ﻿using System;
 using LifeSimulation.myCs.WorldObjects.Animals;
+using LifeSimulation.myCs.WorldObjects.Animals.Animals;
 using LifeSimulation.myCs.WorldObjects.Plants.Fruits;
 using LifeSimulation.myCs.WorldObjects.Plants.Plants;
 
@@ -69,37 +70,8 @@ namespace LifeSimulation.myCs.World
             {
                 if (wo is Animal) return;
             }
-        
-            switch (Random.Next(8))
-            {
-                case 0:
-                    AnimalsSpawner.SpawnOmnivoreAnimalMale(cell);
-                    return;
-                case 1:
-                    AnimalsSpawner.SpawnOmnivoreAnimalFemale(cell);
-                    return;
-                case 2:
-                    AnimalsSpawner.SpawnPredatorAnimalMale(cell);
-                    return;
-                case 3:
-                    AnimalsSpawner.SpawnPredatorAnimalFemale(cell);
-                    return;
-                case 4:
-                    AnimalsSpawner.SpawnHerbivoreAnimalMale(cell);
-                    return;
-                case 5:
-                    AnimalsSpawner.SpawnHerbivoreAnimalFemale(cell);
-                    return;
-                case 6:
-                    AnimalsSpawner.SpawnScavengerAnimalMale(cell);
-                    return;
-                case 7:
-                    AnimalsSpawner.SpawnScavengerAnimalFemale(cell);
-                    return;
 
-                default:
-                    return;
-            }
+            AnimalsSpawner.SpawnRandomAnimal(cell);
         }
 
         private void AddPlant(int x, int y)
@@ -113,21 +85,8 @@ namespace LifeSimulation.myCs.World
             {
                 if (wo is Plant || wo is Fruit) return;
             }
-            
-            switch (Random.Next(3))
-            {
-                case 0:
-                    PlantsSpawner.SpawnNormalPlant(cell);
-                    return;
-                case 1:
-                    PlantsSpawner.SpawnPoisonousPlant(cell);
-                    return;
-                case 2:
-                    PlantsSpawner.SpawnUneatablePlant(cell);
-                    return;
-                default:
-                    return;
-            }
+
+            PlantsSpawner.SpawnRandomPlant(cell);
         }
 
     }

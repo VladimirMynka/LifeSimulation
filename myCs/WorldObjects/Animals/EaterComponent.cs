@@ -13,6 +13,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private HealthComponent _health;
 
         private EatableComponent _mealTarget;
+        private EatableComponent _myEatable;
         private MovingComponent _moving;
 
         private int _visibility;
@@ -29,6 +30,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             _health = GetComponent<HealthComponent>();
             _moving = GetComponent<MovingComponent>();
+            _myEatable = GetComponent<EatableComponent>();
             _cell = WorldObject.Cell;
             _visibility = Defaults.AnimalVisibleArea;
         }
@@ -129,11 +131,9 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             if (meal == null) 
                 return false; 
-            if (MealType != MealType.AllTypes && meal.MealType == MealType) 
+            if (MealType != MealType.AllTypes && meal.MealType != MealType) 
                 return false;
-            var eater = meal.GetComponent<EaterComponent>();
-            return 
-                eater == null || eater.MealType != MealType;
+            return _myEatable.CreatureType == meal.CreatureType;
         }
 
         private EatableComponent GetMeal()
