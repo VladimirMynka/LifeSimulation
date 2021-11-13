@@ -8,7 +8,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
     public class FruitAgeComponent : AgeComponent
     {
         private DrawableComponent _drawableComponent;
-        private CreatureType _creatureType;
+        private readonly CreatureType _creatureType;
         public FruitAgeComponent(
             WorldObject owner, 
             CreatureType creatureType,
@@ -17,7 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
             int layer,
             int[] transAges = null) : base(owner, effect, image, layer)
         {
-            ageStage = AgeStage.Child;
+            ageStage = AgeStage.Adult;
             transitionalAges = transAges;
             _creatureType = creatureType;
             if (transitionalAges != null && transitionalAges.Length == 2) return;
@@ -30,6 +30,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
         {
             base.Start();
             _drawableComponent = new DrawableComponent(WorldObject, image, layer);
+            WorldObject.AddComponent(_drawableComponent);
             if (effect != Effect.Uneatable)
             {
                 WorldObject.AddComponent(new EatableComponent(WorldObject, _creatureType, MealType.Plant, effect));
@@ -75,6 +76,14 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
             _drawableComponent.Image = Pictures.Fruit;
             if (WorldObject != null && WorldObject.Cell != null)
                 WorldObject.Cell.ReportAboutUpdating();
+        }
+
+        public override string GetInformation()
+        {
+            var info = "Type: " + _creatureType + "(fruit)\n";
+            info += "Effect: " + effect + '\n';
+            info += base.GetInformation();
+            return info;
         }
     }
 }

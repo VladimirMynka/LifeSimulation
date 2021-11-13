@@ -8,10 +8,26 @@ namespace LifeSimulation.myCs.Drawer
         private static readonly string Path = Directory.GetCurrentDirectory() + @"\sources\pictures\";
         
         public static Image Herbivore = Image.FromFile(Path + @"animals\herbivore.png");
+        public static Image Herbivore2 = Image.FromFile(Path + @"animals\herbivore2.png");
+        public static Image Herbivore3 = Image.FromFile(Path + @"animals\herbivore3.png");
+
         public static Image Predator = Image.FromFile(Path + @"animals\predator.png");
+        public static Image Predator2 = Image.FromFile(Path + @"animals\predator2.png");
+        public static Image Predator3 = Image.FromFile(Path + @"animals\predator3.png");
+        
         public static Image Omnivore = Image.FromFile(Path + @"animals\omnivore.png");
+        public static Image Omnivore2 = Image.FromFile(Path + @"animals\omnivore2.png");
+        public static Image Omnivore3 = Image.FromFile(Path + @"animals\omnivore3.png");
+        
         public static Image Scavenger = Image.FromFile(Path + @"animals\scavenger.png");
+        public static Image Scavenger2 = Image.FromFile(Path + @"animals\scavenger2.png");
+        public static Image Scavenger3 = Image.FromFile(Path + @"animals\scavenger3.png");
+
         public static Image Meat = Image.FromFile(Path + @"animals\meat.png");
+        public static Image Meat2 = Image.FromFile(Path + @"animals\meat2.png");
+        public static Image Meat3 = Image.FromFile(Path + @"animals\meat3.png");
+        public static Image Meat4 = Image.FromFile(Path + @"animals\meat4.png");
+
         public static Image Egg = Image.FromFile(Path + @"animals\egg.png");
 
         public static Image Plant = Image.FromFile(Path + @"plants\plant.png");

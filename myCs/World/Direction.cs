@@ -78,7 +78,7 @@ namespace LifeSimulation.myCs.World
 
         public static int[] GetNormalDirection(int[] vector)
         {
-            return new[]{-Sign(vector[1]), Sign(vector[0])};
+            return GetDirectionVector((1 - Sign(vector[1])) * 3 + (Sign(vector[0]) + 1));
         }
 
         private static int Sign(int value)
@@ -91,6 +91,13 @@ namespace LifeSimulation.myCs.World
         public static bool CheckEqual(int[] vector1, int[] vector2)
         {
             return (vector1[0] == vector2[0]) && (vector1[1] == vector2[1]);
+        }
+
+        public static int SqrLength(int[] point1, int[] point2)
+        {
+            int x = point1[0] - point2[0];
+            int y = point1[1] - point2[1];
+            return x * x + y * y;
         }
     }
 }

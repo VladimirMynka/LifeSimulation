@@ -43,9 +43,21 @@ namespace LifeSimulation
             _graphics = Graphics.FromImage(_bitmap);
             _drawer.UpdateGraphics(_graphics);
             _world.Update(_updateAll);
+            UpdateInfo();
             _updateAll = false;
             _drawer.Update();
             pictureBox1.Image = _bitmap;
+        }
+
+        private void UpdateInfo()
+        {
+            var info = "";
+            foreach (var informationComponent in _informationComponents)
+            {
+                info += informationComponent.Information += "\n----------\n";
+            }
+
+            InfoTextBox.Text = info;
         }
 
         private void pixelSizeInput_TextChanged(object sender, EventArgs e)
@@ -126,13 +138,14 @@ namespace LifeSimulation
             var coords = _drawer.CellCoordsFromPixelCoords(e.Location);
             foreach (var informationComponent in _informationComponents)
             {
-                informationComponent.Disconnect();
+                informationComponent.Close();
             }
             
+            _informationComponents.Clear();
             _informationComponents = _world.GetCell(coords.X, coords.Y).GetAllInformation();
             foreach (var informationComponent in _informationComponents)
             {
-                informationComponent.ConnectWith(InfoTextBox);
+                informationComponent.Open();
             }
         }
         

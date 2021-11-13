@@ -31,7 +31,12 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         public override void Update()
         {
             base.Update();
-            if (Partner != null) _moving.SetTarget(Partner.WorldObject, false);
+            if (Partner == null)
+                return;
+            _moving.SetTarget(Partner.WorldObject);
+            var sqrLength = _moving.SqrLengthToTarget();
+            if (sqrLength >= 0 && sqrLength < 2)
+                _moving.WaitFor(5);
         }
 
         public bool IsEaterOfType(MealType type)

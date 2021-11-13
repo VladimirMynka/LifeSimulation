@@ -28,11 +28,11 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
         protected override string GetAllInformation()
         {
             string info = "";
-            info += GetInfoAboutCoords() + '\n';
-            info += _eaterComponent.GetInformation() + '\n';
-            info += _healthComponent.GetInformation() + '\n';
-            info += _animalAgeComponent.GetInformation() + '\n';
-            info += _movingComponent.GetInformation() + '\n';
+            info += GetInfoAboutCoords() + "\n\n";
+            info += _eaterComponent.GetInformation() + "\n\n";
+            info += _healthComponent.GetInformation() + "\n\n";
+            info += _animalAgeComponent.GetInformation() + "\n\n";
+            info += _movingComponent.GetInformation() + "\n\n";
             if (_matingComponent == null)
                 _matingComponent = GetComponent<MatingComponent>();
             else

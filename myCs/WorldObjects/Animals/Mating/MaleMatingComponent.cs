@@ -30,7 +30,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
                 return;
             }
             if (_partner == null) SearchPartner();
-            if (_partner != null) _moving.SetTarget(_partner.WorldObject, true);
+            if (_partner != null) _moving.SetTarget(_partner.WorldObject);
         }
 
         private void SearchPartner()

@@ -17,13 +17,15 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
             MealType mealType = MealType.AllTypes,
             bool isMale = true,
             int maxHealth = Defaults.AnimalHealth,
-            int maxSatiety = Defaults.AnimalSatiety
-            
+            int maxSatiety = Defaults.AnimalSatiety,
+            WalkingState walkingState = WalkingState.UsualWalking,
+            MovingToTargetState movingToTargetState = MovingToTargetState.UsualMoving,
+            int pace = Defaults.TicksToStep
         ) : base(keeper)
         {
             components.Add(new DrawableComponent(this, image, layer));
             components.Add(new AnimalAgeComponent(this, creatureType, Effect.None, isMale, afterDiedImage, layer));
-            components.Add(new MovingComponent(this));
+            components.Add(new MovingComponent(this, walkingState, movingToTargetState, pace));
             components.Add(new HealthComponent(this, maxHealth));
             components.Add(new EaterComponent(this, mealType, maxSatiety));
             components.Add(new EatableComponent(this, creatureType, MealType.FreshMeat, Effect.None));

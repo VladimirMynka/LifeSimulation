@@ -21,13 +21,15 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
         public MovingComponent(
             WorldObject owner,
             WalkingState walkingState = WalkingState.UsualWalking, 
-            MovingToTargetState movingState = MovingToTargetState.UsualMoving) : base(owner)
+            MovingToTargetState movingState = MovingToTargetState.UsualMoving,
+            int pace = Defaults.TicksToStep) : base(owner)
         {
-            _ticksToStep = Defaults.TicksToStep;
-            Pace = Defaults.TicksToStep;
-            RunPace = Pace / 2;
+            _ticksToStep = pace;
+            Pace = pace;
+            RunPace = pace / 2;
             _walkingState = walkingState;
             _movingToTargetState = movingState;
+            _lastDirection = new[]{0, 0};
         }
 
         public override void Start()
@@ -39,7 +41,21 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
         public override void Update()
         {
             base.Update();
+            TryChangeStates();
             TryStep();
+        }
+
+        private void TryChangeStates()
+        {
+            var random = World.World.Random.Next(100);
+            if (random < 5)
+                ChangeStates();
+        }
+
+        private void ChangeStates()
+        {
+            _walkingState = (WalkingState) World.World.Random.Next(4);
+            _movingToTargetState = (MovingToTargetState) World.World.Random.Next(2);
         }
 
         private void TryStep()
@@ -134,10 +150,31 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
             switch (_movingToTargetState)
             {
                 case MovingToTargetState.OrthogonalMoving:
-                    return Direction.GetOrthogonalDirection(_cell.Coords, _target.Cell.Coords);
+                    return GetOrthogonalDirection(_target.Cell.Coords);
+                case MovingToTargetState.SnakeMoving:
+                    return GetSnakeDirection(_target.Cell.Coords);
                 default:
-                    return Direction.GetDirectionVector(_cell.Coords, _target.Cell.Coords);
+                    return GetUsualDirection(_target.Cell.Coords);
             }
+        }
+
+        private int[] GetOrthogonalDirection(int[] targetCoords)
+        {
+            return Direction.GetOrthogonalDirection(_cell.Coords, targetCoords);
+        }
+        
+        private int[] GetUsualDirection(int[] targetCoords)
+        {
+            return Direction.GetDirectionVector(_cell.Coords, targetCoords);
+        }
+        
+        private int[] GetSnakeDirection(int[] targetCoords)
+        {
+            var direction = Direction.GetOrthogonalDirection(_cell.Coords, targetCoords);
+            return
+                World.World.Random.Next(10) < 3
+                    ? direction
+                    : Direction.GetNormalDirection(direction);
         }
 
         private int[] GetRandomDirection()
@@ -228,26 +265,38 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
             cell.ReportAboutUpdating();
         }
 
-        public void SetTarget(WorldObject target, bool targetIsDynamic)
+        public void SetTarget(WorldObject target)
         {
-                _target = target;
-                _speedState = SpeedState.SlowUp;
+            _target = target;
+            _speedState = SpeedState.SlowUp;
+        }
+
+        public int SqrLengthToTarget()
+        {
+            if (_target == null || _target.Cell == null)
+                return -1;
+            return Direction.SqrLength(_target.Cell.Coords, _cell.Coords);
         }
 
         public string GetInformation()
         {
             var info = "Ticks to step: " + _ticksToStep + '\n';
-            info += "Speed state: " + _walkingState + '\n';
+            info += "Speed state: " + _speedState + '\n';
             info += "Walking state: " + _movingToTargetState + '\n';
             info += "Go to target state: " + _movingToTargetState + '\n';
             info += "Target: ";
             
-            if (_target == null)
+            if (_target == null || _target.Cell == null)
                 info += "none";
             else
                 info += "on " + _target.Cell.Coords[0] + ',' + _target.Cell.Coords[1];
             
             return info;
+        }
+
+        public void WaitFor(int ticks)
+        {
+            _ticksToStep += ticks;
         }
     }
 }

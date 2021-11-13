@@ -62,7 +62,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         
         public bool IsHungry()
         {
-            return (Satiety <= MaxSatiety / 3);
+            return (Satiety <= 2 * MaxSatiety / 3);
         }
 
         private void EatSmth()
@@ -123,8 +123,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private void SetMeal(EatableComponent meal)
         {
             _mealTarget = meal;
-            bool isPlant = (meal.MealType == MealType.Plant);
-            _moving.SetTarget(meal.WorldObject, isPlant);
+            _moving.SetTarget(meal.WorldObject);
         }
 
         private bool CheckIEatIt(EatableComponent meal)

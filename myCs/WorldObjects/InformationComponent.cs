@@ -2,13 +2,12 @@
 {
     public abstract class InformationComponent : WorldObjectComponent
     {
-        private string _information;
+        public string Information;
         private bool _isChecking;
-        private System.Windows.Forms.RichTextBox _display;
         
         protected InformationComponent(WorldObject owner) : base(owner)
         {
-            _information = "";
+            Information = "";
             _isChecking = false;
         }
 
@@ -17,21 +16,18 @@
             base.Update();
             if (!_isChecking)
                 return;
-            _information = GetAllInformation();
-            _display.Text = _information;
+            Information = GetAllInformation();
         }
 
-        public void ConnectWith(System.Windows.Forms.RichTextBox display)
+        public void Open()
         {
-            _display = display;
             _isChecking = true;
         }
 
-        public void Disconnect()
+        public void Close()
         {
-            _display = null;
             _isChecking = false;
-            _information = "";
+            Information = "";
         }
 
         protected abstract string GetAllInformation();

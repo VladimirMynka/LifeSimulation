@@ -91,6 +91,7 @@
     <Compile Include="myCs\WorldObjects\Plants\Fruits\Fruit.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Fruits\FruitAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Fruits\FruitsSpawner.cs" />
+    <Compile Include="myCs\WorldObjects\Plants\Fruits\FruitInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Fruits\RotComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plants\Plant.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plants\PlantAgeComponent.cs" />
@@ -132,17 +133,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="sources\pictures\dead-plant.png" />
-    <Content Include="sources\pictures\egg.png" />
-    <Content Include="sources\pictures\fruit.png" />
-    <Content Include="sources\pictures\herbivore.png" />
-    <Content Include="sources\pictures\meat.png" />
-    <Content Include="sources\pictures\omnivore.png" />
-    <Content Include="sources\pictures\plant.png" />
-    <Content Include="sources\pictures\poisonous-plant.png" />
-    <Content Include="sources\pictures\predator.png" />
-    <Content Include="sources\pictures\scavenger.png" />
-    <Content Include="sources\pictures\uneatable-plant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="sources\pictures" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,6 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
         {
             components.Add(new FruitAgeComponent(this, creatureType, effect, image, layer, transAges));
             components.Add(new RotComponent(this, creatureType));
+            components.Add(new FruitInformationComponent(this));
             Start();
         }
     }
