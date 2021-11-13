@@ -1,10 +1,17 @@
-﻿using LifeSimulation.myCs.WorldObjects.Eatable;
+﻿using LifeSimulation.myCs.WorldObjects.Animals.Mating;
+using LifeSimulation.myCs.WorldObjects.Animals.Moving;
+using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
 {
     public class AnimalInformationComponent : InformationComponent
     {
-        private EatableComponent _eatableComponent;
+        private EaterComponent _eaterComponent;
+        private HealthComponent _healthComponent;
+        private AnimalAgeComponent _animalAgeComponent;
+        private MatingComponent _matingComponent;
+        private MovingComponent _movingComponent;
+        
         public AnimalInformationComponent(WorldObject owner) : base(owner)
         {
         }
@@ -12,15 +19,26 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
         public override void Start()
         {
             base.Start();
-            _eatableComponent = GetComponent<EatableComponent>();
+            _eaterComponent = GetComponent<EaterComponent>();
+            _healthComponent = GetComponent<HealthComponent>();
+            _animalAgeComponent = GetComponent<AnimalAgeComponent>();
+            _movingComponent = GetComponent<MovingComponent>();
         }
 
         protected override string GetAllInformation()
         {
-            return WorldObject.Cell.Coords[0].ToString() + 
-                   ':' + WorldObject.Cell.Coords[1].ToString() +
-                   '\n' + _eatableComponent.CreatureType.ToString() + 
-                   '\n' + '\n';
+            string info = "";
+            info += GetInfoAboutCoords() + '\n';
+            info += _eaterComponent.GetInformation() + '\n';
+            info += _healthComponent.GetInformation() + '\n';
+            info += _animalAgeComponent.GetInformation() + '\n';
+            info += _movingComponent.GetInformation() + '\n';
+            if (_matingComponent == null)
+                _matingComponent = GetComponent<MatingComponent>();
+            else
+                info += _matingComponent.GetInformation();
+            
+            return info;
         }
     }
 }

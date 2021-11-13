@@ -20,7 +20,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
             int[] transAges = null) : base(owner, effect, image, layer)
         {
             _isMale = isMale;
-            ageStage = AgeStage.Child;
+            ageStage = AgeStage.Adult;
             _creatureType = creatureType;
             transitionalAges = transAges;
 

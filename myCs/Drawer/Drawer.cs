@@ -197,5 +197,20 @@ namespace LifeSimulation.myCs.Drawer
             return new Point(pixelCoords.X / PixelSize + OffsetLeft,
                 pixelCoords.Y / PixelSize + OffsetTop);
         }
+
+        public void ZoomOnCell(Point coords)
+        {
+            if (PixelSize >= 30)
+                PixelSize = 10;
+            else
+                PixelSize = 50;
+            SetOffsetsWithCenterIn(coords);
+        }
+
+        public void SetOffsetsWithCenterIn(Point coords)
+        {
+            OffsetLeft = coords.X - 500 / PixelSize;
+            OffsetTop = coords.Y - 500 / PixelSize;
+        }
     }
 }

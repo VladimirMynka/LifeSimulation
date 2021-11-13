@@ -16,6 +16,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             : base(keeper)
         {
             components.Add(new PlantAgeComponent(this, creatureType, effect, image, layer, transAges));
+            components.Add(new PlantInformationComponent(this));
             Start();
         }
     }

@@ -18,9 +18,9 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
             components.Add(new DrawableComponent(this, image, layer));
             components.Add(new EggComponent(this, creatureType, ticksToBirthday));
             components.Add(new EatableComponent(this, creatureType, MealType.FreshMeat, Effect.None));
+            components.Add(new EggInformationComponent(this));
             
             Start();
-
         }
     }
 }

@@ -50,5 +50,19 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         {
             WorldObject.AddComponent(new PregnantComponent(WorldObject, _pregnantPeriod, _byEggs));
         }
+        
+        public override string GetInformation()
+        {
+            var info = base.GetInformation() + '\n';
+            info += "Gender: female \n";
+            info += "Partner: ";
+            
+            if (Partner == null)
+                info += "none";
+            else
+                info += "on " + Partner.WorldObject.Cell.Coords[0] + ',' + Partner.WorldObject.Cell.Coords[1];
+
+            return info;
+        }
     }
 }

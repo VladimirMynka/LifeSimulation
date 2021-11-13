@@ -64,6 +64,7 @@
     <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalSpawner.cs" />
     <Compile Include="myCs\WorldObjects\Animals\EaterComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Eggs\EggInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Eggs\Egg.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Eggs\EggComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Eggs\EggsSpawner.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="myCs\WorldObjects\Animals\Moving\SpeedState.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Moving\WalkingState.cs" />
     <Compile Include="myCs\WorldObjects\Animals\PlanterComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\RotMeat\RotMeatInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\RotMeat\RotMeat.cs" />
     <Compile Include="myCs\WorldObjects\Animals\RotMeat\RotMeatComponent.cs" />
     <Compile Include="myCs\WorldObjects\CreatureType.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="myCs\WorldObjects\Plants\Plants\PlantAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plants\PlantReproducerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plants\PlantsSpawner.cs" />
+    <Compile Include="myCs\WorldObjects\Plants\Plants\PlantInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Smells\Smell.cs" />
     <Compile Include="myCs\WorldObjects\WorldObjectComponent.cs" />
     <Compile Include="myCs\WorldObjects\WorldObject.cs" />

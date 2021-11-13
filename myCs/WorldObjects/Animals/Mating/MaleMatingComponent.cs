@@ -95,5 +95,19 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             ToWaitingStage();
             _partner = null;
         }
+
+        public override string GetInformation()
+        {
+            var info = base.GetInformation() + '\n';
+            info += "Gender: male \n";
+            info += "Partner: ";
+            
+            if (_partner == null)
+                info += "none";
+            else
+                info += "on " + _partner.WorldObject.Cell.Coords[0] + ',' + _partner.WorldObject.Cell.Coords[1];
+
+            return info;
+        }
     }
 }

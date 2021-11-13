@@ -13,7 +13,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private HealthComponent _health;
 
         private EatableComponent _mealTarget;
-        private EatableComponent _myEatable;
+        private CreatureType _creatureType;
         private MovingComponent _moving;
 
         private int _visibility;
@@ -30,7 +30,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             _health = GetComponent<HealthComponent>();
             _moving = GetComponent<MovingComponent>();
-            _myEatable = GetComponent<EatableComponent>();
+            _creatureType = GetComponent<EatableComponent>().CreatureType;
             _cell = WorldObject.Cell;
             _visibility = Defaults.AnimalVisibleArea;
         }
@@ -133,10 +133,10 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
                 return false; 
             if (MealType != MealType.AllTypes && meal.MealType != MealType) 
                 return false;
-            return _myEatable.CreatureType == meal.CreatureType;
+            return _creatureType != meal.CreatureType;
         }
 
-        private EatableComponent GetMeal()
+        private EatableComponent GetMeal()       
         {
             var cell = WorldObject.Cell;
             foreach (var inCellObject in cell.CurrentObjects)
@@ -146,6 +146,23 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
                     return meal;
             }
             return null;
+        }
+
+        public string GetInformation()
+        {
+            var info = "Type: " + _creatureType + '\n';
+            info += "Meal type: " + MealType + '\n';
+            info += "Satiety: " + Satiety + '/' + MaxSatiety + '\n';
+            info += "Wants eat: ";
+            if (_mealTarget == null || 
+                _mealTarget.WorldObject == null || 
+                _mealTarget.WorldObject.Cell == null)
+                info += "none";
+            else
+                info += _mealTarget.CreatureType + " on " +
+                        _mealTarget.WorldObject.Cell.Coords[0] + ',' +
+                        _mealTarget.WorldObject.Cell.Coords[1];
+            return info;
         }
     }
 }

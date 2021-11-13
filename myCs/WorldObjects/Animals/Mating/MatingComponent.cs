@@ -48,5 +48,11 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         {
             _ticksToMating = _normalTicksToMating;
         }
+
+        public virtual string GetInformation()
+        {
+            var info = "TicksToMating: " + _ticksToMating;
+            return info;
+        }
     }
 }

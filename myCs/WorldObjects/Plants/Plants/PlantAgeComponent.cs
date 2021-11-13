@@ -109,5 +109,13 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             if (WorldObject != null && WorldObject.Cell != null)
                 WorldObject.Cell.ReportAboutUpdating();
         }
+
+        public override string GetInformation()
+        {
+            var info = "Type: " + CreatureType + '\n';
+            info += "On eat effect: " + effect + '\n';
+            info += base.GetInformation();
+            return info;
+        }
     }
 }

@@ -135,5 +135,12 @@ namespace LifeSimulation
                 informationComponent.ConnectWith(InfoTextBox);
             }
         }
+        
+        private void world_DoubleClick(object sender, MouseEventArgs e)
+        {
+            _drawer.ZoomOnCell(_drawer.CellCoordsFromPixelCoords(e.Location));
+            _drawer.DrawOffsets();
+            _updateAll = true;
+        }
     }
 }

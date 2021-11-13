@@ -57,5 +57,13 @@ namespace LifeSimulation.myCs.WorldObjects
         {
             return (AgeStage) index;
         }
+
+        public virtual string GetInformation()
+        {
+            var info = "Age: " + age + '\n';
+            info += "Age stage: " + ageStage;
+
+            return info;
+        }
     }
 }

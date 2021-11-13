@@ -29,5 +29,10 @@
                 _health = _maxHealth;
         }
 
+        public string GetInformation()
+        {
+            var info = "Health: " + _health + '/' + _maxHealth;
+            return info;
+        }
     }
 }

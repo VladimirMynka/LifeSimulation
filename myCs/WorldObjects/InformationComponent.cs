@@ -35,5 +35,11 @@
         }
 
         protected abstract string GetAllInformation();
+        
+        protected string GetInfoAboutCoords()
+        {
+            return "Coords: " + WorldObject.Cell.Coords[0] + 
+                   ',' + WorldObject.Cell.Coords[1];
+        }
     }
 }

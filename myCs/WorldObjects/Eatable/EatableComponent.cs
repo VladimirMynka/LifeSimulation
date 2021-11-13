@@ -46,10 +46,5 @@ namespace LifeSimulation.myCs.WorldObjects.Eatable
                 return;
             eater.GetComponent<HealthComponent>().AddHealth(-Defaults.PoisonDamage);
         }
-
-        public bool IsPoisonous()
-        {
-            return _effect != Effect.None;
-        }
     }
 }

@@ -33,5 +33,12 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
         {
             AnimalsSpawner.SpawnWithRandomGender(WorldObject.Cell, _creatureType);
         }
+
+        public string GetInformation()
+        {
+            var info = "Type: " + _creatureType + '\n';
+            info = "Ticks to birthday: " + _ticksToBirthday;
+            return info;
+        }
     }
 }

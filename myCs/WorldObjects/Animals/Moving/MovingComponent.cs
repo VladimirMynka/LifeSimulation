@@ -231,5 +231,21 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
                 _target = target;
                 _speedState = SpeedState.SlowUp;
         }
+
+        public string GetInformation()
+        {
+            var info = "Ticks to step: " + _ticksToStep + '\n';
+            info += "Speed state: " + _walkingState + '\n';
+            info += "Walking state: " + _movingToTargetState + '\n';
+            info += "Go to target state: " + _movingToTargetState + '\n';
+            info += "Target: ";
+            
+            if (_target == null)
+                info += "none";
+            else
+                info += "on " + _target.Cell.Coords[0] + ',' + _target.Cell.Coords[1];
+            
+            return info;
+        }
     }
 }

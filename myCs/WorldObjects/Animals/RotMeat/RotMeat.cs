@@ -15,9 +15,9 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.RotMeat
         ) : base(keeper)
         {
             components.Add(new DrawableComponent(this, image, layer));
-            components.Add(new RotMeatComponent(this, Defaults.AnimalRotAge));
+            components.Add(new RotMeatComponent(this, Defaults.AnimalRotAge - Defaults.AnimalDiedAge));
             components.Add(new EatableComponent(this, creatureType, MealType.DeadMeat, Effect.None));
-            
+            components.Add(new RotMeatInformationComponent(this));
             Start();
 
         }

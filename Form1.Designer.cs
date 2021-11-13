@@ -58,6 +58,7 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.world_Click);
+            this.pictureBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.world_DoubleClick);
             // 
             // pixelSizeInput
             // 
@@ -231,7 +232,7 @@
             this.InfoTextBox.Location = new System.Drawing.Point(1094, 74);
             this.InfoTextBox.Name = "InfoTextBox";
             this.InfoTextBox.ReadOnly = true;
-            this.InfoTextBox.Size = new System.Drawing.Size(191, 150);
+            this.InfoTextBox.Size = new System.Drawing.Size(191, 312);
             this.InfoTextBox.TabIndex = 16;
             this.InfoTextBox.Text = "";
             // 
