@@ -191,5 +191,11 @@ namespace LifeSimulation.myCs.Drawer
             return (OffsetLeft < x + PixelSize && x < 1000 &&
                     OffsetTop < y + PixelSize && y < 1000);
         }
+
+        public Point CellCoordsFromPixelCoords(Point pixelCoords)
+        {
+            return new Point(pixelCoords.X / PixelSize + OffsetLeft,
+                pixelCoords.Y / PixelSize + OffsetTop);
+        }
     }
 }

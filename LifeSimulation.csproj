@@ -61,6 +61,7 @@
     <Compile Include="myCs\WorldObjects\AgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animals\Animal.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalAgeComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalSpawner.cs" />
     <Compile Include="myCs\WorldObjects\Animals\EaterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Eggs\Egg.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="myCs\WorldObjects\Eatable\EatableComponent.cs" />
     <Compile Include="myCs\WorldObjects\Eatable\Effect.cs" />
     <Compile Include="myCs\WorldObjects\Eatable\MealType.cs" />
+    <Compile Include="myCs\WorldObjects\InformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Fruits\Fruit.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Fruits\FruitAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Fruits\FruitsSpawner.cs" />

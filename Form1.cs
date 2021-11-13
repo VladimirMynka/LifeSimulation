@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using LifeSimulation.myCs.Drawer;
 using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldObjects;
 
 namespace LifeSimulation
 {
@@ -14,6 +16,7 @@ namespace LifeSimulation
         private Drawer _drawer;
         private bool _updateAll = false;
         private bool _pause = false;
+        private List<InformationComponent> _informationComponents;
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +28,8 @@ namespace LifeSimulation
             timer1.Interval = 1000;
             timer1.Tick += new EventHandler(Update);
             timer1.Enabled = true;
-            
+
+            _informationComponents = new List<InformationComponent>();
             _bitmap = new Bitmap(1000, 1000);
             _graphics = Graphics.FromImage(_bitmap);
             _drawer = new Drawer(_graphics);
@@ -114,6 +118,21 @@ namespace LifeSimulation
             {
                 _pause = true;
                 button1.Text = "play";
+            }
+        }
+        
+        private void world_Click(object sender, MouseEventArgs e)
+        {
+            var coords = _drawer.CellCoordsFromPixelCoords(e.Location);
+            foreach (var informationComponent in _informationComponents)
+            {
+                informationComponent.Disconnect();
+            }
+            
+            _informationComponents = _world.GetCell(coords.X, coords.Y).GetAllInformation();
+            foreach (var informationComponent in _informationComponents)
+            {
+                informationComponent.ConnectWith(InfoTextBox);
             }
         }
     }

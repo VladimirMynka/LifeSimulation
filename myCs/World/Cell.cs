@@ -100,6 +100,18 @@ namespace LifeSimulation.myCs.World
             return neighCell;
         }
 
+        public List<InformationComponent> GetAllInformation()
+        {
+            var list = new List<InformationComponent>();
+            foreach (var wo in CurrentObjects)
+            {
+                var informationComponent = wo.GetComponent<InformationComponent>();
+                if (informationComponent != null)
+                    list.Add(informationComponent);
+            }
+
+            return list;
+        }
 
         public int CompareTo(object obj)
         {
@@ -112,10 +124,12 @@ namespace LifeSimulation.myCs.World
             {
                 if (this.Coords[i] > otherCell.Coords[i])
                     return 1;
-                else if (this.Coords[i] < otherCell.Coords[i])
+                if (this.Coords[i] < otherCell.Coords[i])
                     return -1;
             }
             return 0;
         }
+        
+        
     }
 }

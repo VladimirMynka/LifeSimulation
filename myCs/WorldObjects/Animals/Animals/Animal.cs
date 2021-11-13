@@ -30,7 +30,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
 
             if (mealType == MealType.Plant)
                 components.Add(new PlanterComponent(this));
-            
+
+            components.Add(new AnimalInformationComponent(this));
             Start();
 
         }
