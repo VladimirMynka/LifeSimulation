@@ -54,7 +54,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private void ChangeHealth()
         {
             if (_health == null) return;
-            if (IsHungry())
+            if (IsVeryHungry())
                 _health.AddHealth(-Defaults.AnimalHealthDestruction);
             else
                 _health.AddHealth(Defaults.AnimalHealthRegeneration);
@@ -63,6 +63,11 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         public bool IsHungry()
         {
             return (Satiety <= 2 * MaxSatiety / 3);
+        }
+
+        public bool IsVeryHungry()
+        {
+            return (Satiety <= 0);
         }
 
         private void EatSmth()
@@ -141,7 +146,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             foreach (var inCellObject in cell.CurrentObjects)
             {
                 var meal = inCellObject.GetComponent<EatableComponent>();
-                if (!CheckIEatIt(meal))
+                if (CheckIEatIt(meal))
                     return meal;
             }
             return null;

@@ -1,6 +1,5 @@
 ﻿using LifeSimulation.myCs.Drawer;
 using LifeSimulation.myCs.World;
-using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
 {

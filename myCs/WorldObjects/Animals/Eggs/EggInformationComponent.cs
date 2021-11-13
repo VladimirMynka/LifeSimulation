@@ -1,6 +1,4 @@
-﻿using LifeSimulation.myCs.WorldObjects.Animals.Mating;
-
-namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
+﻿namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
 {
     public class EggInformationComponent : InformationComponent
     {

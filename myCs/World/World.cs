@@ -1,5 +1,4 @@
 ﻿using System;
-using LifeSimulation.myCs.WorldObjects.Animals;
 using LifeSimulation.myCs.WorldObjects.Animals.Animals;
 using LifeSimulation.myCs.WorldObjects.Plants.Fruits;
 using LifeSimulation.myCs.WorldObjects.Plants.Plants;
@@ -8,8 +7,8 @@ namespace LifeSimulation.myCs.World
 {
     public class World
     {
-        private const int AnimalsNormalCount = 3000;
-        private const int PlantsNormalCount = 1500;
+        private const int AnimalsNormalCount = 10000;
+        private const int PlantsNormalCount = 5000;
 
         private readonly Cell[][] _cells;
         public readonly int Length;

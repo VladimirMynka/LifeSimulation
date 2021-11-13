@@ -1,6 +1,5 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
-using LifeSimulation.myCs.WorldObjects.Eatable;
 using LifeSimulation.myCs.WorldObjects.Plants.Fruits;
 
 namespace LifeSimulation.myCs.WorldObjects.Plants.Plants

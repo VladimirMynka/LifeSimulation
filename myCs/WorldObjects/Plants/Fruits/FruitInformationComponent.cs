@@ -1,6 +1,4 @@
-﻿using LifeSimulation.myCs.WorldObjects.Plants.Plants;
-
-namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
+﻿namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 {
     public class FruitInformationComponent : InformationComponent
     {

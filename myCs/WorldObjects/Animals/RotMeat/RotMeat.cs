@@ -19,7 +19,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.RotMeat
             components.Add(new EatableComponent(this, creatureType, MealType.DeadMeat, Effect.None));
             components.Add(new RotMeatInformationComponent(this));
             Start();
-
         }
     }
 }

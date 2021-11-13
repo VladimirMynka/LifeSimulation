@@ -1,6 +1,5 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.Animals.Animals;
-using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
 {

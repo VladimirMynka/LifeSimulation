@@ -30,7 +30,7 @@ namespace LifeSimulation.myCs.World
         public static int[] GetDirectionVector(int direction)
         {
             return Vectors[direction] ?? 
-                   (Vectors[direction] = new[]{direction / 3 - 1, direction % 3 - 1});
+                   (Vectors[direction] = new[]{direction % 3 - 1, direction / 3 - 1});
         }
 
         public static int[] GetDirectionVector(int[] vector)
@@ -42,29 +42,30 @@ namespace LifeSimulation.myCs.World
         {
             return GetDirectionVector(new[]{
                 coords2[0] - coords1[0],
-                coords2[1] - coords1[0]
+                coords2[1] - coords1[1]
             });
         }
         public static int[] GetOrthogonalDirection(int[] vector)
         {
-            var normalVector = GetNormalDirection(vector);
-            if (normalVector[0] == normalVector[1] && normalVector[0] != 0)
-                normalVector[1] = 0;
-            return normalVector;
+            var newVector = GetDirectionVector(vector);
+            if ((newVector[0] == newVector[1] || newVector[0] == -newVector[1]) && 
+                newVector[0] != 0) 
+                newVector[1] = 0;
+            return newVector;
         }
         
         public static int[] GetOrthogonalDirection(int[] coords1, int[] coords2)
         {
             return GetOrthogonalDirection(new[]{
                 coords2[0] - coords1[0],
-                coords2[1] - coords1[0]
+                coords2[1] - coords1[1]
             });
         }
 
         public static int GetDirectionByVector(int[] vector)
         {
-            var y = vector[0];
-            var x = vector[1];
+            var x = vector[0];
+            var y = vector[1];
             var absX = Math.Abs(x);
             var absY = Math.Abs(y);
             if (y >= 2 * absX) return Bottom;
@@ -78,7 +79,7 @@ namespace LifeSimulation.myCs.World
 
         public static int[] GetNormalDirection(int[] vector)
         {
-            return GetDirectionVector((1 - Sign(vector[1])) * 3 + (Sign(vector[0]) + 1));
+            return GetDirectionVector((1 - Sign(vector[0])) * 3 + (Sign(vector[1]) + 1));
         }
 
         private static int Sign(int value)
