@@ -5,21 +5,21 @@ namespace LifeSimulation.myCs.Drawer
 {
     public static class Pictures
     {
-        private static readonly string Path = Directory.GetCurrentDirectory() + @"\..\..\sources\pictures\";
+        private static readonly string Path = Directory.GetCurrentDirectory() + @"\sources\pictures\";
         
-        public static Image Herbivore = Image.FromFile(Path + "herbivore.png");
-        public static Image Predator = Image.FromFile(Path + "predator.png");
-        public static Image Omnivore = Image.FromFile(Path + "omnivore.png");
-        public static Image Scavenger = Image.FromFile(Path + "scavenger.png");
-        public static Image Meat = Image.FromFile(Path + "meat.png");
-        public static Image Egg = Image.FromFile(Path + "egg.png");
+        public static Image Herbivore = Image.FromFile(Path + @"animals\herbivore.png");
+        public static Image Predator = Image.FromFile(Path + @"animals\predator.png");
+        public static Image Omnivore = Image.FromFile(Path + @"animals\omnivore.png");
+        public static Image Scavenger = Image.FromFile(Path + @"animals\scavenger.png");
+        public static Image Meat = Image.FromFile(Path + @"animals\meat.png");
+        public static Image Egg = Image.FromFile(Path + @"animals\egg.png");
 
-        public static Image Plant = Image.FromFile(Path + "plant.png");
-        public static Image UneatablePlant = Image.FromFile(Path + "uneatable-plant.png");
-        public static Image PoisonousPlant = Image.FromFile(Path + "poisonous-plant.png");
-        public static Image DeadPlant = Image.FromFile(Path + "dead-plant.png");
+        public static Image Plant = Image.FromFile(Path + @"plants\plant.png");
+        public static Image UneatablePlant = Image.FromFile(Path + @"plants\uneatable-plant.png");
+        public static Image PoisonousPlant = Image.FromFile(Path + @"plants\poisonous-plant.png");
+        public static Image DeadPlant = Image.FromFile(Path + @"plants\dead-plant.png");
 
-        public static Image Fruit = Image.FromFile(Path + "fruit.png");
+        public static Image Fruit = Image.FromFile(Path + @"plants\fruit.png");
 
 
         public static Color AnimalColor = GetAverage(Omnivore);

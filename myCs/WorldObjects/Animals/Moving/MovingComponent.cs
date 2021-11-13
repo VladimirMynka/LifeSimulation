@@ -216,6 +216,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
         private void GoAway()
         {
             _cell.RemoveObject(WorldObject);
+            _cell.ReportAboutUpdating();
         }
 
         private void GoToCell(Cell cell)
@@ -224,6 +225,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
             WorldObject.Cell = cell;
             _cell = cell;
             cell.AddObject(WorldObject);
+            cell.ReportAboutUpdating();
         }
 
         public void SetTarget(WorldObject target, bool targetIsDynamic)

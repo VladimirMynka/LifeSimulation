@@ -37,11 +37,11 @@ namespace LifeSimulation.myCs.World
                 if (evenCycle == worldObject.evenCycle)
                     worldObject.Update();
             }
-            ApplyChanges();
         }
 
         public void AfterUpdate(bool updateInAnyKeys)
         {
+            ApplyChanges();
             if (!updateInAnyKeys && !_wereUpdated) 
                 return;
             Drawer.AddCell(this);
