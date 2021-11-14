@@ -29,13 +29,16 @@ namespace LifeSimulation.myCs.Drawer
         public static Image Meat4 = Image.FromFile(Path + @"animals\meat4.png");
 
         public static Image Egg = Image.FromFile(Path + @"animals\egg.png");
-
+        
+        public static Image Human = Image.FromFile(Path + @"animals\human.png");
+        
         public static Image Plant = Image.FromFile(Path + @"plants\plant.png");
         public static Image UneatablePlant = Image.FromFile(Path + @"plants\uneatable-plant.png");
         public static Image PoisonousPlant = Image.FromFile(Path + @"plants\poisonous-plant.png");
         public static Image DeadPlant = Image.FromFile(Path + @"plants\dead-plant.png");
 
         public static Image Fruit = Image.FromFile(Path + @"plants\fruit.png");
+        
 
 
         public static Color AnimalColor = GetAverage(Omnivore);

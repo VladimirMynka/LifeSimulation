@@ -19,7 +19,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             int[] transAges = null) : base(owner, effect, image, layer)
         {
             CreatureType = creatureType;
-            ageStage = AgeStage.Child;
+            AgeStage = AgeStage.Child;
             transitionalAges = transAges;
 
             if (transitionalAges != null && transitionalAges.Length == 4) return;
@@ -33,7 +33,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
         protected override void NextStage()
         {
             base.NextStage();
-            switch (ageStage)
+            switch (AgeStage)
             {
                 case AgeStage.Adult:
                     GrowToAdult();

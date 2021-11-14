@@ -17,7 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
             int layer,
             int[] transAges = null) : base(owner, effect, image, layer)
         {
-            ageStage = AgeStage.Adult;
+            AgeStage = AgeStage.Adult;
             transitionalAges = transAges;
             _creatureType = creatureType;
             if (transitionalAges != null && transitionalAges.Length == 2) return;
@@ -41,7 +41,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
         protected override void NextStage()
         {
             base.NextStage();
-            if (ageStage == AgeStage.Died)
+            if (AgeStage == AgeStage.Died)
                 GrowToDyingStage();
         }
 

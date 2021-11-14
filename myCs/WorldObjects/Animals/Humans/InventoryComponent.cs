@@ -10,7 +10,6 @@
             _maxReserve = reserve;
         }
 
-        
         /// <summary>
         /// Returns quantity or removed quantity. 
         /// For negative quantity it works as Remove.
@@ -58,6 +57,25 @@
         public bool IsFilled()
         {
             return _reserve == _maxReserve;
+        }
+
+        public void AverageReserveWith(InventoryComponent other)
+        {
+            int commonReserve = other.RemoveAll();
+            commonReserve += this.RemoveAll();
+            int part1 = commonReserve / 2;
+            int excess1 = other.Add(part1);
+            int excess2 = this.Add(commonReserve - part1);
+            if (excess1 > excess2)
+                this.Add(excess1);
+            else
+                other.Add(excess2);
+        }
+
+        public string GetInformation()
+        {
+            var info = "Inventory: " + _reserve + '/' + _maxReserve;
+            return info;
         }
     }
 }

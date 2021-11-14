@@ -10,6 +10,7 @@ namespace LifeSimulation.myCs.Drawer
     public class Drawer
     {
         private readonly List<Cell> _updatingCells;
+        private List<DrawableComponent> _currentDrawables;
         private Graphics _graphics;
         public int PixelSize;
         public int OffsetLeft;
@@ -22,6 +23,7 @@ namespace LifeSimulation.myCs.Drawer
             int offsetTop = 0)
         {
             _updatingCells = new List<Cell>();
+            _currentDrawables = new List<DrawableComponent>();
             _graphics = graphics;
             PixelSize = pixelSize;
             OffsetLeft = offsetLeft;
@@ -42,17 +44,20 @@ namespace LifeSimulation.myCs.Drawer
         private void UpdateCell(Cell cell)
         {
             Fill(cell.Coords[0], cell.Coords[1], Brushes.Khaki);
-            var drawables = GetDrawables(cell);
-            drawables.Sort();
-            DrawObjects(drawables, cell.Coords[0], cell.Coords[1]);
+            FillCurrentDrawables(cell);
+            DrawObjects(_currentDrawables, cell.Coords[0], cell.Coords[1]);
         }
 
-        private static List<DrawableComponent> GetDrawables(Cell cell)
+        private void FillCurrentDrawables(Cell cell)
         {
-            return cell.CurrentObjects
-                .Select(worldObject => worldObject.GetComponent<DrawableComponent>())
-                .Where(component => component != null)
-                .ToList();
+            _currentDrawables.Clear();
+            foreach (var worldObject in cell.CurrentObjects)
+            {
+                var drawable = worldObject.GetComponent<DrawableComponent>();
+                if (drawable != null)
+                    _currentDrawables.Add(drawable);
+            }
+            _currentDrawables.Sort();
         }
 
         private void DrawObjects(List<DrawableComponent> drawables, int x, int y)

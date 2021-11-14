@@ -33,22 +33,32 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         public override void Update()
         {
             base.Update();
+            if (_pregnantComponent != null && _pregnantComponent.WorldObject == null)
+                _pregnantComponent = null;
+
             if (Partner == null)
                 return;
+            
             if (Partner.WorldObject == null || Partner.WorldObject.Cell == null)
             {
                 Partner = null;
                 return;
             }
+            
             _moving.SetTarget(Partner.WorldObject);
             var sqrLength = _moving.SqrLengthToTarget();
             if (sqrLength >= 0 && sqrLength < 2)
                 _moving.WaitFor(1);
         }
 
-        public bool IsEaterOfType(MealType type)
+        public bool IsOfType(CreatureType type)
         {
-            return (type == eaterComponent.MealType);
+            return (type == creatureType);
+        }
+
+        public override bool IsReady()
+        {
+            return (base.IsReady() && Partner == null);
         }
 
         public void Mate(MaleMatingComponent partner)

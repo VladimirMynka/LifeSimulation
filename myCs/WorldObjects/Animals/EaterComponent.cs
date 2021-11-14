@@ -5,21 +5,20 @@ using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals
 {
-    public class EaterComponent : WorldObjectComponent
+    public abstract class EaterComponent : WorldObjectComponent
     {
         public int Satiety;
         public readonly int MaxSatiety;
         public MealType MealType;
         private HealthComponent _health;
 
-        private EatableComponent _mealTarget;
+        protected EatableComponent mealTarget;
         private CreatureType _creatureType;
-        private MovingComponent _moving;
 
         private int _visibility;
         private Cell _cell;
 
-        public EaterComponent(WorldObject owner, MealType mealType, int satiety) : base(owner)
+        protected EaterComponent(WorldObject owner, MealType mealType, int satiety) : base(owner)
         {
             MealType = mealType;
             Satiety = satiety;
@@ -29,7 +28,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         public override void Start()
         {
             _health = GetComponent<HealthComponent>();
-            _moving = GetComponent<MovingComponent>();
             _creatureType = GetComponent<EatableComponent>().CreatureType;
             _cell = WorldObject.Cell;
             _visibility = Defaults.AnimalVisibleArea;
@@ -39,12 +37,21 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             AddSatiety(-Defaults.AnimalSatietyDestruction);
             ChangeHealth();
-            if (!IsHungry()) return;
-            EatSmth();
-            if (_mealTarget == null) SearchMeal();
-            if (_mealTarget != null &&
-                (_mealTarget.WorldObject == null || _mealTarget.WorldObject.Cell == null))
-                _mealTarget = null;
+
+            if (!IsHungry())
+            {
+                mealTarget = null;
+                return;
+            }
+
+            EatSomething();
+            
+            if (IsHungry() && mealTarget == null) 
+                SearchMeal();
+            
+            if (mealTarget != null &&
+                (mealTarget.WorldObject == null || mealTarget.WorldObject.Cell == null))
+                mealTarget = null;
         }
 
         public void AddSatiety(int delta)
@@ -73,7 +80,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             return (Satiety <= 0);
         }
 
-        private void EatSmth()
+        protected virtual void EatSomething()
         {
             Eat(GetMeal());
         }
@@ -84,14 +91,15 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
                 meal.BeEatenBy(this);
         }
 
-        private void SearchMeal()
+        protected void SearchMeal()
         {
             var x = _cell.Coords[0];
             var y = _cell.Coords[1];
-            for (var i = 0; i < _visibility; i++)
+            for (var radius = 0; radius < _visibility; radius++)
             {
-                for (var j = 0; j < _visibility; j++)
+                for (var j = 0; j <= radius; j++)
                 {
+                    var i = radius - j;
                     var currentCell = world.GetCell(x + i, y + j);
                     if (TakeMealFrom(currentCell)) 
                         return;
@@ -128,13 +136,12 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             return false;
         }
 
-        private void SetMeal(EatableComponent meal)
+        protected virtual void SetMeal(EatableComponent meal)
         {
-            _mealTarget = meal;
-            _moving.SetTarget(meal.WorldObject);
+            mealTarget = meal;
         }
 
-        private bool CheckIEatIt(EatableComponent meal)
+        protected virtual bool CheckIEatIt(EatableComponent meal)
         {
             if (meal == null || meal.WorldObject == null || meal.WorldObject.Cell == null)
             {
@@ -147,7 +154,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             return _creatureType != meal.CreatureType;
         }
 
-        private EatableComponent GetMeal()       
+        protected virtual EatableComponent GetMeal()       
         {
             var cell = WorldObject.Cell;
             foreach (var inCellObject in cell.CurrentObjects)
@@ -159,20 +166,20 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             return null;
         }
 
-        public string GetInformation()
+        public virtual string GetInformation()
         {
             var info = "Type: " + _creatureType + '\n';
             info += "Meal type: " + MealType + '\n';
             info += "Satiety: " + Satiety + '/' + MaxSatiety + '\n';
             info += "Wants eat: ";
-            if (_mealTarget == null || 
-                _mealTarget.WorldObject == null || 
-                _mealTarget.WorldObject.Cell == null)
+            if (mealTarget == null || 
+                mealTarget.WorldObject == null || 
+                mealTarget.WorldObject.Cell == null)
                 info += "none";
             else
-                info += _mealTarget.CreatureType + " on " +
-                        _mealTarget.WorldObject.Cell.Coords[0] + ',' +
-                        _mealTarget.WorldObject.Cell.Coords[1];
+                info += mealTarget.CreatureType + " on " +
+                        mealTarget.WorldObject.Cell.Coords[0] + ',' +
+                        mealTarget.WorldObject.Cell.Coords[1];
             return info;
         }
     }

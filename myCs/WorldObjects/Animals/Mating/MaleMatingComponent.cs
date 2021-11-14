@@ -1,52 +1,39 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldObjects.Animals.Animals;
 using LifeSimulation.myCs.WorldObjects.Animals.Moving;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 {
-    public class MaleMatingComponent : MatingComponent
+    public abstract class MaleMatingComponent : MatingComponent
     {
-        private FemaleMatingComponent _partner;
-        private MovingComponent _moving;
+        protected FemaleMatingComponent partner;
         
         public MaleMatingComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) 
             : base(owner, ticksToMating)
         {
-            
-        }
-
-        public override void Start()
-        {
-            base.Start();
-            _moving = GetComponent<MovingComponent>();
         }
 
         public override void Update()
         {
             base.Update();
             if (eaterComponent.IsHungry())
-            {
-                _partner = null;
                 return;
-            }
-            if (_partner == null || 
-                _partner.WorldObject == null || 
-                _partner.WorldObject.Cell == null) 
+            if (partner == null || 
+                partner.WorldObject == null || 
+                partner.WorldObject.Cell == null) 
                 SearchPartner();
-            if (_partner != null) 
-                _moving.SetTarget(_partner.WorldObject);
-            if (_partner != null && _moving.SqrLengthToTarget() == 0)
-                Mate(_partner);
         }
 
         private void SearchPartner()
         {
             var x = cell.Coords[0];
             var y = cell.Coords[1];
-            for (var i = 0; i < visibility; i++)
+            for (var radius = 0; radius < visibility; radius++)
             {
-                for (var j = 0; j < visibility; j++)
+                for (var j = 0; j <= radius; j++)
                 {
+                    var i = radius - j;
                     var currentCell = world.GetCell(x + i, y + j);
                     if (TakePartnerFrom(currentCell)) 
                         return;
@@ -74,38 +61,37 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         {
             if (checkingCell == null) 
                 return false;
-            foreach (var wo in checkingCell.CurrentObjects)
+            foreach (var worldObject in checkingCell.CurrentObjects)
             {
-                var partner = wo.GetComponent<FemaleMatingComponent>();
-                if (partner == null) 
+                var female = GetComponentFrom(worldObject);
+                if (female == null) 
                     continue;
-                if (!CanMateWith(partner)) 
+                if (!CanMateWith(female)) 
                     break;
-                SetPartner(partner);
+                SetPartner(female);
                 
                 return true;
             }
             return false;
         }
 
-        private void SetPartner(FemaleMatingComponent partner)
+        protected abstract FemaleMatingComponent GetComponentFrom(WorldObject worldObject);
+
+        private void SetPartner(FemaleMatingComponent female)
         {
-            partner.Partner = this;
-            _partner = partner;
+            female.Partner = this;
+            partner = female;
         }
 
-        private bool CanMateWith(FemaleMatingComponent partner)
+        private bool CanMateWith(FemaleMatingComponent female)
         {
-            if (!partner.IsReady()) 
-                return false;
-            return partner.IsEaterOfType(eaterComponent.MealType);
+            return female.IsReady() && female.IsOfType(creatureType);
         }
 
-        private void Mate(FemaleMatingComponent partner)
+        protected virtual void Mate(FemaleMatingComponent female)
         {
-            partner.Mate(this);
+            female.Mate(this);
             ToWaitingStage();
-            _partner = null;
         }
 
         public override string GetInformation()
@@ -114,10 +100,10 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             info += "Gender: male \n";
             info += "Partner: ";
             
-            if (_partner == null)
+            if (partner == null || partner.WorldObject == null || partner.WorldObject.Cell == null)
                 info += "none";
             else
-                info += "on " + _partner.WorldObject.Cell.Coords[0] + ',' + _partner.WorldObject.Cell.Coords[1];
+                info += "on " + partner.WorldObject.Cell.Coords[0] + ',' + partner.WorldObject.Cell.Coords[1];
 
             return info;
         }

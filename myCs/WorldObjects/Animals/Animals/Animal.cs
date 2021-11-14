@@ -30,7 +30,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
                 isMale, afterDiedImage, layer, pregnantPeriod, byEggs));
             components.Add(new MovingComponent(this, walkingState, movingToTargetState, pace));
             components.Add(new HealthComponent(this, maxHealth));
-            components.Add(new EaterComponent(this, mealType, maxSatiety));
+            components.Add(new AnimalEaterComponent(this, mealType, maxSatiety));
             components.Add(new EatableComponent(this, creatureType, MealType.FreshMeat, Effect.None));
 
             if (mealType == MealType.Plant)

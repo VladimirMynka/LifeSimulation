@@ -27,14 +27,12 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private void PlantSeed()
         {
             if (WorldObject.Cell.CurrentObjects.Any(neighObject => neighObject is Plant || neighObject is Fruit))
-            {
                 return;
-            }
             var chance = _eaterComponent.Satiety * Defaults.AnimalPlantProbability / 100;
             var random = World.World.Random.Next(0, _eaterComponent.MaxSatiety);
             if (random < chance)
             {
-                world.AddPlant(WorldObject.Cell);
+                PlantsSpawner.SpawnRandomPlant(WorldObject.Cell);
             }
         }
     }

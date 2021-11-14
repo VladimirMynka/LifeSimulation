@@ -1,4 +1,5 @@
 ﻿using System;
+using LifeSimulation.myCs.WorldObjects.Animals;
 using LifeSimulation.myCs.WorldObjects.Animals.Animals;
 using LifeSimulation.myCs.WorldObjects.Plants.Fruits;
 using LifeSimulation.myCs.WorldObjects.Plants.Plants;
@@ -8,6 +9,7 @@ namespace LifeSimulation.myCs.World
     public class World
     {
         private const int AnimalsNormalCount = 10000;
+        private const int HumanNormalCount = 2000;
         private const int PlantsNormalCount = 5000;
 
         private readonly Cell[][] _cells;
@@ -33,10 +35,14 @@ namespace LifeSimulation.myCs.World
                     );
 
                     int rand = Random.Next(length * width);
-                    if (rand < AnimalsNormalCount) AddAnimal(i, j);
+                    if (rand < AnimalsNormalCount) 
+                        AddAnimal(i, j);
                     
                     rand = Random.Next(length * width);
                     if (rand < PlantsNormalCount) AddPlant(i, j);
+                    
+                    rand = Random.Next(length * width);
+                    if (rand < HumanNormalCount) AddHuman(i, j);
                 }
             }
         }
@@ -60,32 +66,22 @@ namespace LifeSimulation.myCs.World
 
         private void AddAnimal(int x, int y)
         {
-            AddAnimal(GetCell(x, y));
+            AnimalsSpawner.SpawnRandomAnimal(GetCell(x, y));
         }
         
-        private void AddAnimal(Cell cell)
-        {
-            foreach (var wo in cell.CurrentObjects)
-            {
-                if (wo is Animal) return;
-            }
-
-            AnimalsSpawner.SpawnRandomAnimal(cell);
-        }
-
         private void AddPlant(int x, int y)
         {
-            AddPlant(GetCell(x, y));
+            PlantsSpawner.SpawnRandomPlant(GetCell(x, y));
         }
-        
-        public void AddPlant(Cell cell)
-        {
-            foreach (var wo in cell.CurrentObjects)
-            {
-                if (wo is Plant || wo is Fruit) return;
-            }
 
-            PlantsSpawner.SpawnRandomPlant(cell);
+        private void AddHuman(int x, int y)
+        {
+            var cell = GetCell(x, y);
+            foreach (var worldObject in cell.CurrentObjects)
+            {
+                if (worldObject is Animal) return;
+            }
+            AnimalsSpawner.SpawnHumanWithRandomGender(cell);
         }
 
     }

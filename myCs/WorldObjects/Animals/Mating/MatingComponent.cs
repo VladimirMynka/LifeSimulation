@@ -1,11 +1,13 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 {
     public abstract class MatingComponent : WorldObjectComponent
     {
         protected EaterComponent eaterComponent;
+        protected CreatureType creatureType;
         private int _ticksToMating;
         private readonly int _normalTicksToMating;
 
@@ -23,6 +25,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         {
             base.Start();
             eaterComponent = WorldObject.GetComponent<EaterComponent>();
+            creatureType = WorldObject.GetComponent<EatableComponent>().CreatureType;
             cell = WorldObject.Cell;
             visibility = Defaults.AnimalVisibleArea;
         }
@@ -39,7 +42,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
                 _ticksToMating--;
         }
 
-        public bool IsReady()
+        public virtual bool IsReady()
         {
             return (_ticksToMating <= 0 && !eaterComponent.IsHungry());
         }

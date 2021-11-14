@@ -8,12 +8,18 @@ namespace LifeSimulation.myCs.WorldObjects.Eatable
         public MealType MealType;
         public readonly CreatureType CreatureType;
         private readonly Effect _effect;
+        public readonly int NutritionalValue;
 
-        public EatableComponent(WorldObject owner, CreatureType creatureType, MealType mealType,  Effect effect) : base(owner)
+        public EatableComponent(WorldObject owner, 
+            CreatureType creatureType, 
+            MealType mealType,  
+            Effect effect,
+            int nutritionalValue = Defaults.NutritionalValue) : base(owner)
         {
             CreatureType = creatureType;
             MealType = mealType;
             _effect = effect;
+            NutritionalValue = nutritionalValue;
         }
 
         public void BeEatenBy(EaterComponent eater)
@@ -37,14 +43,19 @@ namespace LifeSimulation.myCs.WorldObjects.Eatable
 
         private void AddSatiety(EaterComponent eater)
         {
-            eater.AddSatiety(Defaults.NutritionalValue);
+            eater.AddSatiety(NutritionalValue);
         }
-
+        
         private void Damage(EaterComponent eater)
         {
             if (eater == null)
                 return;
-            eater.GetComponent<HealthComponent>().AddHealth(-Defaults.PoisonDamage);
+            eater.GetComponent<HealthComponent>().AddHealth(-NutritionalValue / 2);
+        }
+
+        public bool IsPoisonous()
+        {
+            return _effect != Effect.None;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace LifeSimulation.myCs.WorldObjects
     public abstract class AgeComponent : WorldObjectComponent
     {
         protected int age;
-        protected AgeStage ageStage;
+        public AgeStage AgeStage;
         public int[] transitionalAges;
         private int _stageIndex;
         protected Effect effect;
@@ -39,13 +39,13 @@ namespace LifeSimulation.myCs.WorldObjects
 
         protected virtual void NextStage()
         {
-            if (ageStage == AgeStage.Died)
+            if (AgeStage == AgeStage.Died)
             {
                 WorldObject.Destroy();
                 return;
             }
             _stageIndex++;
-            ageStage = GetAgeStageByIndex(_stageIndex);
+            AgeStage = GetAgeStageByIndex(_stageIndex);
         }
 
         protected virtual int GetStageIndex(AgeStage stage)
@@ -61,7 +61,7 @@ namespace LifeSimulation.myCs.WorldObjects
         public virtual string GetInformation()
         {
             var info = "Age: " + age + '\n';
-            info += "Age stage: " + ageStage;
+            info += "Age stage: " + AgeStage;
 
             return info;
         }

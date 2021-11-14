@@ -1,9 +1,11 @@
 ﻿using LifeSimulation.myCs.Drawer;
 using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldObjects.Animals.Animals;
+using LifeSimulation.myCs.WorldObjects.Animals.Humans;
 using LifeSimulation.myCs.WorldObjects.Animals.Moving;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
+namespace LifeSimulation.myCs.WorldObjects.Animals
 {
     public static class AnimalsSpawner
     {
@@ -78,7 +80,17 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
                     return null;
             }
         }
-        
-        
+
+        public static Human SpawnHumanWithRandomGender(Cell cell)
+        {
+            var isMale = (World.World.Random.Next(2) == 1);
+            return SpawnHumanWithGender(cell, isMale);
+
+        }
+        public static Human SpawnHumanWithGender(Cell cell, bool isMale)
+        {
+            return new Human(cell, Pictures.Human, Pictures.Meat3,
+                4, isMale, 500, 100, 300);
+        }
     }
 }
