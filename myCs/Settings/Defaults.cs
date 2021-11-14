@@ -2,7 +2,7 @@
 {
     public static class Defaults
     {
-        public const int NutritionalValue = 10;
+        public const int NutritionalValue = 50;
         public const int PoisonDamage = 50;
         public const int SeedPeriod = 5;
         public const int PlantTeenagePeriod = 20;
@@ -13,20 +13,20 @@
         public const int FruitLivePeriod = 20;
         public const int FruitRotAge = 30;
 
-        public const int AnimalTeenagePeriod = 30;
-        public const int AnimalDiedAge = 600;
-        public const int AnimalRotAge = 650;
-        public const int AnimalEggPeriod = 50;
+        public const int AnimalTeenagePeriod = 12;
+        public const int AnimalDiedAge = 300;
+        public const int AnimalRotAge = 350;
+        public const int AnimalEggPeriod = 20;
         
         public const int AnimalHealth = 100;
         public const int AnimalHealthRegeneration = 5;
-        public const int AnimalHealthDestruction = 3;
+        public const int AnimalHealthDestruction = 1;
         public const int AnimalSatiety = 100;
-        public const int AnimalSatietyDestruction = 2;
+        public const int AnimalSatietyDestruction = 1;
         public const int AnimalVisibleArea = 10;
         public const int AnimalPlantProbability = 30;
 
-        public const int AnimalNormalTicksToMating = 10;
+        public const int AnimalNormalTicksToMating = 20;
         public const int TicksToStep = 4;
         public const int PregnantPeriod = 0;
     }

@@ -25,7 +25,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
             if (_ticksToBirthday > 0)
                 _ticksToBirthday--;
             else
-                Destroy();
+                WorldObject.Destroy();
         }
 
         protected override void OnDestroy()

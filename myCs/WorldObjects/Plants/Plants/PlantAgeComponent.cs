@@ -104,6 +104,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             if (effect != Effect.Uneatable)
             {
                 WorldObject.RemoveComponent(_eatableComponent);
+                _eatableComponent = null;
             }
             if (WorldObject != null && WorldObject.Cell != null)
                 WorldObject.Cell.ReportAboutUpdating();
@@ -113,7 +114,13 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
         {
             var info = "Type: " + CreatureType + '\n';
             info += "On eat effect: " + effect + '\n';
-            info += base.GetInformation();
+            info += "Now eatable: ";
+            if (_eatableComponent == null)
+                info += "no";
+            else
+                info += "yes";
+            info += '\n';
+                info += base.GetInformation();
             return info;
         }
     }

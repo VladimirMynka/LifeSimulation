@@ -21,7 +21,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
         {
 
             Start();
-
         }
     }
 }

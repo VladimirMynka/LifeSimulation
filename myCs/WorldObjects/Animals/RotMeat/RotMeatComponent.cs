@@ -3,11 +3,12 @@
     public class RotMeatComponent : WorldObjectComponent
     {
         private int _ticksToRot;
-        private CreatureType _creatureType;
+        private readonly CreatureType _creatureType;
 
-        public RotMeatComponent(WorldObject owner, int ticksToRot) : base(owner)
+        public RotMeatComponent(WorldObject owner, int ticksToRot, CreatureType creatureType) : base(owner)
         {
             _ticksToRot = ticksToRot;
+            _creatureType = creatureType;
         }
 
         public override void Update()
@@ -20,7 +21,7 @@
         public string GetInformation()
         {
             var info = "Type: " + _creatureType + '\n';
-            info = "Ticks to rot at all: " + _ticksToRot;
+            info += "Ticks to rot at all: " + _ticksToRot;
             return info;
         }
     }

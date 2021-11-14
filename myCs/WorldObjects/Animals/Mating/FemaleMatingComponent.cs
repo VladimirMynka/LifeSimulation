@@ -7,16 +7,18 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
     public class FemaleMatingComponent : MatingComponent
     {
         public MaleMatingComponent Partner;
+        private PregnantComponent _pregnantComponent;
         private MovingComponent _moving;
         private readonly bool _byEggs;
         private readonly int _pregnantPeriod;
         
         public FemaleMatingComponent(
             WorldObject owner, 
-            int ticksToMating = Defaults.AnimalNormalTicksToMating,
             bool byEggs = true,
-            int pregnantPeriod = Defaults.PregnantPeriod) 
-            : base(owner, ticksToMating)
+            int pregnantPeriod = Defaults.PregnantPeriod,
+            int ticksToMating = Defaults.AnimalNormalTicksToMating
+            )
+                : base(owner, ticksToMating)
         {
             _byEggs = byEggs;
             _pregnantPeriod = pregnantPeriod;
@@ -33,10 +35,15 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             base.Update();
             if (Partner == null)
                 return;
+            if (Partner.WorldObject == null || Partner.WorldObject.Cell == null)
+            {
+                Partner = null;
+                return;
+            }
             _moving.SetTarget(Partner.WorldObject);
             var sqrLength = _moving.SqrLengthToTarget();
             if (sqrLength >= 0 && sqrLength < 2)
-                _moving.WaitFor(5);
+                _moving.WaitFor(1);
         }
 
         public bool IsEaterOfType(MealType type)
@@ -53,7 +60,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 
         private void BecomePregnant()
         {
-            WorldObject.AddComponent(new PregnantComponent(WorldObject, _pregnantPeriod, _byEggs));
+            _pregnantComponent = new PregnantComponent(WorldObject, _pregnantPeriod, _byEggs);
+            WorldObject.AddComponent(_pregnantComponent);
         }
         
         public override string GetInformation()
@@ -66,6 +74,9 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
                 info += "none";
             else
                 info += "on " + Partner.WorldObject.Cell.Coords[0] + ',' + Partner.WorldObject.Cell.Coords[1];
+
+            if (_pregnantComponent != null)
+                info += '\n' + _pregnantComponent.GetInformation();
 
             return info;
         }

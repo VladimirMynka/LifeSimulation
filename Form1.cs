@@ -153,6 +153,9 @@ namespace LifeSimulation
         {
             _drawer.ZoomOnCell(_drawer.CellCoordsFromPixelCoords(e.Location));
             _drawer.DrawOffsets();
+            pixelSizeInput.Text = _drawer.PixelSize.ToString();
+            offsetLeftInput.Text = _drawer.OffsetLeft.ToString();
+            offsetTopInput.Text = _drawer.OffsetTop.ToString();
             _updateAll = true;
         }
     }

@@ -10,36 +10,25 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
             switch (creatureType)
             {
                 case CreatureType.Herbivore1:
-                    return SpawnHerbivoreEgg(cell);
+                case CreatureType.Herbivore2:
+                case CreatureType.Herbivore3:
+                    return new Egg(cell, Pictures.Egg, creatureType, 3, 20);
                 case CreatureType.Omnivore1:
-                    return SpawnOmnivoreEgg(cell);
+                case CreatureType.Omnivore2:
+                case CreatureType.Omnivore3:
+                    return new Egg(cell, Pictures.Egg, creatureType, 3, 10);
                 case CreatureType.Predator1:
-                    return SpawnPredatorEgg(cell);
+                case CreatureType.Predator2:
+                case CreatureType.Predator3:
+                    return new Egg(cell, Pictures.Egg, creatureType, 3, 20);
                 case CreatureType.Scavenger1:
-                    return SpawnScavengerEgg(cell);
+                case CreatureType.Scavenger2:
+                case CreatureType.Scavenger3:
+                    return new Egg(cell, Pictures.Egg, creatureType, 3, 15);
+
                 default:
                     return null;
             }
-        }
-        
-        public static Egg SpawnOmnivoreEgg(Cell cell)
-        {
-            return new Egg(cell, Pictures.Egg, CreatureType.Omnivore1, 3, 30);
-        }
-
-        public static Egg SpawnPredatorEgg(Cell cell)
-        {
-            return new Egg(cell, Pictures.Egg, CreatureType.Predator1, 3, 50);
-        }
-
-        public static Egg SpawnHerbivoreEgg(Cell cell)
-        {
-            return new Egg(cell, Pictures.Egg, CreatureType.Herbivore1, 3, 10);
-        }
-
-        public static Egg SpawnScavengerEgg(Cell cell)
-        {
-            return new Egg(cell, Pictures.Egg, CreatureType.Scavenger1, 3, 20);
         }
     }
 }

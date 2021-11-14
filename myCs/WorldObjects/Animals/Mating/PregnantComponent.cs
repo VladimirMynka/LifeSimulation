@@ -9,7 +9,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
     {
         private EatableComponent _eatableComponent;
         private int _ticksToBirthday;
-        private bool _byEggs;
+        private readonly bool _byEggs;
 
         public PregnantComponent(WorldObject owner, 
             int ticksToBirthday = Defaults.PregnantPeriod, 
@@ -55,6 +55,13 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             if (_eatableComponent == null) 
                 return;
             EggsSpawner.SpawnEggByType(WorldObject.Cell, _eatableComponent.CreatureType);
+        }
+
+        public string GetInformation()
+        {
+            var info = "";
+            info += "Ticks to birthday: " + _ticksToBirthday;
+            return info;
         }
     }
 }

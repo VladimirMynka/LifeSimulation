@@ -42,6 +42,9 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             if (!IsHungry()) return;
             EatSmth();
             if (_mealTarget == null) SearchMeal();
+            if (_mealTarget != null &&
+                (_mealTarget.WorldObject == null || _mealTarget.WorldObject.Cell == null))
+                _mealTarget = null;
         }
 
         public void AddSatiety(int delta)
@@ -133,8 +136,12 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         private bool CheckIEatIt(EatableComponent meal)
         {
-            if (meal == null) 
-                return false; 
+            if (meal == null || meal.WorldObject == null || meal.WorldObject.Cell == null)
+            {
+                meal = null;
+                return false;
+            }
+
             if (MealType != MealType.AllTypes && meal.MealType != MealType) 
                 return false;
             return _creatureType != meal.CreatureType;

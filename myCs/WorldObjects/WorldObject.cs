@@ -39,8 +39,8 @@ namespace LifeSimulation.myCs.WorldObjects
             evenCycle = !evenCycle;
             foreach (var component in components)
             {
-                component.Update();
                 if (_isDestroyed) return;
+                component.Update();
             }
 
             foreach (var component in _removingComponents)
@@ -53,6 +53,9 @@ namespace LifeSimulation.myCs.WorldObjects
                 components.Add(component);
                 component.Start();
             }
+            
+            _addingComponents.Clear();
+            _removingComponents.Clear();
         }
 
         public void Destroy()

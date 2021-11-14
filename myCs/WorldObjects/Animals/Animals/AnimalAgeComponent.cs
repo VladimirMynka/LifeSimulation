@@ -9,6 +9,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
     {
         private readonly bool _isMale;
         private readonly CreatureType _creatureType;
+        private int _pregnantPeriod;
+        private bool _byEggs;
         
         public AnimalAgeComponent(
             WorldObject owner,
@@ -17,17 +19,22 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
             bool isMale,
             Image image,
             int layer,
+            int pregnantPeriod,
+            bool byEggs,
             int[] transAges = null) : base(owner, effect, image, layer)
         {
             _isMale = isMale;
             ageStage = AgeStage.Adult;
             _creatureType = creatureType;
             transitionalAges = transAges;
+            _pregnantPeriod = pregnantPeriod;
+            _byEggs = byEggs;
 
-            if (transitionalAges != null && transitionalAges.Length == 2) return;
-            transitionalAges = new int[2];
+            if (transitionalAges != null && transitionalAges.Length == 3) return;
+            transitionalAges = new int[3];
             transitionalAges[0] = Defaults.AnimalTeenagePeriod;
             transitionalAges[1] = Defaults.AnimalDiedAge;
+            transitionalAges[2] = Defaults.AnimalDiedAge;
         }
 
         protected override void NextStage()
@@ -76,7 +83,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
             if (_isMale)
                 WorldObject.AddComponent(new MaleMatingComponent(WorldObject));
             else 
-                WorldObject.AddComponent(new FemaleMatingComponent(WorldObject));
+                WorldObject.AddComponent(new FemaleMatingComponent(WorldObject, _byEggs, _pregnantPeriod));
         }
 
         protected override void OnDestroy()

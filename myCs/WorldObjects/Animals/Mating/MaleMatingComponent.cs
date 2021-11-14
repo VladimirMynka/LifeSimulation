@@ -29,8 +29,14 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
                 _partner = null;
                 return;
             }
-            if (_partner == null) SearchPartner();
-            if (_partner != null) _moving.SetTarget(_partner.WorldObject);
+            if (_partner == null || 
+                _partner.WorldObject == null || 
+                _partner.WorldObject.Cell == null) 
+                SearchPartner();
+            if (_partner != null) 
+                _moving.SetTarget(_partner.WorldObject);
+            if (_partner != null && _moving.SqrLengthToTarget() == 0)
+                Mate(_partner);
         }
 
         private void SearchPartner()
@@ -50,11 +56,13 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
                         if (TakePartnerFrom(currentCell))
                             return;
                     }
-                    if (i == 0) continue;
+                    if (i == 0) 
+                        continue;
                     currentCell = world.GetCell(x - i, y + j);
                     if (TakePartnerFrom(currentCell)) 
                         return;
-                    if (j == 0) continue;
+                    if (j == 0) 
+                        continue;
                     currentCell = world.GetCell(x - i, y - j);
                     if (TakePartnerFrom(currentCell))
                         return;
@@ -64,12 +72,15 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 
         private bool TakePartnerFrom(Cell checkingCell)
         {
-            if (checkingCell == null) return false;
+            if (checkingCell == null) 
+                return false;
             foreach (var wo in checkingCell.CurrentObjects)
             {
                 var partner = wo.GetComponent<FemaleMatingComponent>();
-                if (partner == null) continue;
-                if (!CanMateWith(partner)) break;
+                if (partner == null) 
+                    continue;
+                if (!CanMateWith(partner)) 
+                    break;
                 SetPartner(partner);
                 
                 return true;
@@ -85,7 +96,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 
         private bool CanMateWith(FemaleMatingComponent partner)
         {
-            if (!partner.IsReady()) return false;
+            if (!partner.IsReady()) 
+                return false;
             return partner.IsEaterOfType(eaterComponent.MealType);
         }
 

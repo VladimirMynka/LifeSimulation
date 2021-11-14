@@ -39,12 +39,12 @@ namespace LifeSimulation.myCs.WorldObjects
 
         protected virtual void NextStage()
         {
-            _stageIndex++;
             if (ageStage == AgeStage.Died)
             {
                 WorldObject.Destroy();
                 return;
             }
+            _stageIndex++;
             ageStage = GetAgeStageByIndex(_stageIndex);
         }
 

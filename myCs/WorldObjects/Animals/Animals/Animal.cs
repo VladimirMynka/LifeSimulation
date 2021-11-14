@@ -16,6 +16,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
             int layer = 0,
             MealType mealType = MealType.AllTypes,
             bool isMale = true,
+            int pregnantPeriod = 0,
+            bool byEggs = false,
             int maxHealth = Defaults.AnimalHealth,
             int maxSatiety = Defaults.AnimalSatiety,
             WalkingState walkingState = WalkingState.UsualWalking,
@@ -24,7 +26,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
         ) : base(keeper)
         {
             components.Add(new DrawableComponent(this, image, layer));
-            components.Add(new AnimalAgeComponent(this, creatureType, Effect.None, isMale, afterDiedImage, layer));
+            components.Add(new AnimalAgeComponent(this, creatureType, Effect.None, 
+                isMale, afterDiedImage, layer, pregnantPeriod, byEggs));
             components.Add(new MovingComponent(this, walkingState, movingToTargetState, pace));
             components.Add(new HealthComponent(this, maxHealth));
             components.Add(new EaterComponent(this, mealType, maxSatiety));

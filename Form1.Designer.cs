@@ -196,7 +196,7 @@
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(70, 13);
             this.textBox8.TabIndex = 13;
-            this.textBox8.Text = "Top offset";
+            this.textBox8.Text = "Tick";
             this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox9

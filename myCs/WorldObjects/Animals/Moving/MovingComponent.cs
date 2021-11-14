@@ -43,6 +43,10 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
             base.Update();
             TryChangeStates();
             TryStep();
+            if (_target != null && _target.Cell == null)
+            {
+                _target = null;
+            }
         }
 
         private void TryChangeStates()
