@@ -49,16 +49,17 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             if (IsHungry() && mealTarget == null) 
                 SearchMeal();
             
-            if (mealTarget != null &&
-                (mealTarget.WorldObject == null || mealTarget.WorldObject.Cell == null))
+            if (CheckWereDestroyed(mealTarget))
                 mealTarget = null;
         }
 
         public void AddSatiety(int delta)
         {
             Satiety += delta;
-            if (Satiety > MaxSatiety) Satiety = MaxSatiety;
-            if (Satiety < 0) Satiety = 0;
+            if (Satiety > MaxSatiety) 
+                Satiety = MaxSatiety;
+            if (Satiety < 0) 
+                Satiety = 0;
         }
 
         private void ChangeHealth()
@@ -143,11 +144,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         protected virtual bool CheckIEatIt(EatableComponent meal)
         {
-            if (meal == null || meal.WorldObject == null || meal.WorldObject.Cell == null)
-            {
-                meal = null;
+            if (CheckWereDestroyed(meal))
                 return false;
-            }
 
             if (MealType != MealType.AllTypes && meal.MealType != MealType) 
                 return false;
@@ -172,9 +170,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             info += "Meal type: " + MealType + '\n';
             info += "Satiety: " + Satiety + '/' + MaxSatiety + '\n';
             info += "Wants eat: ";
-            if (mealTarget == null || 
-                mealTarget.WorldObject == null || 
-                mealTarget.WorldObject.Cell == null)
+            if (CheckWereDestroyed(mealTarget))
                 info += "none";
             else
                 info += mealTarget.CreatureType + " on " +

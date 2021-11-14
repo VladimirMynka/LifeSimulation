@@ -23,27 +23,30 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
             
             if (eaterComponent.IsHungry())
             {
-                partner = null;
+                DeletePartner();
                 return;
             }
             
-            if (partner != null) 
+            if (!CheckWereDestroyed(partner)) 
                 _moving.SetTarget(partner.WorldObject);
-            if (partner != null && _moving.SqrLengthToTarget() == 0)
-                Mate(partner);
         }
 
-        protected override FemaleMatingComponent GetComponentFrom(WorldObject worldObject)
+        protected override FemaleMatingComponent GetFemaleComponent(WorldObject worldObject)
         {
             return worldObject is Animal 
                 ? worldObject.GetComponent<AnimalFemaleComponent>() 
                 : null;
         }
 
+        protected override bool CanMateWith(FemaleMatingComponent female)
+        {
+            return female.IsReady() && female.IsOfType(creatureType);
+        }
+
         protected override void Mate(FemaleMatingComponent female)
         {
             base.Mate(female);
-            partner = null;
+            DeletePartner();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 
         protected override bool CheckIEatIt(EatableComponent meal)
         {
-            if (meal == null || meal.WorldObject == null || meal.WorldObject.Cell == null)
+            if (CheckWereDestroyed(meal))
                 return false;
             if (meal.CreatureType == CreatureType.Human)
                 return false;
@@ -48,7 +48,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 
         public WorldObject GetTarget()
         {
-            return mealTarget?.WorldObject;
+            return mealTarget != null ? mealTarget.WorldObject : null;
         }
     }
 }

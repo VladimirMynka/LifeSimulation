@@ -11,6 +11,18 @@
             world = owner.world;
         }
 
+        public static bool CheckWereDestroyed(WorldObjectComponent component)
+        {
+            return component == null ||
+                   component.WorldObject == null ||
+                   component.WorldObject.Cell == null;
+        }
+
+        public static bool CheckWereDestroyed(WorldObject worldObject)
+        {
+            return WorldObject.CheckWereDestroyed(worldObject);
+        }
+
         public T GetComponent<T>() where T : WorldObjectComponent
         {
             return WorldObject.GetComponent<T>();

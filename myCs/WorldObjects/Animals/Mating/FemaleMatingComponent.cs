@@ -1,6 +1,5 @@
 ﻿using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.Animals.Moving;
-using LifeSimulation.myCs.WorldObjects.Eatable;
+using LifeSimulation.myCs.World;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 {
@@ -8,7 +7,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
     {
         public MaleMatingComponent Partner;
         private PregnantComponent _pregnantComponent;
-        private MovingComponent _moving;
         private readonly bool _byEggs;
         private readonly int _pregnantPeriod;
         
@@ -23,32 +21,30 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             _byEggs = byEggs;
             _pregnantPeriod = pregnantPeriod;
         }
-
-        public override void Start()
-        {
-            base.Start();
-            _moving = GetComponent<MovingComponent>();
-        }
-
+        
         public override void Update()
         {
             base.Update();
-            if (_pregnantComponent != null && _pregnantComponent.WorldObject == null)
+            if (CheckWereDestroyed(_pregnantComponent))
                 _pregnantComponent = null;
-
-            if (Partner == null)
-                return;
             
-            if (Partner.WorldObject == null || Partner.WorldObject.Cell == null)
-            {
+            if (CheckWereDestroyed(Partner))
                 Partner = null;
-                return;
-            }
-            
-            _moving.SetTarget(Partner.WorldObject);
-            var sqrLength = _moving.SqrLengthToTarget();
-            if (sqrLength >= 0 && sqrLength < 2)
-                _moving.WaitFor(1);
+        }
+
+        protected void DeletePartner()
+        {
+            if (Partner != null)
+                Partner.DeletePartner();
+        }
+
+        public bool CheckPartnerNearly()
+        {
+            if (CheckWereDestroyed(Partner)) 
+                return false;
+            var sqrLength = 
+                Direction.SqrLength(WorldObject.Cell.Coords, Partner.WorldObject.Cell.Coords);
+            return 0 < sqrLength && sqrLength < 2;
         }
 
         public bool IsOfType(CreatureType type)
@@ -65,7 +61,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         {
             BecomePregnant();
             ToWaitingStage();
-            Partner = null;
         }
 
         private void BecomePregnant()
@@ -80,7 +75,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             info += "Gender: female \n";
             info += "Partner: ";
             
-            if (Partner == null)
+            if (CheckWereDestroyed(Partner))
                 info += "none";
             else
                 info += "on " + Partner.WorldObject.Cell.Coords[0] + ',' + Partner.WorldObject.Cell.Coords[1];

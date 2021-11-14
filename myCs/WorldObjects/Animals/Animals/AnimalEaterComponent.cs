@@ -21,7 +21,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
         public override void Update()
         {
             base.Update();
-            if (mealTarget != null)
+            if (!CheckWereDestroyed(mealTarget))
                 _moving.SetTarget(mealTarget.WorldObject);
         }
     }

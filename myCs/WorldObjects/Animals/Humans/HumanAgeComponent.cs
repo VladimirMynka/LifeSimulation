@@ -19,7 +19,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 
         protected override void AddFemaleComponent(bool byEggs, int pregnantPeriod)
         {
-            WorldObject.AddComponent(new WomanComponent(WorldObject));
+            WorldObject.AddComponent(new WomanComponent(WorldObject, pregnantPeriod));
         }
     }
 }

@@ -68,6 +68,12 @@ namespace LifeSimulation.myCs.WorldObjects
             Cell.RemoveObject(this);
             Cell = null;
         }
+        
+        public static bool CheckWereDestroyed(WorldObject worldObject)
+        {
+            return worldObject == null ||
+                   worldObject.Cell == null;
+        }
 
         public bool DestroyComponent<T>() where T : WorldObjectComponent
         {

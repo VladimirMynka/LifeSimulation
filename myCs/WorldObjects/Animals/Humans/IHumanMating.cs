@@ -2,7 +2,9 @@
 {
     public interface IHumanMating
     {
-        public int GetPriority();
-        public WorldObject GetTarget();
+        int GetPriority();
+        WorldObject GetTarget();
+        bool IsHungry();
+        bool IsVeryHungry();
     }
 }

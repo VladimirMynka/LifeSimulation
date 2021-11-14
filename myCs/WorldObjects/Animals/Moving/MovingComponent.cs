@@ -43,7 +43,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
             base.Update();
             TryChangeStates();
             TryStep();
-            if (_target != null && _target.Cell == null)
+            if (CheckWereDestroyed(_target))
             {
                 _target = null;
             }
@@ -199,20 +199,28 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
         private int[] GetRandomLeftTopDirection()
         {
             int direction = World.World.Random.Next(10);
-            if (direction < 1) return Direction.GetDirectionVector(Direction.BottomLeft);
-            if (direction < 3) return Direction.GetDirectionVector(Direction.Left);
-            if (direction < 7) return Direction.GetDirectionVector(Direction.TopLeft);
-            if (direction < 9) return Direction.GetDirectionVector(Direction.Top);
+            if (direction < 1) 
+                return Direction.GetDirectionVector(Direction.BottomLeft);
+            if (direction < 3) 
+                return Direction.GetDirectionVector(Direction.Left);
+            if (direction < 7) 
+                return Direction.GetDirectionVector(Direction.TopLeft);
+            if (direction < 9) 
+                return Direction.GetDirectionVector(Direction.Top);
             return Direction.GetDirectionVector(Direction.TopRight);
         }
         
         private int[] GetRandomRightBottomDirection()
         {
             int direction = World.World.Random.Next(10);
-            if (direction < 1) return Direction.GetDirectionVector(Direction.TopRight);
-            if (direction < 3) return Direction.GetDirectionVector(Direction.Right);
-            if (direction < 7) return Direction.GetDirectionVector(Direction.BottomRight);
-            if (direction < 9) return Direction.GetDirectionVector(Direction.Bottom);
+            if (direction < 1) 
+                return Direction.GetDirectionVector(Direction.TopRight);
+            if (direction < 3) 
+                return Direction.GetDirectionVector(Direction.Right);
+            if (direction < 7) 
+                return Direction.GetDirectionVector(Direction.BottomRight);
+            if (direction < 9) 
+                return Direction.GetDirectionVector(Direction.Bottom);
             return Direction.GetDirectionVector(Direction.BottomLeft);
         }
 
@@ -277,9 +285,14 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
 
         public int SqrLengthToTarget()
         {
-            if (_target == null || _target.Cell == null)
+            if (CheckWereDestroyed(_target))
                 return -1;
             return Direction.SqrLength(_target.Cell.Coords, _cell.Coords);
+        }
+        
+        public void WaitFor(int ticks)
+        {
+            _ticksToStep += ticks;
         }
 
         public string GetInformation()
@@ -290,17 +303,12 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
             info += "Go to target state: " + _movingToTargetState + '\n';
             info += "Target: ";
             
-            if (_target == null || _target.Cell == null)
+            if (CheckWereDestroyed(_target))
                 info += "none";
             else
                 info += "on " + _target.Cell.Coords[0] + ',' + _target.Cell.Coords[1];
             
             return info;
-        }
-
-        public void WaitFor(int ticks)
-        {
-            _ticksToStep += ticks;
         }
     }
 }

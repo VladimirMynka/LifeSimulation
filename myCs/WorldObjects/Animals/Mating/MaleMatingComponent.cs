@@ -8,8 +8,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
     public abstract class MaleMatingComponent : MatingComponent
     {
         protected FemaleMatingComponent partner;
-        
-        public MaleMatingComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) 
+
+        protected MaleMatingComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) 
             : base(owner, ticksToMating)
         {
         }
@@ -19,10 +19,16 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             base.Update();
             if (eaterComponent.IsHungry())
                 return;
-            if (partner == null || 
-                partner.WorldObject == null || 
-                partner.WorldObject.Cell == null) 
+            if (CheckWereDestroyed(partner)) 
                 SearchPartner();
+            if (CheckPartnerHere())
+                Mate(partner);
+        }
+
+        protected bool CheckPartnerHere()
+        {
+            return !CheckWereDestroyed(partner) &&
+                   Direction.CheckEqual(WorldObject.Cell.Coords, partner.WorldObject.Cell.Coords);
         }
 
         private void SearchPartner()
@@ -63,7 +69,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
                 return false;
             foreach (var worldObject in checkingCell.CurrentObjects)
             {
-                var female = GetComponentFrom(worldObject);
+                var female = GetFemaleComponent(worldObject);
                 if (female == null) 
                     continue;
                 if (!CanMateWith(female)) 
@@ -75,7 +81,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             return false;
         }
 
-        protected abstract FemaleMatingComponent GetComponentFrom(WorldObject worldObject);
+        protected abstract FemaleMatingComponent GetFemaleComponent(WorldObject worldObject);
 
         private void SetPartner(FemaleMatingComponent female)
         {
@@ -83,10 +89,15 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             partner = female;
         }
 
-        private bool CanMateWith(FemaleMatingComponent female)
+        public void DeletePartner()
         {
-            return female.IsReady() && female.IsOfType(creatureType);
+            if (partner == null)
+                return;
+            partner.Partner = null;
+            partner = null;
         }
+
+        protected abstract bool CanMateWith(FemaleMatingComponent female);
 
         protected virtual void Mate(FemaleMatingComponent female)
         {
@@ -100,10 +111,11 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             info += "Gender: male \n";
             info += "Partner: ";
             
-            if (partner == null || partner.WorldObject == null || partner.WorldObject.Cell == null)
+            if (CheckWereDestroyed(partner))
                 info += "none";
             else
-                info += "on " + partner.WorldObject.Cell.Coords[0] + ',' + partner.WorldObject.Cell.Coords[1];
+                info += "on " + partner.WorldObject.Cell.Coords[0] + 
+                        ',' + partner.WorldObject.Cell.Coords[1];
 
             return info;
         }
