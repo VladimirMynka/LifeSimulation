@@ -1,6 +1,6 @@
 ﻿namespace LifeSimulation.myCs.WorldObjects.Animals.RotMeat
 {
-    public class RotMeatComponent : WorldObjectComponent
+    public class RotMeatComponent : WorldObjectComponent, IHaveInformation
     {
         private int _ticksToRot;
         private readonly CreatureType _creatureType;

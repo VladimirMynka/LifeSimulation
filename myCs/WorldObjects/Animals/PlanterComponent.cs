@@ -1,13 +1,15 @@
 ﻿using System.Linq;
 using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.World.Weather;
 using LifeSimulation.myCs.WorldObjects.Plants.Fruits;
 using LifeSimulation.myCs.WorldObjects.Plants.Plants;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals
 {
-    public class PlanterComponent : WorldObjectComponent
+    public class PlanterComponent : WorldObjectComponent, IDependingOnWeather
     {
         private EaterComponent _eaterComponent;
+        private bool _tooCold;
         public PlanterComponent(WorldObject owner) : base(owner)
         {
         }
@@ -32,8 +34,13 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             var random = World.World.Random.Next(0, _eaterComponent.MaxSatiety);
             if (random < chance)
             {
-                PlantsSpawner.SpawnRandomPlant(WorldObject.Cell);
+                Plant.SpawnRandomPlant(WorldObject.Cell);
             }
+        }
+
+        public void ConfigureByWeather(Weather weather)
+        {
+            _tooCold = weather.GetTemperature() < 0;
         }
     }
 }

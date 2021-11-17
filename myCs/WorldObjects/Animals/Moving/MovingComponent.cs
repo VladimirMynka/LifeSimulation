@@ -3,7 +3,7 @@ using LifeSimulation.myCs.World;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
 {
-    public class MovingComponent : WorldObjectComponent
+    public class MovingComponent : WorldObjectComponent, IHaveInformation
     {
         private int _ticksToStep;
         public int Pace;
@@ -283,13 +283,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
             _speedState = SpeedState.SlowUp;
         }
 
-        public int SqrLengthToTarget()
-        {
-            if (CheckWereDestroyed(_target))
-                return -1;
-            return Direction.SqrLength(_target.Cell.Coords, _cell.Coords);
-        }
-        
         public void WaitFor(int ticks)
         {
             _ticksToStep += ticks;

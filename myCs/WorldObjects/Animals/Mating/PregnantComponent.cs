@@ -47,14 +47,14 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         {
             if (_eatableComponent == null) 
                 return;
-            AnimalsSpawner.SpawnWithRandomGender(WorldObject.Cell, _eatableComponent.CreatureType);
+            Animal.SpawnWithRandomGender(WorldObject.Cell, _eatableComponent.CreatureType);
         }
 
         private void SpawnEgg()
         {
             if (_eatableComponent == null) 
                 return;
-            EggsSpawner.SpawnEggByType(WorldObject.Cell, _eatableComponent.CreatureType);
+            Egg.SpawnEggByType(WorldObject.Cell, _eatableComponent.CreatureType);
         }
 
         public string GetInformation()

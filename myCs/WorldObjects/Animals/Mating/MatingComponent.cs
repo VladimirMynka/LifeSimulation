@@ -4,7 +4,7 @@ using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 {
-    public abstract class MatingComponent : WorldObjectComponent
+    public abstract class MatingComponent : WorldObjectComponent, IHaveInformation
     {
         protected EaterComponent eaterComponent;
         protected CreatureType creatureType;

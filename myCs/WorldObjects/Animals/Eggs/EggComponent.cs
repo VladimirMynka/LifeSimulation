@@ -3,7 +3,7 @@ using LifeSimulation.myCs.WorldObjects.Animals.Animals;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
 {
-    public class EggComponent : WorldObjectComponent
+    public class EggComponent : WorldObjectComponent, IHaveInformation
     {
         private int _ticksToBirthday;
         private readonly CreatureType _creatureType;
@@ -30,13 +30,13 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Eggs
 
         protected override void OnDestroy()
         {
-            AnimalsSpawner.SpawnWithRandomGender(WorldObject.Cell, _creatureType);
+            Animal.SpawnWithRandomGender(WorldObject.Cell, _creatureType);
         }
 
         public string GetInformation()
         {
             var info = "Type: " + _creatureType + '\n';
-            info = "Ticks to birthday: " + _ticksToBirthday;
+            info += "Ticks to birthday: " + _ticksToBirthday;
             return info;
         }
     }

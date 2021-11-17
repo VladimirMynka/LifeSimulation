@@ -1,5 +1,4 @@
-﻿using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.Animals.Moving;
+﻿using LifeSimulation.myCs.WorldObjects.Animals.Moving;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Animals

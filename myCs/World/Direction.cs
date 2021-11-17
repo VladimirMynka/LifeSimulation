@@ -48,9 +48,11 @@ namespace LifeSimulation.myCs.World
         public static int[] GetOrthogonalDirection(int[] vector)
         {
             var newVector = GetDirectionVector(vector);
-            if ((newVector[0] == newVector[1] || newVector[0] == -newVector[1]) && 
-                newVector[0] != 0) 
-                newVector[1] = 0;
+            if ((newVector[0] != newVector[1] && newVector[0] != -newVector[1]) || newVector[0] == 0) 
+                return newVector;
+            
+            var i = World.Random.Next(2);
+            newVector[i] = 0;
             return newVector;
         }
         
@@ -99,6 +101,18 @@ namespace LifeSimulation.myCs.World
             int x = point1[0] - point2[0];
             int y = point1[1] - point2[1];
             return x * x + y * y;
+        }
+
+        public static bool CheckInRectangle(int[] coords, int x1, int y1, int x2, int y2)
+        {
+            return x1 <= coords[0] && coords[0] <= x2 &&
+                   y1 <= coords[1] && coords[1] <= y2;
+        }
+        
+        public static bool CheckInSquare(int[] coords, int x, int y, int length)
+        {
+            return x <= coords[0] && coords[0] <= x + length &&
+                   y <= coords[1] && coords[1] <= y + length;
         }
     }
 }

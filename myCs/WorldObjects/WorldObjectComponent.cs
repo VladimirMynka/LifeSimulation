@@ -1,4 +1,6 @@
-﻿namespace LifeSimulation.myCs.WorldObjects
+﻿using System.Collections.Generic;
+
+namespace LifeSimulation.myCs.WorldObjects
 {
     public abstract class WorldObjectComponent
     {
@@ -26,6 +28,11 @@
         public T GetComponent<T>() where T : WorldObjectComponent
         {
             return WorldObject.GetComponent<T>();
+        }
+        
+        public List<WorldObjectComponent> GetComponents<T>()
+        {
+            return WorldObject.GetComponents<T>();
         }
 
         public void Destroy()

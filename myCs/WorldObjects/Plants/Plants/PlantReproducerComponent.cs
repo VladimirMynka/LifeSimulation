@@ -45,12 +45,12 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
 
         private void SpawnPlant(Cell cell)
         {
-            PlantsSpawner.SpawnPlantByType(cell, _plantAgeComponent.CreatureType);
+            Plant.SpawnPlantByType(cell, _plantAgeComponent.CreatureType);
         }
 
         private void SpawnFruit(Cell cell)
         {
-            FruitsSpawner.SpawnFruitByType(cell, _plantAgeComponent.CreatureType);
+            Fruit.SpawnFruitByType(cell, _plantAgeComponent.CreatureType);
         }
     }
 }

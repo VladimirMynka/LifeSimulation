@@ -1,5 +1,4 @@
-﻿using LifeSimulation.myCs.WorldObjects.Animals.Animals;
-using LifeSimulation.myCs.WorldObjects.Animals.Mating;
+﻿using LifeSimulation.myCs.WorldObjects.Animals.Mating;
 using LifeSimulation.myCs.WorldObjects.Animals.Moving;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals.Humans

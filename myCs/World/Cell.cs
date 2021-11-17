@@ -48,7 +48,7 @@ namespace LifeSimulation.myCs.World
             _wereUpdated = false;
         }
 
-        public void ApplyChanges()
+        private void ApplyChanges()
         {
             foreach (var worldObject in _removingObjects)
             {

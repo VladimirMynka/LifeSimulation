@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using LifeSimulation.myCs.Drawer;
 using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
@@ -6,7 +7,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 {
     public class Fruit : WorldObject
     {
-        public Fruit(
+        private Fruit(
             Cell keeper, 
             Image image,
             int layer,
@@ -19,6 +20,21 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
             components.Add(new RotComponent(this, creatureType));
             components.Add(new FruitInformationComponent(this));
             Start();
+        }
+        
+        public static Fruit SpawnFruitByType(Cell cell, CreatureType creatureType)
+        {
+            switch (creatureType)
+            {
+                case CreatureType.EatableGreenPlant:
+                    return new Fruit(cell, Pictures.Fruit, 3, creatureType, Effect.None);
+                case CreatureType.PoisonousPurplePlant:
+                    return new Fruit(cell, Pictures.Fruit, 3, creatureType, Effect.Heart);
+                case CreatureType.UneatableBrownPlant:
+                    return new Fruit(cell, Pictures.Fruit, 3, creatureType, Effect.Uneatable);
+                default:
+                    return null;
+            }
         }
     }
 }

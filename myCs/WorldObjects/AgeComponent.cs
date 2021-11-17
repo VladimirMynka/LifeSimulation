@@ -3,7 +3,7 @@ using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects
 {
-    public abstract class AgeComponent : WorldObjectComponent
+    public abstract class AgeComponent : WorldObjectComponent, IHaveInformation
     {
         protected int age;
         public AgeStage AgeStage;

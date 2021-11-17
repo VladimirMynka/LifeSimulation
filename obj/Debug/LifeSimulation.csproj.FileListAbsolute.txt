@@ -22,3 +22,12 @@ F:\life simulation\LifeSimulation1\bin\Debug\LifeSimulation.exe.config
 F:\life simulation\LifeSimulation1\bin\Debug\LifeSimulation.exe
 F:\life simulation\LifeSimulation1\bin\Debug\LifeSimulation.pdb
 F:\life simulation\LifeSimulation1\obj\Debug\LifeSimulation.pdb
+F:\Hw\OOP\life simulation\LifeSimulation1\bin\Debug\LifeSimulation.exe.config
+F:\Hw\OOP\life simulation\LifeSimulation1\bin\Debug\LifeSimulation.exe
+F:\Hw\OOP\life simulation\LifeSimulation1\bin\Debug\LifeSimulation.pdb
+F:\Hw\OOP\life simulation\LifeSimulation1\obj\Debug\LifeSimulation.csprojResolveAssemblyReference.cache
+F:\Hw\OOP\life simulation\LifeSimulation1\obj\Debug\LifeSimulation.MyForm.resources
+F:\Hw\OOP\life simulation\LifeSimulation1\obj\Debug\LifeSimulation.Properties.Resources.resources
+F:\Hw\OOP\life simulation\LifeSimulation1\obj\Debug\LifeSimulation.csproj.GenerateResource.Cache
+F:\Hw\OOP\life simulation\LifeSimulation1\obj\Debug\LifeSimulation.exe
+F:\Hw\OOP\life simulation\LifeSimulation1\obj\Debug\LifeSimulation.pdb

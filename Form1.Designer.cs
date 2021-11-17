@@ -1,6 +1,6 @@
 ﻿namespace LifeSimulation
 {
-    partial class Form1
+    partial class MyForm
     {
         /// <summary>
         /// Required designer variable.
@@ -269,8 +269,6 @@
 
         private System.Windows.Forms.RichTextBox InfoTextBox;
 
-        private System.Windows.Forms.RichTextBox richTextBox1;
-
         private System.Windows.Forms.TextBox textBox10;
 
         private System.Windows.Forms.TextBox textBox8;
@@ -285,8 +283,6 @@
         private System.Windows.Forms.TextBox textBox3;
 
         private System.Windows.Forms.TextBox textBox2;
-
-        private System.Windows.Forms.TextBox textBox1;
 
         private System.Windows.Forms.Button button1;
 

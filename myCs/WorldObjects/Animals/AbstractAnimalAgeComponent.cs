@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.Animals.Mating;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals

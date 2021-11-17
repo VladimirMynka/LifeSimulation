@@ -3,37 +3,37 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using LifeSimulation.myCs.Drawer;
+using LifeSimulation.myCs.Informer;
 using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects;
 
 namespace LifeSimulation
 {
-    public partial class Form1 : Form
+    public partial class MyForm : Form
     {
         private World _world;
         private Bitmap _bitmap;
         private Graphics _graphics;
         private Drawer _drawer;
-        private bool _updateAll = false;
+        private Informant _informant;
         private bool _pause = false;
-        private List<InformationComponent> _informationComponents;
-        public Form1()
+        public MyForm()
         {
             InitializeComponent();
-            Init();
+            MyInitialize();
         }
 
-        private void Init()
+        private void MyInitialize()
         {
             timer1.Interval = 1000;
             timer1.Tick += new EventHandler(Update);
             timer1.Enabled = true;
 
-            _informationComponents = new List<InformationComponent>();
             _bitmap = new Bitmap(1000, 1000);
             _graphics = Graphics.FromImage(_bitmap);
             _drawer = new Drawer(_graphics);
             _world = new World(1000, 1000, _drawer);
+            _informant = new Informant(_drawer, _world, InfoTextBox);
             _drawer.Update();
         }
 
@@ -42,22 +42,11 @@ namespace LifeSimulation
             if (_world == null || _pause) return;
             _graphics = Graphics.FromImage(_bitmap);
             _drawer.UpdateGraphics(_graphics);
-            _world.Update(_updateAll);
-            UpdateInfo();
-            _updateAll = false;
+            _world.Update();
+            _informant.Update();
+            _drawer.UpdateAll = false;
             _drawer.Update();
             pictureBox1.Image = _bitmap;
-        }
-
-        private void UpdateInfo()
-        {
-            var info = "";
-            foreach (var informationComponent in _informationComponents)
-            {
-                info += informationComponent.Information += "\n----------\n";
-            }
-
-            InfoTextBox.Text = info;
         }
 
         private void pixelSizeInput_TextChanged(object sender, EventArgs e)
@@ -68,7 +57,6 @@ namespace LifeSimulation
                 if (newSize <= 0) return;
                 _drawer.PixelSize = newSize;
                 _drawer.DrawOffsets();
-                _updateAll = true;
             }
             catch
             {
@@ -83,7 +71,6 @@ namespace LifeSimulation
                 if (offsetLeftInput.Text == "") return;
                 _drawer.OffsetLeft = Convert.ToInt32(offsetLeftInput.Text);
                 _drawer.DrawOffsets();
-                _updateAll = true;
             }
             catch
             {
@@ -98,7 +85,6 @@ namespace LifeSimulation
                 if (offsetTopInput.Text == "") return;
                 _drawer.OffsetTop = Convert.ToInt32(offsetTopInput.Text);
                 _drawer.DrawOffsets();
-                _updateAll = true;
             }
             catch
             {
@@ -135,18 +121,7 @@ namespace LifeSimulation
         
         private void world_Click(object sender, MouseEventArgs e)
         {
-            var coords = _drawer.CellCoordsFromPixelCoords(e.Location);
-            foreach (var informationComponent in _informationComponents)
-            {
-                informationComponent.Close();
-            }
-            
-            _informationComponents.Clear();
-            _informationComponents = _world.GetCell(coords.X, coords.Y).GetAllInformation();
-            foreach (var informationComponent in _informationComponents)
-            {
-                informationComponent.Open();
-            }
+            _informant.UpdateComponents(e.Location);
         }
         
         private void world_DoubleClick(object sender, MouseEventArgs e)
@@ -156,7 +131,6 @@ namespace LifeSimulation
             pixelSizeInput.Text = _drawer.PixelSize.ToString();
             offsetLeftInput.Text = _drawer.OffsetLeft.ToString();
             offsetTopInput.Text = _drawer.OffsetTop.ToString();
-            _updateAll = true;
         }
     }
 }

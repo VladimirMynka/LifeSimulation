@@ -1,6 +1,6 @@
 ﻿namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 {
-    public class InventoryComponent : WorldObjectComponent
+    public class InventoryComponent : WorldObjectComponent, IHaveInformation
     {
         private int _reserve;
         private readonly int _maxReserve;

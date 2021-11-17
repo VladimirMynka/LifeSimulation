@@ -17,7 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 
         private void SpawnPlant()
         {
-            PlantsSpawner.SpawnPlantByType(WorldObject.Cell, _creatureType);
+            Plant.SpawnPlantByType(WorldObject.Cell, _creatureType);
         }
     }
 }

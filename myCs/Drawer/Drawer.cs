@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects;
@@ -10,11 +9,14 @@ namespace LifeSimulation.myCs.Drawer
     public class Drawer
     {
         private readonly List<Cell> _updatingCells;
-        private List<DrawableComponent> _currentDrawables;
+        private readonly List<DrawableComponent> _currentDrawables;
         private Graphics _graphics;
         public int PixelSize;
         public int OffsetLeft;
         public int OffsetTop;
+
+        private Brush _brush = Brushes.Bisque;
+        public bool UpdateAll;
 
         public Drawer(
             Graphics graphics, 
@@ -43,7 +45,7 @@ namespace LifeSimulation.myCs.Drawer
 
         private void UpdateCell(Cell cell)
         {
-            Fill(cell.Coords[0], cell.Coords[1], Brushes.Khaki);
+            Fill(cell.Coords[0], cell.Coords[1], _brush);
             FillCurrentDrawables(cell);
             DrawObjects(_currentDrawables, cell.Coords[0], cell.Coords[1]);
         }
@@ -98,6 +100,7 @@ namespace LifeSimulation.myCs.Drawer
             DrawBottomOffset();
             DrawTopOffset();
             DrawRightOffset();
+            UpdateAll = true;
         }
 
         private void DrawLeftOffset()
@@ -170,7 +173,7 @@ namespace LifeSimulation.myCs.Drawer
             ClearList();
         }
 
-        public void ClearList()
+        private void ClearList()
         {
             _updatingCells.Clear();
         }
@@ -216,6 +219,27 @@ namespace LifeSimulation.myCs.Drawer
         {
             OffsetLeft = coords.X - 500 / PixelSize;
             OffsetTop = coords.Y - 500 / PixelSize;
+        }
+
+        public int GetX()
+        {
+            return OffsetLeft;
+        }
+
+        public int GetY()
+        {
+            return OffsetTop;
+        }
+
+        public int GetLength()
+        {
+            return 1000 / PixelSize;
+        }
+
+        public void SetBackground(Brush brush)
+        {
+            _brush = brush;
+            UpdateAll = true;
         }
     }
 }

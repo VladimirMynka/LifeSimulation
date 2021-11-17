@@ -1,11 +1,11 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.World;
-using LifeSimulation.myCs.WorldObjects.Animals.Moving;
+using LifeSimulation.myCs.World.Weather;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals
 {
-    public abstract class EaterComponent : WorldObjectComponent
+    public abstract class EaterComponent : WorldObjectComponent, IHaveInformation, IDependingOnWeather
     {
         public int Satiety;
         public readonly int MaxSatiety;
@@ -16,13 +16,21 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         private CreatureType _creatureType;
 
         private int _visibility;
+        private int _normalVisibility;
         private Cell _cell;
 
-        protected EaterComponent(WorldObject owner, MealType mealType, int satiety) : base(owner)
+        protected EaterComponent(
+            WorldObject owner, 
+            MealType mealType, 
+            int satiety, 
+            int visibility = Defaults.AnimalVisibleArea) 
+            : base(owner)
         {
             MealType = mealType;
             Satiety = satiety;
             MaxSatiety = satiety;
+            _visibility = visibility;
+            _normalVisibility = visibility;
         }
 
         public override void Start()
@@ -30,7 +38,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             _health = GetComponent<HealthComponent>();
             _creatureType = GetComponent<EatableComponent>().CreatureType;
             _cell = WorldObject.Cell;
-            _visibility = Defaults.AnimalVisibleArea;
         }
 
         public override void Update()
@@ -67,8 +74,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             if (_health == null) return;
             if (IsVeryHungry())
                 _health.AddHealth(-Defaults.AnimalHealthDestruction);
-            else
-                _health.AddHealth(Defaults.AnimalHealthRegeneration);
         }
         
         public bool IsHungry()
@@ -178,5 +183,12 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
                         mealTarget.WorldObject.Cell.Coords[1];
             return info;
         }
+
+        public void ConfigureByWeather(Weather weather)
+        {
+            
+        }
+        
+        
     }
 }
