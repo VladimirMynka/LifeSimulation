@@ -17,6 +17,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
             bool isMale = true,
             int maxHealth = Defaults.AnimalHealth,
             int regeneration = Defaults.AnimalHealthRegeneration,
+            int satietyDestruction = Defaults.AnimalSatietyDestruction,
             int maxSatiety = Defaults.AnimalSatiety,
             int maxReserve = Defaults.AnimalSatiety,
             int visibility = Defaults.AnimalVisibleArea
@@ -25,7 +26,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
         {
             components.Add(new DrawableComponent(this, image, layer));
             components.Add(new InventoryComponent(this, maxReserve));
-            components.Add(new HumanEaterComponent(this, MealType.AllTypes, maxSatiety));
+            components.Add(new HumanEaterComponent(this, MealType.AllTypes, maxSatiety, satietyDestruction));
             components.Add(new HealthComponent(this, maxHealth, regeneration));
             components.Add(new VisibilityComponent(this, visibility));
             components.Add(new HumanAgeComponent(this, isMale, afterDiedImage, layer, 20));
@@ -44,7 +45,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
         public static Human SpawnHumanWithGender(Cell cell, bool isMale)
         {
             return new Human(cell, Pictures.Human, Pictures.Meat3,
-                4, isMale, 500, 2, 100, 300, 10);
+                4, isMale, 500, 2, 1, 100, 300, 10);
         }
     }
 }

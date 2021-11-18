@@ -7,7 +7,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
     {
         private MovingComponent _moving;
 
-        public AnimalEaterComponent(WorldObject owner, MealType mealType, int satiety) : base(owner, mealType, satiety)
+        public AnimalEaterComponent(WorldObject owner, MealType mealType, int satiety, int destruction) 
+            : base(owner, mealType, satiety, destruction)
         {
         }
 

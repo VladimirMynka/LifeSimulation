@@ -2,6 +2,7 @@
 using LifeSimulation.myCs.Drawer;
 using LifeSimulation.myCs.World;
 using LifeSimulation.myCs.WorldObjects.Eatable;
+using LifeSimulation.myCs.WorldObjects.Plants.Plants;
 
 namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
 {
@@ -18,6 +19,8 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Fruits
         {
             components.Add(new FruitAgeComponent(this, creatureType, effect, image, layer, transAges));
             components.Add(new RotComponent(this, creatureType));
+            components.Add(new PlantOnWeatherComponent(this, false));
+            components.Add(new DependingOnWeatherComponent(this));
             components.Add(new FruitInformationComponent(this));
             Start();
         }

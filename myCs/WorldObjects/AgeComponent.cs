@@ -12,6 +12,7 @@ namespace LifeSimulation.myCs.WorldObjects
         protected Effect effect;
         protected Image image;
         protected int layer;
+        private bool pause;
 
         protected AgeComponent(
             WorldObject owner, 
@@ -32,6 +33,8 @@ namespace LifeSimulation.myCs.WorldObjects
 
         public override void Update()
         {
+            if (pause)
+                return;
             age++;
             if (age > transitionalAges[_stageIndex])
                 NextStage();
@@ -64,6 +67,16 @@ namespace LifeSimulation.myCs.WorldObjects
             info += "Age stage: " + AgeStage;
 
             return info;
+        }
+
+        public void Wait()
+        {
+            pause = true;
+        }
+
+        public void StopWait()
+        {
+            pause = false;
         }
     }
 }

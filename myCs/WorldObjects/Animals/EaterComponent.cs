@@ -7,8 +7,10 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 {
     public abstract class EaterComponent : WorldObjectComponent, IHaveInformation, IDependingOnWeather
     {
-        public int Satiety;
-        public readonly int MaxSatiety;
+        protected int satiety;
+        protected readonly int maxSatiety;
+        private int _destruction;
+        private readonly int _normalDestruction;
         public MealType MealType;
         private HealthComponent _health;
 
@@ -21,12 +23,15 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         protected EaterComponent(
             WorldObject owner, 
             MealType mealType, 
-            int satiety) 
+            int satiety,
+            int destruction) 
             : base(owner)
         {
             MealType = mealType;
-            Satiety = satiety;
-            MaxSatiety = satiety;
+            this.satiety = satiety;
+            maxSatiety = satiety;
+            _destruction = destruction;
+            _normalDestruction = destruction;
         }
 
         public override void Start()
@@ -39,7 +44,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         public override void Update()
         {
-            AddSatiety(-Defaults.AnimalSatietyDestruction);
+            AddSatiety(-_destruction);
             ChangeHealth();
 
             if (!IsHungry())
@@ -59,11 +64,11 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         public void AddSatiety(int delta)
         {
-            Satiety += delta;
-            if (Satiety > MaxSatiety) 
-                Satiety = MaxSatiety;
-            if (Satiety < 0) 
-                Satiety = 0;
+            satiety += delta;
+            if (satiety > maxSatiety) 
+                satiety = maxSatiety;
+            if (satiety < 0) 
+                satiety = 0;
         }
 
         private void ChangeHealth()
@@ -75,12 +80,12 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         
         public bool IsHungry()
         {
-            return (Satiety <= 2 * MaxSatiety / 3);
+            return (satiety <= 2 * maxSatiety / 3);
         }
 
         public bool IsVeryHungry()
         {
-            return (Satiety <= 0);
+            return (satiety <= 0);
         }
 
         protected virtual void EatSomething()
@@ -170,7 +175,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             var info = "Type: " + _creatureType + '\n';
             info += "Meal type: " + MealType + '\n';
-            info += "Satiety: " + Satiety + '/' + MaxSatiety + '\n';
+            info += "Satiety: " + satiety + '/' + maxSatiety + '\n';
             info += "Wants eat: ";
             if (CheckWereDestroyed(mealTarget))
                 info += "none";
@@ -183,9 +188,24 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         public void ConfigureByWeather(Weather weather)
         {
-            
+            var t = weather.GetTemperature();
+            if (t <= -30)
+                _destruction = 2 * _normalDestruction;
+            else if (t >= 30)
+                _destruction = _normalDestruction / 2;
+            else
+                _destruction = _normalDestruction;
         }
-        
-        
+
+
+        public int GetSatiety()
+        {
+            return satiety;
+        }
+
+        public int GetMaxSatiety()
+        {
+            return maxSatiety;
+        }
     }
 }

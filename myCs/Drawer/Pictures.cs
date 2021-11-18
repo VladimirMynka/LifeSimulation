@@ -38,6 +38,8 @@ namespace LifeSimulation.myCs.Drawer
         public static Image DeadPlant = Image.FromFile(Path + @"plants\dead-plant.png");
 
         public static Image Fruit = Image.FromFile(Path + @"plants\fruit.png");
+
+        public static Image Sleeper = Image.FromFile(Path + @"animals\sleeper.png");
         
 
 

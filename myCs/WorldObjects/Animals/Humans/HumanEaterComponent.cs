@@ -5,8 +5,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
     public class HumanEaterComponent : EaterComponent
     {
         private InventoryComponent _inventory;
-        public HumanEaterComponent(WorldObject owner, MealType mealType, int satiety) 
-            : base(owner, mealType, satiety)
+        public HumanEaterComponent(WorldObject owner, MealType mealType, int satiety, int destruction) 
+            : base(owner, mealType, satiety, destruction)
         {
         }
 
@@ -18,7 +18,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 
         protected override void EatSomething()
         {
-            AddSatiety(_inventory.Remove(MaxSatiety - Satiety));
+            AddSatiety(_inventory.Remove(maxSatiety - satiety));
             if (_inventory.IsFilled())
                 return;
             CollectFrom(GetMeal());

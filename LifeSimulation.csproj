@@ -64,10 +64,11 @@
     <Compile Include="myCs\WorldObjects\Animals\Animals\Animal.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalEaterComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalFemaleComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalInformationComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\Animals\AnimalMaleComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Animals\Mating\AnimalFemaleComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Animals\Mating\AnimalMaleComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Animals\PetComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Animals\SleeperComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\EaterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Eggs\EggInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Eggs\Egg.cs" />
@@ -78,11 +79,11 @@
     <Compile Include="myCs\WorldObjects\Animals\Humans\HumanAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Humans\HumanEaterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Humans\HumanInformationComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\Humans\IHumanMating.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\Humans\ManComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Humans\InventoryComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Humans\Mating\IHumanMating.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Humans\Mating\ManComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Animals\Humans\Mating\WomanComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Humans\PetsOwnerComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Animals\Humans\WomanComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Mating\FemaleMatingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Mating\MaleMatingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Animals\Mating\MatingComponent.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="myCs\WorldObjects\Plants\Fruits\FruitAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Fruits\FruitInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Fruits\RotComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Plants\Plants\PlantOnWeatherComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plants\Plant.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plants\PlantAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Plants\Plants\PlantReproducerComponent.cs" />

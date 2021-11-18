@@ -13,10 +13,13 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             CreatureType creatureType,
             int layer = 0,
             Effect effect = Effect.None, 
+            bool isAnnual = false,
             int[] transAges = null) 
             : base(keeper)
         {
             components.Add(new PlantAgeComponent(this, creatureType, effect, image, layer, transAges));
+            components.Add(new PlantOnWeatherComponent(this, isAnnual));
+            components.Add(new DependingOnWeatherComponent(this));
             components.Add(new PlantInformationComponent(this));
             Start();
         }
@@ -32,11 +35,11 @@ namespace LifeSimulation.myCs.WorldObjects.Plants.Plants
             switch (creatureType)
             {
                 case CreatureType.EatableGreenPlant:
-                    return new Plant(cell, Pictures.Plant, creatureType, 2, Effect.None);
+                    return new Plant(cell, Pictures.Plant, creatureType, 2, Effect.None, true);
                 case CreatureType.PoisonousPurplePlant:
-                    return new Plant(cell, Pictures.PoisonousPlant, creatureType, 2, Effect.Heart);
+                    return new Plant(cell, Pictures.PoisonousPlant, creatureType, 2, Effect.Heart, true);
                 case CreatureType.UneatableBrownPlant:
-                    return new Plant(cell, Pictures.UneatablePlant, creatureType, 2, Effect.Uneatable);
+                    return new Plant(cell, Pictures.UneatablePlant, creatureType, 2, Effect.Uneatable, false);
                 default:
                     return null;
             }
