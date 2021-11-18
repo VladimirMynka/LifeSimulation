@@ -16,15 +16,18 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
             int layer = 0,
             bool isMale = true,
             int maxHealth = Defaults.AnimalHealth,
+            int regeneration = Defaults.AnimalHealthRegeneration,
             int maxSatiety = Defaults.AnimalSatiety,
-            int maxReserve = Defaults.AnimalSatiety
+            int maxReserve = Defaults.AnimalSatiety,
+            int visibility = Defaults.AnimalVisibleArea
             
         ) : base(keeper)
         {
             components.Add(new DrawableComponent(this, image, layer));
             components.Add(new InventoryComponent(this, maxReserve));
             components.Add(new HumanEaterComponent(this, MealType.AllTypes, maxSatiety));
-            components.Add(new HealthComponent(this, maxHealth));
+            components.Add(new HealthComponent(this, maxHealth, regeneration));
+            components.Add(new VisibilityComponent(this, visibility));
             components.Add(new HumanAgeComponent(this, isMale, afterDiedImage, layer, 20));
             components.Add(new EatableComponent(this, CreatureType.Human, MealType.FreshMeat, Effect.None));
             components.Add(new MovingComponent(this));
@@ -41,7 +44,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
         public static Human SpawnHumanWithGender(Cell cell, bool isMale)
         {
             return new Human(cell, Pictures.Human, Pictures.Meat3,
-                4, isMale, 500, 100, 300);
+                4, isMale, 500, 2, 100, 300, 10);
         }
     }
 }

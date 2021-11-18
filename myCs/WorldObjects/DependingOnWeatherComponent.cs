@@ -3,12 +3,12 @@ using LifeSimulation.myCs.World.Weather;
 
 namespace LifeSimulation.myCs.WorldObjects
 {
-    public abstract class DependingOnWeatherComponent : WorldObjectComponent
+    public class DependingOnWeatherComponent : WorldObjectComponent
     {
         private readonly List<IDependingOnWeather> _dependingComponents;
         private Weather _weather;
 
-        protected DependingOnWeatherComponent(WorldObject owner) : base(owner)
+        public DependingOnWeatherComponent(WorldObject owner) : base(owner)
         {
             _dependingComponents = new List<IDependingOnWeather>();
         }

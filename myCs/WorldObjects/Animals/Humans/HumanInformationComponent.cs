@@ -7,6 +7,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
     {
         private InventoryComponent _inventory;
         private HumanEaterComponent _humanEaterComponent;
+        private VisibilityComponent _visibilityComponent;
         private HealthComponent _healthComponent;
         private HumanAgeComponent _humanAgeComponent;
         private MatingComponent _matingComponent;
@@ -17,11 +18,13 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 
         public override void Start()
         {
+            base.Start();
             _inventory = GetComponent<InventoryComponent>();
             _humanEaterComponent = GetComponent<HumanEaterComponent>();
             _healthComponent = GetComponent<HealthComponent>();
             _humanAgeComponent = GetComponent<HumanAgeComponent>();
             _movingComponent = GetComponent<MovingComponent>();
+            _visibilityComponent = GetComponent<VisibilityComponent>();
         }
 
         protected override string GetAllInformation()
@@ -30,6 +33,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
             info += _humanEaterComponent.GetInformation() + "\n\n";
             info += _inventory.GetInformation() + "\n\n";
             info += _healthComponent.GetInformation() + "\n\n";
+            info += _visibilityComponent.GetInformation() + "\n\n";
             info += _humanAgeComponent.GetInformation() + "\n\n";
             info += _movingComponent.GetInformation() + "\n\n";
             if (_matingComponent == null)

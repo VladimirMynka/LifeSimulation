@@ -3,15 +3,20 @@ using LifeSimulation.myCs.World.Weather;
 
 namespace LifeSimulation.myCs.WorldObjects.Animals
 {
-    public class VisibilityComponent : WorldObjectComponent, IDependingOnWeather
+    public class VisibilityComponent : WorldObjectComponent, IDependingOnWeather, IHaveInformation
     {
         private int _visibility;
-        private int _normalVisibility;
+        private readonly int _normalVisibility;
         
         public VisibilityComponent(WorldObject owner, int visibility) : base(owner)
         {
             _visibility = visibility;
             _normalVisibility = visibility;
+        }
+
+        public int GetVisibility()
+        {
+            return _visibility;
         }
         
         public void ConfigureByWeather(Weather weather)
@@ -28,6 +33,14 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
                     _visibility = _normalVisibility / 4;
                     return;
             }
+        }
+        
+        //delegate bool ItIsGood(
+        public string GetInformation()
+        {
+            var info = "";
+            info += "Visibility: " + _visibility;
+            return info;
         }
     }
 }

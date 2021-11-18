@@ -33,7 +33,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         {
             var x = cell.Coords[0];
             var y = cell.Coords[1];
-            for (var radius = 0; radius < visibility; radius++)
+            for (var radius = 0; radius < visibilityComponent.GetVisibility(); radius++)
             {
                 for (var j = 0; j <= radius; j++)
                 {

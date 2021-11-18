@@ -15,27 +15,24 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         protected EatableComponent mealTarget;
         private CreatureType _creatureType;
 
-        private int _visibility;
-        private int _normalVisibility;
+        private VisibilityComponent _visibilityComponent;
         private Cell _cell;
 
         protected EaterComponent(
             WorldObject owner, 
             MealType mealType, 
-            int satiety, 
-            int visibility = Defaults.AnimalVisibleArea) 
+            int satiety) 
             : base(owner)
         {
             MealType = mealType;
             Satiety = satiety;
             MaxSatiety = satiety;
-            _visibility = visibility;
-            _normalVisibility = visibility;
         }
 
         public override void Start()
         {
             _health = GetComponent<HealthComponent>();
+            _visibilityComponent = GetComponent<VisibilityComponent>();
             _creatureType = GetComponent<EatableComponent>().CreatureType;
             _cell = WorldObject.Cell;
         }
@@ -101,7 +98,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
         {
             var x = _cell.Coords[0];
             var y = _cell.Coords[1];
-            for (var radius = 0; radius < _visibility; radius++)
+            for (var radius = 0; radius < _visibilityComponent.GetVisibility(); radius++)
             {
                 for (var j = 0; j <= radius; j++)
                 {

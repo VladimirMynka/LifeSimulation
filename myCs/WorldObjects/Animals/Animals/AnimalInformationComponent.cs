@@ -10,6 +10,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
         private AnimalAgeComponent _animalAgeComponent;
         private MatingComponent _matingComponent;
         private MovingComponent _movingComponent;
+        private VisibilityComponent _visibilityComponent;
         
         public AnimalInformationComponent(WorldObject owner) : base(owner)
         {
@@ -22,6 +23,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
             _healthComponent = GetComponent<HealthComponent>();
             _animalAgeComponent = GetComponent<AnimalAgeComponent>();
             _movingComponent = GetComponent<MovingComponent>();
+            _visibilityComponent = GetComponent<VisibilityComponent>();
         }
 
         protected override string GetAllInformation()
@@ -30,12 +32,14 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
             info += GetInfoAboutCoords() + "\n\n";
             info += _eaterComponent.GetInformation() + "\n\n";
             info += _healthComponent.GetInformation() + "\n\n";
+            info += _visibilityComponent.GetInformation() + "\n\n";
             info += _animalAgeComponent.GetInformation() + "\n\n";
             info += _movingComponent.GetInformation() + "\n\n";
             if (_matingComponent == null)
                 _matingComponent = GetComponent<MatingComponent>();
             else
                 info += _matingComponent.GetInformation();
+            
             
             return info;
         }

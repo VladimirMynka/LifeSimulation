@@ -12,7 +12,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
         private readonly int _normalTicksToMating;
 
         protected Cell cell;
-        protected int visibility;
+        protected VisibilityComponent visibilityComponent;
 
         protected MatingComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) 
             : base(owner)
@@ -27,7 +27,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
             eaterComponent = WorldObject.GetComponent<EaterComponent>();
             creatureType = WorldObject.GetComponent<EatableComponent>().CreatureType;
             cell = WorldObject.Cell;
-            visibility = Defaults.AnimalVisibleArea;
+            visibilityComponent = GetComponent<VisibilityComponent>();
         }
 
         public override void Update()

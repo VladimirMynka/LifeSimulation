@@ -27,6 +27,7 @@ namespace LifeSimulation.myCs.World.Weather
         {
             IncreaseDay();
             ChangeTemperature();
+            ChangePrecipitation();
         }
         
         private void IncreaseDay()
@@ -82,6 +83,37 @@ namespace LifeSimulation.myCs.World.Weather
                 default:
                     return;
             }
+        }
+
+        private void ChangePrecipitation()
+        {
+            var temperatureInfluence = Math.Abs(_temperature) < 20 ? 2 : 1;
+            var previousInfluence = _precipitation == Precipitation.Rain ? 4
+                : _precipitation == Precipitation.Fog ? 2
+                : 1;
+            var random = World.Random.Next(1, 9);
+            var result = temperatureInfluence * previousInfluence * random;
+            if (result >= 24)
+                SetRain();
+            else if (result >= 8)
+                SetFog();
+            else
+                SetSun();
+        }
+
+        private void SetRain()
+        {
+            _precipitation = Precipitation.Rain;
+        }
+
+        private void SetFog()
+        {
+            _precipitation = Precipitation.Fog;
+        }
+
+        private void SetSun()
+        {
+            _precipitation = Precipitation.Sun;
         }
 
         public int GetTemperature()
