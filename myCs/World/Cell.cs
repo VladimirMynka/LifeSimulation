@@ -50,13 +50,14 @@ namespace LifeSimulation.myCs.World
 
         private void ApplyChanges()
         {
-            foreach (var worldObject in _removingObjects)
-            {
-                CurrentObjects.Remove(worldObject);
-            }
             foreach (var worldObject in _addingObjects)
             {
                 CurrentObjects.Add(worldObject);
+            }
+            
+            foreach (var worldObject in _removingObjects)
+            {
+                CurrentObjects.Remove(worldObject);
             }
             
             if (_removingObjects.Count != 0 || _addingObjects.Count != 0)

@@ -34,8 +34,18 @@
         
         protected string GetInfoAboutCoords()
         {
-            return "Coords: " + WorldObject.Cell.Coords[0] + 
-                   ',' + WorldObject.Cell.Coords[1];
+            return "Coords: " + GetInfoAboutCoords(this);
+        }
+
+        public static string GetInfoAboutCoords(WorldObjectComponent component)
+        {
+            return GetInfoAboutCoords(component.WorldObject);
+        }
+        
+        public static string GetInfoAboutCoords(WorldObject worldObject)
+        {
+            return worldObject.Cell.Coords[0].ToString() +
+                   ',' + worldObject.Cell.Coords[1];
         }
     }
 }

@@ -11,9 +11,12 @@ namespace LifeSimulation.myCs.Drawer
         private readonly List<Cell> _updatingCells;
         private readonly List<DrawableComponent> _currentDrawables;
         private Graphics _graphics;
-        public int PixelSize;
+        private readonly int _size = 1000;
+        private readonly int _bitmapSize = 1000;
+        private int _pixelSize;
         public int OffsetLeft;
         public int OffsetTop;
+        private int _length;
 
         private Brush _brush = Brushes.Bisque;
         public bool UpdateAll;
@@ -27,7 +30,7 @@ namespace LifeSimulation.myCs.Drawer
             _updatingCells = new List<Cell>();
             _currentDrawables = new List<DrawableComponent>();
             _graphics = graphics;
-            PixelSize = pixelSize;
+            SetCellSize(pixelSize);
             OffsetLeft = offsetLeft;
             OffsetTop = offsetTop;
         }
@@ -48,6 +51,7 @@ namespace LifeSimulation.myCs.Drawer
             Fill(cell.Coords[0], cell.Coords[1], _brush);
             FillCurrentDrawables(cell);
             DrawObjects(_currentDrawables, cell.Coords[0], cell.Coords[1]);
+            _currentDrawables.Clear();
         }
 
         private void FillCurrentDrawables(Cell cell)
@@ -73,25 +77,30 @@ namespace LifeSimulation.myCs.Drawer
             _graphics.FillRectangle(
                 color, 
                 new Rectangle(
-                    PixelSize * (x - OffsetLeft),
-                    PixelSize * (y - OffsetTop),
-                    PixelSize,
-                    PixelSize
+                    _pixelSize * (x - OffsetLeft),
+                    _pixelSize * (y - OffsetTop),
+                    _pixelSize,
+                    _pixelSize
                     )
                 );
         }
 
         private void DrawPicture(int x, int y, Image image)
         {
-            _graphics.DrawImage(
-                image, 
-                new Rectangle(
-                    PixelSize * (x - OffsetLeft),
-                    PixelSize * (y - OffsetTop),
-                    PixelSize,
-                    PixelSize
-                )
-            );        
+            if (_pixelSize <= 5)
+                Fill(x, y, Pictures.GetBrushFor(image));
+            else
+            {
+                _graphics.DrawImage(
+                    image,
+                    new Rectangle(
+                        _pixelSize * (x - OffsetLeft),
+                        _pixelSize * (y - OffsetTop),
+                        _pixelSize,
+                        _pixelSize
+                    )
+                );
+            }
         }
 
         public void DrawOffsets()
@@ -111,8 +120,8 @@ namespace LifeSimulation.myCs.Drawer
                     new Rectangle(
                         0,
                         0,
-                        -PixelSize * OffsetLeft,
-                        1000
+                        -_pixelSize * OffsetLeft,
+                        _bitmapSize
                     )
                 );
             }
@@ -127,8 +136,8 @@ namespace LifeSimulation.myCs.Drawer
                     new Rectangle(
                         0,
                         0,
-                        1000,
-                        -PixelSize * OffsetTop
+                        _bitmapSize,
+                        -_pixelSize * OffsetTop
                     )
                 );
             }
@@ -137,34 +146,34 @@ namespace LifeSimulation.myCs.Drawer
         
         private void DrawRightOffset()
         {
-            if (OffsetLeft * PixelSize >= 1000)
+            var offsetRight = _size - OffsetLeft - _bitmapSize / _pixelSize;
+            if (offsetRight < 0)
             {
                 _graphics.FillRectangle(Colors.Black,
                     new Rectangle(
-                        PixelSize * OffsetLeft,
+                        _bitmapSize + offsetRight * _pixelSize,
                         0,
-                        1000 - PixelSize * (1000 - OffsetLeft),
-                        1000
+                        -_pixelSize * offsetRight,
+                        _bitmapSize
                     )
                 );
             }
-
         }
 
         private void DrawBottomOffset()
         {
-            if (OffsetTop * PixelSize >= 1000)
+            var offsetBottom = _size - OffsetTop - _bitmapSize / _pixelSize;
+            if (offsetBottom < 0)
             {
                 _graphics.FillRectangle(Colors.Black,
                     new Rectangle(
-                        0,
-                        PixelSize * OffsetTop,
-                        1000,
-                        1000 - PixelSize * (1000 - OffsetTop)
+                        0, 
+                        _bitmapSize + offsetBottom * _pixelSize,
+                        _bitmapSize,
+                        -_pixelSize * offsetBottom
                     )
                 );
             }
-
         }
 
         public void UpdateGraphics(Graphics graphics)
@@ -187,38 +196,38 @@ namespace LifeSimulation.myCs.Drawer
             {
                 _updatingCells.Insert(~index, cell);
             }
-        } 
+        }
         
         private bool CheckVisible(Cell cell)
         {
-            return CheckVisible(cell.Coords[0], cell.Coords[0]);
+            return CheckVisible(cell.Coords[0], cell.Coords[1]);
         }
 
         private bool CheckVisible(int x, int y)
         {
-            return (OffsetLeft < x + PixelSize && x < 1000 &&
-                    OffsetTop < y + PixelSize && y < 1000);
+            return (OffsetLeft <= x && x <= OffsetLeft + _length &&
+                    OffsetTop <= y && y <= OffsetTop + _length);
         }
-
+        
         public Point CellCoordsFromPixelCoords(Point pixelCoords)
         {
-            return new Point(pixelCoords.X / PixelSize + OffsetLeft,
-                pixelCoords.Y / PixelSize + OffsetTop);
+            return new Point(pixelCoords.X / _pixelSize + OffsetLeft,
+                pixelCoords.Y / _pixelSize + OffsetTop);
         }
 
         public void ZoomOnCell(Point coords)
         {
-            if (PixelSize >= 30)
-                PixelSize = 10;
+            if (_pixelSize >= 30)
+                _pixelSize = 10;
             else
-                PixelSize = 50;
+                _pixelSize = 50;
             SetOffsetsWithCenterIn(coords);
         }
 
         public void SetOffsetsWithCenterIn(Point coords)
         {
-            OffsetLeft = coords.X - 500 / PixelSize;
-            OffsetTop = coords.Y - 500 / PixelSize;
+            OffsetLeft = coords.X - _bitmapSize / 2 / _pixelSize;
+            OffsetTop = coords.Y - _bitmapSize / 2 / _pixelSize;
         }
 
         public int GetX()
@@ -233,13 +242,24 @@ namespace LifeSimulation.myCs.Drawer
 
         public int GetLength()
         {
-            return 1000 / PixelSize;
+            return _length;
         }
 
         public void SetBackground(Brush brush)
         {
             _brush = brush;
             UpdateAll = true;
+        }
+
+        public void SetCellSize(int size)
+        {
+            _pixelSize = size;
+            _length = _bitmapSize / size;
+        }
+
+        public int GetCellSize()
+        {
+            return _pixelSize;
         }
     }
 }

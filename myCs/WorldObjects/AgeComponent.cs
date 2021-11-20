@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 using LifeSimulation.myCs.WorldObjects.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects
@@ -63,7 +64,7 @@ namespace LifeSimulation.myCs.WorldObjects
 
         public virtual string GetInformation()
         {
-            var info = "Age: " + age + '\n';
+            var info = "Age: " + age + '/' + transitionalAges[transitionalAges.Length - 1] + '\n';
             info += "Age stage: " + AgeStage;
 
             return info;

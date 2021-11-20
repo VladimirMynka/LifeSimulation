@@ -31,55 +31,8 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Mating
 
         private void SearchPartner()
         {
-            var x = cell.Coords[0];
-            var y = cell.Coords[1];
-            for (var radius = 0; radius < visibilityComponent.GetVisibility(); radius++)
-            {
-                for (var j = 0; j <= radius; j++)
-                {
-                    var i = radius - j;
-                    var currentCell = world.GetCell(x + i, y + j);
-                    if (TakePartnerFrom(currentCell)) 
-                        return;
-                    if (j != 0)
-                    {
-                        currentCell = world.GetCell(x + i, y - j);
-                        if (TakePartnerFrom(currentCell))
-                            return;
-                    }
-                    if (i == 0) 
-                        continue;
-                    currentCell = world.GetCell(x - i, y + j);
-                    if (TakePartnerFrom(currentCell)) 
-                        return;
-                    if (j == 0) 
-                        continue;
-                    currentCell = world.GetCell(x - i, y - j);
-                    if (TakePartnerFrom(currentCell))
-                        return;
-                }
-            }
+            SetPartner(visibilityComponent.Search<FemaleMatingComponent>(CanMateWith));
         }
-
-        private bool TakePartnerFrom(Cell checkingCell)
-        {
-            if (checkingCell == null) 
-                return false;
-            foreach (var worldObject in checkingCell.CurrentObjects)
-            {
-                var female = GetFemaleComponent(worldObject);
-                if (female == null) 
-                    continue;
-                if (!CanMateWith(female)) 
-                    break;
-                SetPartner(female);
-                
-                return true;
-            }
-            return false;
-        }
-
-        protected abstract FemaleMatingComponent GetFemaleComponent(WorldObject worldObject);
 
         private void SetPartner(FemaleMatingComponent female)
         {

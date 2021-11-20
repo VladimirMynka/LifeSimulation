@@ -57,13 +57,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
             return eaterComponent.IsVeryHungry();
         }
 
-        protected override FemaleMatingComponent GetFemaleComponent(WorldObject worldObject)
-        {
-            return worldObject is Human 
-                ? worldObject.GetComponent<WomanComponent>()
-                : null;
-        }
-
         protected override bool CanMateWith(FemaleMatingComponent female)
         {
             return female != null && female.IsReady() && female is WomanComponent;

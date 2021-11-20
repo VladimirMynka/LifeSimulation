@@ -29,7 +29,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 
         protected override string GetAllInformation()
         {
-            var info = "";
+            var info = GetInfoAboutCoords() + "\n\n";
             info += _humanEaterComponent.GetInformation() + "\n\n";
             info += _inventory.GetInformation() + "\n\n";
             info += _healthComponent.GetInformation() + "\n\n";

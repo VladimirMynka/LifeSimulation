@@ -1,62 +1,121 @@
-﻿namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
+﻿using LifeSimulation.myCs.WorldObjects.Eatable;
+
+namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 {
     public class InventoryComponent : WorldObjectComponent, IHaveInformation
     {
-        private int _reserve;
+        private int _plantReserve;
+        private int _meatReserve;
+        private int _rotMeatReserve;
         private readonly int _maxReserve;
         public InventoryComponent(WorldObject owner, int reserve) : base(owner)
         {
-            _reserve = 0;
+            _plantReserve = 0;
+            _meatReserve = 0;
+            _rotMeatReserve = 0;
             _maxReserve = reserve;
+        }
+
+        private ref int ReserveByMealType(MealType mealType)
+        {
+            switch (mealType)
+            {
+                case MealType.Plant:
+                    return ref _plantReserve;
+                case MealType.FreshMeat:
+                    return ref _meatReserve;
+                case MealType.DeadMeat:
+                    return ref _rotMeatReserve;
+                default:
+                    return ref _plantReserve;
+            }
         }
 
         /// <summary>
         /// Returns quantity or removed quantity. 
         /// For negative quantity it works as Remove.
         /// </summary>
-        public int Remove(int quantity)
+        public int Remove(int quantity, MealType mealType = MealType.AllTypes)
         {
             if (quantity < 0)
-                return Add(-quantity);
-            if (_reserve > quantity)
             {
-                _reserve -= quantity;
+                return Add(-quantity, mealType);
+            }
+            
+            if (mealType == MealType.AllTypes)
+            {
+                int removed = RemoveFrom(ref _plantReserve, quantity / 3);
+                removed += RemoveFrom(ref _meatReserve, quantity / 3 * 2 - removed);
+                removed += RemoveFrom(ref _rotMeatReserve, quantity - removed);
+                removed += RemoveFrom(ref _plantReserve, quantity - removed);
+                removed += RemoveFrom(ref _meatReserve, quantity - removed);
+                return removed;
+            }
+            
+            ref var reserve = ref ReserveByMealType(mealType);
+            return RemoveFrom(ref reserve, quantity);
+        }
+
+        private static int RemoveFrom(ref int reserve, int quantity)
+        {
+            if (quantity < 0)
+                return 0;
+            if (reserve > quantity)
+            {
+                reserve -= quantity;
                 return quantity;
             }
-            var forReturn = _reserve;
-            _reserve = 0;
+            var forReturn = reserve;
+            reserve = 0;
             return forReturn;
         }
-        
+
         /// <summary>
         /// Returns 0 or excess.
         /// For negative quantity it works as Add.
         /// </summary>
-        public int Add(int quantity)
+        public int Add(int quantity, MealType mealType = MealType.AllTypes)
+        {
+            if (mealType == MealType.AllTypes)
+            {
+                int excess = RemoveFrom(ref _plantReserve, quantity / 3);
+                excess = RemoveFrom(ref _meatReserve, quantity / 3 + excess);
+                excess = RemoveFrom(ref _rotMeatReserve, quantity - quantity / 3 * 2 + excess);
+                excess = RemoveFrom(ref _plantReserve, excess);
+                excess = RemoveFrom(ref _meatReserve, excess);
+                return excess;
+            }
+            
+            ref var reserve = ref ReserveByMealType(mealType);
+            return AddTo(ref reserve, quantity);
+        }
+
+        private int AddTo(ref int reserve, int quantity)
         {
             if (quantity < 0)
-                return Remove(-quantity);
-            if (_reserve + quantity < _maxReserve)
+                return 0;
+            if (quantity + _plantReserve + _meatReserve + _rotMeatReserve <= _maxReserve)
             {
-                _reserve += quantity;
+                reserve += quantity;
                 return 0;
             }
-
-            var excess = _reserve + quantity - _maxReserve;
-            _reserve = _maxReserve;
-            return excess;
+            var empty = _maxReserve - _meatReserve - _plantReserve - _rotMeatReserve;
+            reserve += empty;
+            return quantity - empty;
         }
 
         public int RemoveAll()
         {
-            var removedQuantity = _reserve;
-            _reserve = 0;
+            var removedQuantity = _plantReserve + _meatReserve + _rotMeatReserve;
+            _plantReserve = 0;
+            _meatReserve = 0;
+            _rotMeatReserve = 0;
             return removedQuantity;
         }
 
         public bool IsFilled()
         {
-            return _reserve == _maxReserve;
+            return _plantReserve + _meatReserve + _rotMeatReserve == _maxReserve;
         }
 
         public void AverageReserveWith(InventoryComponent other)
@@ -72,9 +131,29 @@
                 other.Add(excess2);
         }
 
+        public int AllReserve()
+        {
+            return _meatReserve + _plantReserve + _rotMeatReserve;
+        }
+
+        public bool CheckHave(int quantity, MealType mealType)
+        {
+            if (mealType == MealType.AllTypes)
+                return AllReserve() > quantity;
+            return CheckHaveIn(ref ReserveByMealType(mealType), quantity);
+        }
+
+        private static bool CheckHaveIn(ref int reserve, int quantity)
+        {
+            return reserve >= quantity;
+        }
+
         public string GetInformation()
         {
-            var info = "Inventory: " + _reserve + '/' + _maxReserve;
+            var info = "Inventory: \n";
+            info += "plants: " + _plantReserve + '/' + _maxReserve;
+            info += "meat: " + _meatReserve + '/' + _maxReserve;
+            info += "rot meat: " + _rotMeatReserve + '/' + _maxReserve;
             return info;
         }
     }

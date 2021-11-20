@@ -26,8 +26,10 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 
         private void CollectFrom(EatableComponent meal)
         {
-            if (CheckIEatIt(meal))
-                _inventory.Add(meal.NutritionalValue / 2);
+            if (!CheckIEatIt(meal)) 
+                return;
+            _inventory.Add(meal.NutritionalValue / 2, meal.MealType);
+            meal.WorldObject.Destroy();
         }
 
         protected override bool CheckIEatIt(EatableComponent meal)
@@ -36,9 +38,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
                 return false;
             if (meal.CreatureType == CreatureType.Human)
                 return false;
-            if (meal.IsPoisonous())
-                return false;
-            return true;
+            return !meal.IsPoisonous();
         }
 
         public int GetPriority()
@@ -48,7 +48,9 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Humans
 
         public WorldObject GetTarget()
         {
-            return mealTarget != null ? mealTarget.WorldObject : null;
+            return mealTarget != null 
+                ? mealTarget.WorldObject 
+                : null;
         }
     }
 }

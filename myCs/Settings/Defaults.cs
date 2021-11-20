@@ -13,14 +13,14 @@
         public const int FruitLivePeriod = 20;
         public const int FruitRotAge = 30;
 
-        public const int AnimalTeenagePeriod = 12;
-        public const int AnimalDiedAge = 300;
-        public const int AnimalRotAge = 350;
+        public const int AnimalTeenagePeriod = 1;
+        public const int AnimalDiedAge = 700;
+        public const int AnimalRotAge = 750;
         public const int AnimalEggPeriod = 20;
         
         public const int AnimalHealth = 100;
         public const int AnimalHealthRegeneration = 5;
-        public const int AnimalHealthDestruction = 1;
+        public const int AnimalHealthDestruction = 3;
         public const int AnimalSatiety = 100;
         public const int AnimalSatietyDestruction = 1;
         public const int AnimalVisibleArea = 10;

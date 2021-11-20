@@ -70,7 +70,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
                 case CreatureType.Herbivore1:
                     return new Animal(cell, Pictures.Herbivore, Pictures.Meat, creatureType,
                         4, MealType.Plant, isMale, 0, false, 200, 200, 
-                        3, 1, 6, WalkingState.UsualWalking, 
+                        2, 1, 6, WalkingState.UsualWalking, 
                         MovingToTargetState.OrthogonalMoving, 4);
                 case CreatureType.Herbivore2:
                     return new Animal(cell, Pictures.Herbivore2, Pictures.Meat3, creatureType,
@@ -86,17 +86,17 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
                 case CreatureType.Predator1:
                     return new Animal(cell, Pictures.Predator, Pictures.Meat3, creatureType,
                         4, MealType.FreshMeat, isMale, 12, false, 200, 200, 
-                        3, 1, 12,
+                        2, 1, 12,
                         WalkingState.NoSharpTurns, MovingToTargetState.UsualMoving, 3);
                 case CreatureType.Predator2:
                     return new Animal(cell, Pictures.Predator2, Pictures.Meat3, creatureType,
                         4, MealType.FreshMeat, isMale, 16, false, 400, 80, 
-                        4, 1, 10,
+                        2, 1, 10,
                         WalkingState.RightBottomWalking, MovingToTargetState.SnakeMoving, 2);
                 case CreatureType.Predator3:
                     return new Animal(cell, Pictures.Predator3, Pictures.Meat, creatureType,
                         4, MealType.FreshMeat, isMale, 12, false, 80, 400, 
-                        3, 1, 6,
+                        2, 1, 6,
                         WalkingState.UsualWalking, MovingToTargetState.OrthogonalMoving, 4, true);
                 
                 case CreatureType.Omnivore1:
@@ -107,23 +107,23 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
                 case CreatureType.Omnivore2:
                     return new Animal(cell, Pictures.Omnivore2, Pictures.Meat, creatureType,
                         4, MealType.AllTypes, isMale, 12, true, 150, 100, 
-                        5, 1, 8,
+                        2, 1, 8,
                         WalkingState.UsualWalking, MovingToTargetState.SnakeMoving, 4);
                 case CreatureType.Omnivore3:
                     return new Animal(cell, Pictures.Omnivore3, Pictures.Meat4, creatureType,
                         4, MealType.AllTypes, isMale, 12, true, 150, 160, 
-                        3, 1, 10,
+                        2, 1, 10,
                         WalkingState.NoSharpTurns, MovingToTargetState.OrthogonalMoving, 2);
                 
                 case CreatureType.Scavenger1:
                     return new Animal(cell, Pictures.Scavenger, Pictures.Meat4, creatureType,
-                        4, MealType.DeadMeat, isMale, 12, true, 80, 300, 
-                        5, 1, 12,
+                        4, MealType.DeadMeat, isMale, 12, true, 80, 100, 
+                        2, 1, 12,
                         WalkingState.NoSharpTurns, MovingToTargetState.UsualMoving, 2);
                 case CreatureType.Scavenger2:
                     return new Animal(cell, Pictures.Scavenger2, Pictures.Meat3, creatureType,
-                        4, MealType.DeadMeat, isMale, 12, true, 150, 150, 
-                        3, 1, 6,
+                        4, MealType.DeadMeat, isMale, 12, true, 150, 100, 
+                        2, 1, 6,
                         WalkingState.LeftTopWalking, MovingToTargetState.SnakeMoving, 6);
                 case CreatureType.Scavenger3:
                     return new Animal(cell, Pictures.Scavenger3, Pictures.Meat3, creatureType,

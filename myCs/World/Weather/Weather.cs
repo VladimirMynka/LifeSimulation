@@ -15,10 +15,10 @@ namespace LifeSimulation.myCs.World.Weather
 
         public Weather(Drawer.Drawer drawer)
         {
-            _dayOfYear = 300;
+            _dayOfYear = 250;
             _year = 0;
             _temperature = 20;
-            _season = Season.Summer;
+            _season = Season.Autumn;
             _precipitation = Precipitation.Sun;
             _drawer = drawer;
             drawer.SetBackground(Brushes.Gold);

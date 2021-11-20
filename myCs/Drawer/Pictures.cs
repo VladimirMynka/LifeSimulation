@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace LifeSimulation.myCs.Drawer
 {
@@ -41,49 +43,35 @@ namespace LifeSimulation.myCs.Drawer
 
         public static Image Sleeper = Image.FromFile(Path + @"animals\sleeper.png");
         
+        private static readonly List<Image> AllImages = new List<Image>(){
+            Herbivore, Herbivore2, Herbivore3,
+            Omnivore, Omnivore2, Omnivore3,
+            Predator, Predator2, Predator3,
+            Scavenger, Scavenger2, Scavenger3,
+            Meat, Meat2, Meat3, Meat4,
+            Egg, Human,
+            Plant, UneatablePlant, PoisonousPlant, DeadPlant,
+            Fruit, Sleeper
+        };
 
+        private static readonly List<Brush> AllBrushes = GetBrushesList(AllImages);
 
-        public static Color AnimalColor = GetAverage(Omnivore);
-        public static Color PlantColor = GetAverage(Plant);
-        public static Color FruitColor = GetAverage(Fruit);
-        public static Color NoneColor = Color.Black;
-
-        public static Image Get(string name)
+        private static List<Brush> GetBrushesList(IEnumerable<Image> images)
         {
-            switch (name)
-            {
-                case "Animal":
-                    return Omnivore;
-                case "Plant":
-                    return Plant;
-                case "Fruit":
-                    return Fruit;
-                default:
-                    return null;
-            }
+            return images.Select(image => new SolidBrush(GetAverage(image))).Cast<Brush>().ToList();
         }
-
-        public static Color GetColor(string name)
+        public static Brush GetBrushFor(Image image)
         {
-            switch (name)
-            {
-                case "Animal":
-                    return AnimalColor;
-                case "Plant":
-                    return PlantColor;
-                case "Fruit":
-                    return FruitColor;
-                default:
-                    return NoneColor;
-            }
+            return AllBrushes[AllImages.IndexOf(image)];
         }
-
+        
         private static Color GetAverage(Image image)
         {
-            int alpha = 0;
+            //int alpha = 0;
             int red = 0;
             int green = 0;
             int blue = 0;
+            int divider = 1;
             Bitmap bitmap = (Bitmap) image;
 
             for (int i = 0; i < bitmap.Width; i++)
@@ -91,16 +79,18 @@ namespace LifeSimulation.myCs.Drawer
                 for (int j = 0; j < bitmap.Height; j++)
                 {
                     Color color = bitmap.GetPixel(i, j);
-                    alpha += color.A;
+                    if (color.A < 120) 
+                        continue;
+                    //alpha += color.A;
                     red += color.R;
                     green += color.G;
                     blue += color.B;
+                    divider++;
                 }
             }
 
-            int divider = bitmap.Width * bitmap.Height;
             return Color.FromArgb(
-                alpha / divider, 
+                255, 
                 red / divider, 
                 green / divider, 
                 blue / divider

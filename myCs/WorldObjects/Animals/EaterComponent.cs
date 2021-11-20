@@ -101,47 +101,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
 
         protected void SearchMeal()
         {
-            var x = _cell.Coords[0];
-            var y = _cell.Coords[1];
-            for (var radius = 0; radius < _visibilityComponent.GetVisibility(); radius++)
-            {
-                for (var j = 0; j <= radius; j++)
-                {
-                    var i = radius - j;
-                    var currentCell = world.GetCell(x + i, y + j);
-                    if (TakeMealFrom(currentCell)) 
-                        return;
-                    if (j != 0)
-                    {
-                        currentCell = world.GetCell(x + i, y - j);
-                        if (TakeMealFrom(currentCell))
-                            return;
-                    }
-                    if (i == 0) continue;
-                    currentCell = world.GetCell(x - i, y + j);
-                    if (TakeMealFrom(currentCell)) 
-                        return;
-                    if (j == 0) continue;
-                    currentCell = world.GetCell(x - i, y - j);
-                    if (TakeMealFrom(currentCell))
-                        return;
-                }
-            }
-        }
-
-        private bool TakeMealFrom(Cell checkingCell)
-        {
-            if (checkingCell == null) return false;
-            foreach (var wo in checkingCell.CurrentObjects)
-            {
-                var meal = wo.GetComponent<EatableComponent>();
-                if (meal == null) continue;
-                if (!CheckIEatIt(meal)) continue;
-                SetMeal(meal);
-                
-                return true;
-            }
-            return false;
+            SetMeal(_visibilityComponent.Search<EatableComponent>(CheckIEatIt));
         }
 
         protected virtual void SetMeal(EatableComponent meal)
@@ -180,9 +140,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals
             if (CheckWereDestroyed(mealTarget))
                 info += "none";
             else
-                info += mealTarget.CreatureType + " on " +
-                        mealTarget.WorldObject.Cell.Coords[0] + ',' +
-                        mealTarget.WorldObject.Cell.Coords[1];
+                info += mealTarget.CreatureType + " on " + InformationComponent.GetInfoAboutCoords(mealTarget);
             return info;
         }
 

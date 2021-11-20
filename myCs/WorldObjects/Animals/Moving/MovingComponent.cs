@@ -43,9 +43,10 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
             base.Update();
             TryChangeStates();
             TryStep();
-            if (CheckWereDestroyed(_target))
+            if (_target != null && CheckWereDestroyed(_target))
             {
                 _target = null;
+                _speedState = SpeedState.SlowDown;
             }
         }
 
@@ -64,7 +65,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
 
         private void TryStep()
         {
-            if (_ticksToStep == 0)
+            if (_ticksToStep <= 0)
             {
                 Step();
                 UpdateTickToStep();
@@ -108,20 +109,26 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
 
         private void UpdateTickWhenSlowDown()
         {
-            _ticksToStep = --_lastPace;
-            if (_ticksToStep > Pace) 
-                return;
-            _speedState = SpeedState.Walk;
-            _ticksToStep = Pace;
+            _lastPace++;
+            _ticksToStep = _lastPace;
+            if (_ticksToStep >= Pace)
+            {
+                _speedState = SpeedState.Walk;
+                _ticksToStep = Pace;
+                _lastPace = Pace;
+            }
         }
         
         private void UpdateTickWhenSlowUp()
         {
-            _ticksToStep = ++_lastPace;
-            if (_ticksToStep < RunPace)
-                return;
-            _speedState = SpeedState.Run;
-            _ticksToStep = Pace;
+            _lastPace--;
+            _ticksToStep = _lastPace;
+            if (_ticksToStep <= RunPace)
+            {
+                _speedState = SpeedState.Run;
+                _ticksToStep = RunPace;
+                _lastPace = RunPace;
+            }
         }
 
         private void Step()
@@ -299,7 +306,7 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Moving
             if (CheckWereDestroyed(_target))
                 info += "none";
             else
-                info += "on " + _target.Cell.Coords[0] + ',' + _target.Cell.Coords[1];
+                info += "on " + InformationComponent.GetInfoAboutCoords(_target);
             
             return info;
         }

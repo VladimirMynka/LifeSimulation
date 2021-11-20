@@ -55,7 +55,7 @@ namespace LifeSimulation
             {
                 var newSize = int.Parse(pixelSizeInput.Text);
                 if (newSize <= 0) return;
-                _drawer.PixelSize = newSize;
+                _drawer.SetCellSize(newSize);
                 _drawer.DrawOffsets();
             }
             catch
@@ -128,7 +128,7 @@ namespace LifeSimulation
         {
             _drawer.ZoomOnCell(_drawer.CellCoordsFromPixelCoords(e.Location));
             _drawer.DrawOffsets();
-            pixelSizeInput.Text = _drawer.PixelSize.ToString();
+            pixelSizeInput.Text = _drawer.GetCellSize().ToString();
             offsetLeftInput.Text = _drawer.OffsetLeft.ToString();
             offsetTopInput.Text = _drawer.OffsetTop.ToString();
         }

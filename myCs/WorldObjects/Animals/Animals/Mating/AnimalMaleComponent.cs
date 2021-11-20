@@ -2,7 +2,7 @@
 using LifeSimulation.myCs.WorldObjects.Animals.Mating;
 using LifeSimulation.myCs.WorldObjects.Animals.Moving;
 
-namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
+namespace LifeSimulation.myCs.WorldObjects.Animals.Animals.Mating
 {
     public class AnimalMaleComponent : MaleMatingComponent
     {
@@ -29,13 +29,6 @@ namespace LifeSimulation.myCs.WorldObjects.Animals.Animals
             
             if (!CheckWereDestroyed(partner)) 
                 _moving.SetTarget(partner.WorldObject);
-        }
-
-        protected override FemaleMatingComponent GetFemaleComponent(WorldObject worldObject)
-        {
-            return worldObject is Animal 
-                ? worldObject.GetComponent<AnimalFemaleComponent>() 
-                : null;
         }
 
         protected override bool CanMateWith(FemaleMatingComponent female)

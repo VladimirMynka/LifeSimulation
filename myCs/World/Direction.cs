@@ -48,7 +48,7 @@ namespace LifeSimulation.myCs.World
         public static int[] GetOrthogonalDirection(int[] vector)
         {
             var newVector = GetDirectionVector(vector);
-            if ((newVector[0] != newVector[1] && newVector[0] != -newVector[1]) || newVector[0] == 0) 
+            if (newVector[0] == 0 || newVector[1] == 0) 
                 return newVector;
             
             var i = World.Random.Next(2);
