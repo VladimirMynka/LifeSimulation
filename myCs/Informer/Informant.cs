@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using LifeSimulation.myCs.World;
-using LifeSimulation.myCs.World.Weather;
+using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.WorldObjects;
+using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.Informer
 {
     public class Informant
     {
-        private readonly Drawer.Drawer _drawer;
-        private readonly World.World _world;
+        private readonly Drawer _drawer;
+        private readonly World _world;
         private readonly System.Windows.Forms.RichTextBox _infoTextBox;
         private List<InformationComponent> _informationComponents;
         private readonly List<InformationComponent> _removingComponents;
 
 
-        public Informant(Drawer.Drawer drawer, World.World world, System.Windows.Forms.RichTextBox infoTextBox)
+        public Informant(Drawer drawer, World world, System.Windows.Forms.RichTextBox infoTextBox)
         {
             _drawer = drawer;
             _world = world;

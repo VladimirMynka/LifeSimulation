@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects
 {
     public abstract class WorldObjectComponent
     {
         public WorldObject WorldObject;
-        protected readonly World.World world;
+        protected readonly World world;
 
         protected WorldObjectComponent(WorldObject owner)
         {

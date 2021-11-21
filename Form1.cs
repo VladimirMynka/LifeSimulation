@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using LifeSimulation.myCs.Drawer;
+using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.Informer;
-using LifeSimulation.myCs.World;
-using LifeSimulation.myCs.WorldObjects;
+using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation
 {

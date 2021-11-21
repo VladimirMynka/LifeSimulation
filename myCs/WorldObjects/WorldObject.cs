@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using LifeSimulation.myCs.World;
+using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects
 {
     public abstract class WorldObject
     {
         public Cell Cell;
-        protected internal World.World world;
+        protected internal World world;
         protected List<WorldObjectComponent> components;
         private readonly List<WorldObjectComponent> _removingComponents;
         private readonly List<WorldObjectComponent> _addingComponents;
