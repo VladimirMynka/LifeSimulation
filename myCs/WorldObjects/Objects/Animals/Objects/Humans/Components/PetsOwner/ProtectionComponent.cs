@@ -12,6 +12,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void Start()
         {
             base.Start();
+            WorldObject.DestroyComponent<ProtectionComponent>();
             _eatableComponent = GetComponent<EatableComponent>();
             _eatableComponent.SetEffect(Effect.Uneatable);
         }
