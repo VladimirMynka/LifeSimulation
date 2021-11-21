@@ -1,7 +1,7 @@
 ﻿using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
-using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner;
 using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Components
@@ -13,11 +13,15 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         private int _toPresentTimer;
         private readonly int _defaultToPresentTimer;
         private CreatureType _creatureType;
+        private readonly PetEffect _effect;
+        private readonly int _presentValue;
         
-        public PetComponent(WorldObject owner, int timer) : base(owner)
+        public PetComponent(WorldObject owner, int timer, PetEffect effect, int presentValue) : base(owner)
         {
             _toPresentTimer = timer;
             _defaultToPresentTimer = timer;
+            _effect = effect;
+            _presentValue = presentValue;
         }
 
         public override void Start()
@@ -63,7 +67,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
 
         private void GivePresent()
         {
-            _petOwner.GetPresent(20, GetMealType());
+            _petOwner.GetPresent(_presentValue, _effect, GetMealType());
         }
 
         public bool HasPresent()
@@ -123,6 +127,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
                 info += "none";
             else
                 info += "on " + InformationComponent.GetInfoAboutCoords(_petOwner);
+
+            info += "\nPet effect: " + _effect;
+            info += "\nTo present ticks: " + _toPresentTimer;
             return info;
         }
 

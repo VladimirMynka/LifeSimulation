@@ -7,7 +7,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable
     {
         public MealType MealType;
         public readonly CreatureType CreatureType;
-        private readonly Effect _effect;
+        private Effect _effect;
         public readonly int NutritionalValue;
 
         public EatableComponent(WorldObject owner, 
@@ -24,6 +24,8 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable
 
         public void BeEatenBy(EaterComponent eater)
         {
+            if (_effect == Effect.Uneatable)
+                return;
             ApplyEffect(eater);
             WorldObject.Destroy();
         }
@@ -39,6 +41,11 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable
                     Damage(target);
                     return;
             }
+        }
+
+        public void SetEffect(Effect effect)
+        {
+            _effect = effect;
         }
 
         private void AddSatiety(EaterComponent eater)

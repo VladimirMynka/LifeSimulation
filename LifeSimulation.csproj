@@ -101,7 +101,11 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\InventoryComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Mating\ManComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Mating\WomanComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwnerComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\GoodEffectComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\PetEffect.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\PetsOwnerComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\ProtectionComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\WarmClothesComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Human.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\Components\RotMeat.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\Components\RotMeatComponent.cs" />

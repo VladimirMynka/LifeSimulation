@@ -6,7 +6,7 @@ using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Components;
 using LifeSimulation.myCs.WorldStructure;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner
 {
     public class PetsOwnerComponent : WorldObjectComponent, IHaveInformation, IHaveTarget
     {
@@ -128,9 +128,21 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                    _targetPet.IsVeryHungry();
         }
 
-        public void GetPresent(int quantity, MealType mealType)
+        public void GetPresent(int value, PetEffect effect, MealType mealType)
         {
-            _inventory.Add(quantity, mealType);
+            switch (effect)
+            {
+                case PetEffect.WarmClothes:
+                    WorldObject.AddComponent(new WarmClothesComponent(WorldObject, value));
+                    return;
+                case PetEffect.Protection:
+                    WorldObject.AddComponent(new ProtectionComponent(WorldObject, value));
+                    return;
+                case PetEffect.AddMeal:
+                default:
+                    _inventory.Add(value, mealType);
+                    return;
+            }
         }
 
         /// <summary>
