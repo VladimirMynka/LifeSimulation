@@ -61,7 +61,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Movi
         private void ChangeStates()
         {
             _walkingState = (WalkingState) World.Random.Next(4);
-            _movingToTargetState = (MovingToTargetState) World.Random.Next(2);
+            _movingToTargetState = (MovingToTargetState) World.Random.Next(3);
         }
 
         private void TryStep()

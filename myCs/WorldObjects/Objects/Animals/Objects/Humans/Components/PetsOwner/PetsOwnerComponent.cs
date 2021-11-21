@@ -133,9 +133,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             switch (effect)
             {
                 case PetEffect.WarmClothes:
+                    WorldObject.DestroyComponent<WarmClothesComponent>();
                     WorldObject.AddComponent(new WarmClothesComponent(WorldObject, value));
                     return;
                 case PetEffect.Protection:
+                    WorldObject.DestroyComponent<ProtectionComponent>();
                     WorldObject.AddComponent(new ProtectionComponent(WorldObject, value));
                     return;
                 case PetEffect.AddMeal:
@@ -154,8 +156,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public int GetPriority()
         {
             return CheckWereDestroyed(_targetPet) ? 0
-                : _targetPet.IsVeryHungry() ? 6
-                : _targetPet.IsHungry() ? 4
+                : _targetPet.IsVeryHungry() 
+                  && _inventory.CheckHave(50, _targetPet.GetMealType()) ? 6
+                : _targetPet.IsHungry() 
+                  && _inventory.CheckHave(20, _targetPet.GetMealType()) ? 4
                 : _targetPet.HasPresent() ? 2
                 : 0;
         }

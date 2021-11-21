@@ -33,6 +33,7 @@ namespace LifeSimulation.myCs.Drawing
         public static Image Egg = Image.FromFile(Path + @"animals\egg.png");
         
         public static Image Human = Image.FromFile(Path + @"animals\human.png");
+        public static Image Human2 = Image.FromFile(Path + @"animals\human2.png");
         
         public static Image Plant = Image.FromFile(Path + @"plants\plant.png");
         public static Image UneatablePlant = Image.FromFile(Path + @"plants\uneatable-plant.png");
@@ -40,6 +41,11 @@ namespace LifeSimulation.myCs.Drawing
         public static Image DeadPlant = Image.FromFile(Path + @"plants\dead-plant.png");
 
         public static Image Fruit = Image.FromFile(Path + @"plants\fruit.png");
+        public static Image UneatableFruit = Image.FromFile(Path + @"plants\uneatable-fruit.png");
+        public static Image PoisonousFruit = Image.FromFile(Path + @"plants\poisonous-fruit.png");
+        public static Image DeadFruit = Image.FromFile(Path + @"plants\dead-fruit.png");
+
+
 
         public static Image Sleeper = Image.FromFile(Path + @"animals\sleeper.png");
         
@@ -49,9 +55,10 @@ namespace LifeSimulation.myCs.Drawing
             Predator, Predator2, Predator3,
             Scavenger, Scavenger2, Scavenger3,
             Meat, Meat2, Meat3, Meat4,
-            Egg, Human,
+            Egg, Human, Human2,
             Plant, UneatablePlant, PoisonousPlant, DeadPlant,
-            Fruit, Sleeper
+            Fruit, UneatableFruit, PoisonousFruit, DeadFruit,
+            Sleeper
         };
 
         private static readonly List<Brush> AllBrushes = GetBrushesList(AllImages);

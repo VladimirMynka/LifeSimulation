@@ -68,6 +68,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         private void GivePresent()
         {
             _petOwner.GetPresent(_presentValue, _effect, GetMealType());
+            _toPresentTimer = _defaultToPresentTimer;
         }
 
         public bool HasPresent()

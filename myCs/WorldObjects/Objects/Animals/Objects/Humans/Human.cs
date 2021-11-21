@@ -52,8 +52,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans
         }
         public static Human SpawnHumanWithGender(Cell cell, bool isMale)
         {
-            return new Human(cell, Pictures.Human, Pictures.Meat3,
-                4, isMale, 500, 2, 1, 100, 300, 10);
+            if (isMale)
+                return new Human(cell, Pictures.Human, Pictures.Meat3,
+                4, true, 500, 2, 1, 100, 300, 10);
+            return new Human(cell, Pictures.Human2, Pictures.Meat3,
+                4, false, 500, 2, 1, 100, 200, 10);
         }
     }
 }

@@ -33,9 +33,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits
                 case CreatureType.EatableGreenPlant:
                     return new Fruit(cell, Pictures.Fruit, 3, creatureType, Effect.None);
                 case CreatureType.PoisonousPurplePlant:
-                    return new Fruit(cell, Pictures.Fruit, 3, creatureType, Effect.Heart);
+                    return new Fruit(cell, Pictures.PoisonousFruit, 3, creatureType, Effect.Heart);
                 case CreatureType.UneatableBrownPlant:
-                    return new Fruit(cell, Pictures.Fruit, 3, creatureType, Effect.Uneatable);
+                    return new Fruit(cell, Pictures.UneatableFruit, 3, creatureType, Effect.Uneatable);
                 default:
                     return null;
             }
