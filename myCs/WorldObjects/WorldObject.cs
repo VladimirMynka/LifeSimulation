@@ -104,13 +104,13 @@ namespace LifeSimulation.myCs.WorldObjects
             return null;
         }
         
-        public List<WorldObjectComponent> GetComponents<T>()
+        public List<T> GetComponents<T>() where T : class
         {
-            var componentsOfType = new List<WorldObjectComponent>();
+            var componentsOfType = new List<T>();
             foreach (var component in components)
             {
                 if (component is T) 
-                    componentsOfType.Add(component);
+                    componentsOfType.Add(component as T);
             }
             return componentsOfType;
         }

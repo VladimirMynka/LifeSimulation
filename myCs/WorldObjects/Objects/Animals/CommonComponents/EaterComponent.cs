@@ -6,7 +6,7 @@ using LifeSimulation.myCs.WorldStructure.Weather;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 {
-    public abstract class EaterComponent : WorldObjectComponent, IHaveInformation, IDependingOnWeather
+    public abstract class EaterComponent : WorldObjectComponent, IHaveInformation, IDependingOnWeather, IHaveTarget
     {
         protected int satiety;
         protected readonly int maxSatiety;
@@ -165,6 +165,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         public int GetMaxSatiety()
         {
             return maxSatiety;
+        }
+
+        public int GetPriority()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public WorldObject GetTarget()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

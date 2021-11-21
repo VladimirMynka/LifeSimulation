@@ -42,17 +42,5 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 return false;
             return !meal.IsPoisonous();
         }
-
-        public int GetPriority()
-        {
-            return IsVeryHungry() ? 10 : IsHungry() ? 5 : 0;
-        }
-
-        public WorldObject GetTarget()
-        {
-            return mealTarget != null 
-                ? mealTarget.WorldObject 
-                : null;
-        }
     }
 }

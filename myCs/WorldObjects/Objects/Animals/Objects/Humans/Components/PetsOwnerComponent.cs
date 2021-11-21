@@ -8,7 +8,7 @@ using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 {
-    public class PetsOwnerComponent : WorldObjectComponent, IHaveInformation
+    public class PetsOwnerComponent : WorldObjectComponent, IHaveInformation, IHaveTarget
     {
         private readonly List<PetComponent> _pets;
         private PetComponent _targetPet;

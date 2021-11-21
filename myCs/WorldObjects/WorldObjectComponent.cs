@@ -31,7 +31,7 @@ namespace LifeSimulation.myCs.WorldObjects
             return WorldObject.GetComponent<T>();
         }
         
-        public List<WorldObjectComponent> GetComponents<T>()
+        public List<T> GetComponents<T>() where T : class
         {
             return WorldObject.GetComponents<T>();
         }
