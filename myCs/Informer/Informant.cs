@@ -33,7 +33,7 @@ namespace LifeSimulation.myCs.Informer
         private void UpdateInfo()
         {
             var info = "";
-            info += _world.Weather.GetInformation() + "\n\n\n----Objects----\n";
+            info += _world.Weather + "\n\n\n----Objects----\n";
             foreach (var component in _informationComponents)
             {
                 if (WorldObjectComponent.CheckWereDestroyed(component))

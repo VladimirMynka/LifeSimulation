@@ -5,7 +5,7 @@ using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating
 {
-    public abstract class MatingComponent : WorldObjectComponent, IHaveInformation
+    public abstract class MatingComponent : WorldObjectComponent, IHaveInformation, IHaveTarget
     {
         protected EaterComponent eaterComponent;
         protected CreatureType creatureType;
@@ -53,10 +53,20 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             _ticksToMating = _normalTicksToMating;
         }
 
-        public virtual string GetInformation()
+        public override string ToString()
         {
             var info = "TicksToMating: " + _ticksToMating;
             return info;
+        }
+
+        public virtual int GetPriority()
+        {
+            return 0;
+        }
+
+        public virtual WorldObject GetTarget()
+        {
+            return null;
         }
     }
 }

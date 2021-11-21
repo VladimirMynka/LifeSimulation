@@ -94,8 +94,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             }
         }
         
-        //delegate bool ItIsGood(
-        public string GetInformation()
+        public override string ToString()
         {
             var info = "";
             info += "Visibility: " + _visibility;

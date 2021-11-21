@@ -1,11 +1,12 @@
 ﻿using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Eggs;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating
 {
-    public class PregnantComponent : WorldObjectComponent
+    public class PregnantComponent : WorldObjectComponent, IHaveInformation
     {
         private EatableComponent _eatableComponent;
         private int _ticksToBirthday;
@@ -57,7 +58,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             Egg.SpawnEggByType(WorldObject.Cell, _eatableComponent.CreatureType);
         }
 
-        public string GetInformation()
+        public override string ToString()
         {
             var info = "";
             info += "Ticks to birthday: " + _ticksToBirthday;

@@ -63,7 +63,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
                 _regeneration = _normalRegeneration;
         }
 
-        public string GetInformation()
+        public override string ToString()
         {
             var info = "Health: " + _health + '/' + _maxHealth;
             return info;

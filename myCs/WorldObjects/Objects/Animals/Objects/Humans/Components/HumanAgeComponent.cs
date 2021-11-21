@@ -2,6 +2,7 @@
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
@@ -15,14 +16,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
         }
 
-        protected override void AddMaleComponent()
+        protected override MatingComponent NewMaleComponent()
         {
-            WorldObject.AddComponent(new ManComponent(WorldObject));
+            return new ManComponent(WorldObject);
         }
 
-        protected override void AddFemaleComponent(bool byEggs, int pregnantPeriod)
+        protected override MatingComponent NewFemaleComponent(bool byEggs, int pregnantPeriod)
         {
-            WorldObject.AddComponent(new WomanComponent(WorldObject, pregnantPeriod));
+            return new WomanComponent(WorldObject, pregnantPeriod);
         }
     }
 }

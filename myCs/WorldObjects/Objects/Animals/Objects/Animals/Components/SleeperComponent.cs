@@ -44,7 +44,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
             _active = weather.GetSeason() == Season.Winter;
         }
 
-        public string GetInformation()
+        public override string ToString()
         {
             return "IsSleeping: " + _active;
         }

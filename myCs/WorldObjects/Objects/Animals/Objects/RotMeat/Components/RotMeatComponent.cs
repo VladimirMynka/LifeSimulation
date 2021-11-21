@@ -20,7 +20,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.RotMeat.Compo
                 WorldObject.Destroy();
         } 
         
-        public string GetInformation()
+        public override string ToString()
         {
             var info = "Type: " + _creatureType + '\n';
             info += "Ticks to rot at all: " + _ticksToRot;

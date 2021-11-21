@@ -8,9 +8,9 @@ namespace LifeSimulation.myCs.WorldStructure
 {
     public class World
     {
-        private const int AnimalsNormalCount = 15000;
-        private const int HumanNormalCount = 4000;
-        private const int PlantsNormalCount = 5000;
+        private const int AnimalsNormalCount = 30000;
+        private const int HumanNormalCount = 5000;
+        private const int PlantsNormalCount = 1000;
 
         private readonly Cell[][] _cells;
         private readonly Drawer _drawer;

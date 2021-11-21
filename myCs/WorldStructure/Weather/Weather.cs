@@ -133,7 +133,7 @@ namespace LifeSimulation.myCs.WorldStructure.Weather
             return _precipitation;
         }
 
-        public string GetInformation()
+        public override string ToString()
         {
             var info = "";
             info += "Day of year: " + _dayOfYear + '\n';

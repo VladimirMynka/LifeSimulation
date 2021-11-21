@@ -4,7 +4,7 @@ using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Moving;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Components.Mating
 {
-    public class AnimalMaleComponent : MaleMatingComponent
+    public class AnimalMaleComponent : MaleComponent
     {
         private MovingComponent _moving;
         public AnimalMaleComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) : base(owner, ticksToMating)
@@ -22,24 +22,24 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
             base.Update();
             
             if (eaterComponent.IsHungry())
-            {
                 DeletePartner();
-                return;
-            }
-            
-            if (!CheckWereDestroyed(partner)) 
-                _moving.SetTarget(partner.WorldObject);
         }
 
-        protected override bool CanMateWith(FemaleMatingComponent female)
+        protected override bool CanMateWith(FemaleComponent female)
         {
             return female.IsReady() && female.IsOfType(creatureType);
         }
 
-        protected override void Mate(FemaleMatingComponent female)
+        protected override void Mate(FemaleComponent female)
         {
             base.Mate(female);
             DeletePartner();
+        }
+        
+        public override int GetPriority()
+        {
+            return CheckWereDestroyed(partner) ? 0 
+                : 5;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits
         {
             string info = "";
             info += GetInfoAboutCoords() + '\n';
-            info += _fruitAgeComponent.GetInformation() + '\n';
+            info += _fruitAgeComponent.ToString() + '\n';
             
             return info;
         }

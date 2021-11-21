@@ -296,7 +296,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Movi
             _ticksToStep += ticks;
         }
 
-        public string GetInformation()
+        public string ToString()
         {
             var info = "Ticks to step: " + _ticksToStep + '\n';
             info += "Speed state: " + _speedState + '\n';

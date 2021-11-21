@@ -3,11 +3,11 @@ using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating
 {
-    public abstract class MaleMatingComponent : MatingComponent
+    public abstract class MaleComponent : MatingComponent
     {
-        protected FemaleMatingComponent partner;
+        protected FemaleComponent partner;
 
-        protected MaleMatingComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) 
+        protected MaleComponent(WorldObject owner, int ticksToMating = Defaults.AnimalNormalTicksToMating) 
             : base(owner, ticksToMating)
         {
         }
@@ -31,11 +31,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
 
         private void SearchPartner()
         {
-            SetPartner(visibilityComponent.Search<FemaleMatingComponent>(CanMateWith));
+            SetPartner(visibilityComponent.Search<FemaleComponent>(CanMateWith));
         }
 
-        private void SetPartner(FemaleMatingComponent female)
+        private void SetPartner(FemaleComponent female)
         {
+            if (CheckWereDestroyed(female))
+                return;
             female.Partner = this;
             partner = female;
         }
@@ -48,17 +50,17 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             partner = null;
         }
 
-        protected abstract bool CanMateWith(FemaleMatingComponent female);
+        protected abstract bool CanMateWith(FemaleComponent female);
 
-        protected virtual void Mate(FemaleMatingComponent female)
+        protected virtual void Mate(FemaleComponent female)
         {
             female.Mate(this);
             ToWaitingStage();
         }
 
-        public override string GetInformation()
+        public override string ToString()
         {
-            var info = base.GetInformation() + '\n';
+            var info = base.ToString() + '\n';
             info += "Gender: male \n";
             info += "Partner: ";
             
@@ -69,6 +71,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
                         ',' + partner.WorldObject.Cell.Coords[1];
 
             return info;
+        }
+
+        public override WorldObject GetTarget()
+        {
+            return CheckWereDestroyed(partner) ? null
+                : partner.WorldObject;
         }
     }
 }

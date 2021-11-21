@@ -3,9 +3,11 @@ using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating
 {
-    public class WomanComponent : FemaleMatingComponent, IHaveTarget
+    public class WomanComponent : FemaleComponent, IHaveTarget
     {
         private InventoryComponent _inventory;
+        private ManComponent _man;
+        
         public WomanComponent(WorldObject owner, int pregnantPeriod) 
             : base(owner, false, pregnantPeriod)
         {
@@ -20,7 +22,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void Update()
         {
             base.Update();
-            
+            if (Partner != null && _man == null)
+                _man = (ManComponent) Partner;
         }
 
         public void AverageEatWith(InventoryComponent otherInventory)
@@ -28,14 +31,21 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _inventory.AverageReserveWith(otherInventory);
         }
 
-        public int GetPriority()
+        /// <summary></summary>
+        /// <returns>
+        /// 7 if partner is very hungry,
+        /// 5 if partner is hungry,
+        /// 3 if it's time to mating,
+        /// 0 in others
+        /// </returns>
+        public override int GetPriority()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public WorldObject GetTarget()
-        {
-            throw new System.NotImplementedException();
+            var man = (ManComponent) Partner;
+            return CheckWereDestroyed(man) ? 0 
+                : man.IsVeryHungry() ? 7 
+                : man.IsHungry() ? 5 
+                : man.IsReady() && IsReady() ? 3 
+                : 0;
         }
 
         public bool IsHungry()

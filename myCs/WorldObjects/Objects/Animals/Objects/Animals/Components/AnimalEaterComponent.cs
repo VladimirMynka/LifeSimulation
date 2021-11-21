@@ -22,8 +22,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         public override void Update()
         {
             base.Update();
-            if (!CheckWereDestroyed(mealTarget))
-                _moving.SetTarget(mealTarget.WorldObject);
+
+            if (IsHungry() && mealTarget == null) 
+                SearchMeal();
+            
+            if (CheckWereDestroyed(mealTarget))
+                mealTarget = null;
         }
     }
 }

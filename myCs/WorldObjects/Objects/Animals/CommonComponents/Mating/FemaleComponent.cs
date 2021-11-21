@@ -4,14 +4,14 @@ using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating
 {
-    public class FemaleMatingComponent : MatingComponent
+    public class FemaleComponent : MatingComponent
     {
-        public MaleMatingComponent Partner;
+        public MaleComponent Partner;
         private PregnantComponent _pregnantComponent;
         private readonly bool _byEggs;
         private readonly int _pregnantPeriod;
         
-        public FemaleMatingComponent(
+        public FemaleComponent(
             WorldObject owner, 
             bool byEggs = true,
             int pregnantPeriod = Defaults.PregnantPeriod,
@@ -58,7 +58,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             return (base.IsReady() && Partner == null);
         }
 
-        public void Mate(MaleMatingComponent partner)
+        public void Mate(MaleComponent partner)
         {
             BecomePregnant();
             ToWaitingStage();
@@ -70,9 +70,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             WorldObject.AddComponent(_pregnantComponent);
         }
         
-        public override string GetInformation()
+        public override string ToString()
         {
-            var info = base.GetInformation() + '\n';
+            var info = base.ToString() + '\n';
             info += "Gender: female \n";
             info += "Partner: ";
             
@@ -81,10 +81,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             else
                 info += "on " + Partner.WorldObject.Cell.Coords[0] + ',' + Partner.WorldObject.Cell.Coords[1];
 
-            if (_pregnantComponent != null)
-                info += '\n' + _pregnantComponent.GetInformation();
+            if (!CheckWereDestroyed(_pregnantComponent))
+                info += '\n' + _pregnantComponent.ToString();
 
             return info;
+        }
+
+        public override WorldObject GetTarget()
+        {
+            return CheckWereDestroyed(Partner) ? null 
+                : Partner.WorldObject;
         }
     }
 }

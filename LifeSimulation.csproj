@@ -74,8 +74,8 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\EaterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\HealthComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\IHaveTarget.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\Mating\FemaleMatingComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\Mating\MaleMatingComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\Mating\FemaleComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\Mating\MaleComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\Mating\MatingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\Mating\PregnantComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\Moving\MovingComponent.cs" />

@@ -6,12 +6,13 @@ using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Components
 {
-    public class PetComponent: WorldObjectComponent, IHaveInformation
+    public class PetComponent: WorldObjectComponent, IHaveInformation, IHaveTarget
     {
-        public PetsOwnerComponent PetOwner;
+        private PetsOwnerComponent _petOwner;
         private EaterComponent _eaterComponent;
         private int _toPresentTimer;
         private readonly int _defaultToPresentTimer;
+        private CreatureType _creatureType;
         
         public PetComponent(WorldObject owner, int timer) : base(owner)
         {
@@ -23,25 +24,27 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         {
             base.Start();
             _eaterComponent = GetComponent<EaterComponent>();
+            _creatureType = GetComponent<EatableComponent>().CreatureType;
         }
 
         public override void Update()
         {
             base.Update();
-            if (CheckWereDestroyed(PetOwner))
+            if (CheckWereDestroyed(_petOwner))
             {
-                PetOwner = null;
+                _petOwner = null;
                 _toPresentTimer = _defaultToPresentTimer;
+                return;
             }
             UpdateTimer();
             if (IsHungry())
-                PetOwner.GetSignal(this, IsVeryHungry());
+                _petOwner.GetSignal(this, IsVeryHungry());
             if (_toPresentTimer == 0)
             {
                 if (OwnerHere())
                     GivePresent();
                 else
-                    PetOwner.GetSignal(this);
+                    _petOwner.GetSignal(this);
             }
         }
 
@@ -54,13 +57,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
 
         private bool OwnerHere()
         {
-            return !CheckWereDestroyed(PetOwner) &&
-                   Direction.CheckEqual(WorldObject.Cell.Coords, PetOwner.WorldObject.Cell.Coords);
+            return !CheckWereDestroyed(_petOwner) &&
+                   Direction.CheckEqual(WorldObject.Cell.Coords, _petOwner.WorldObject.Cell.Coords);
         }
 
         private void GivePresent()
         {
-            PetOwner.GetPresent(20, GetMealType());
+            _petOwner.GetPresent(20, GetMealType());
         }
 
         public bool HasPresent()
@@ -71,6 +74,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         public MealType GetMealType()
         {
             return _eaterComponent.MealType;
+        }
+
+        public CreatureType GetCreatureType()
+        {
+            return _creatureType;
         }
 
         public void AddSatiety(int delta)
@@ -88,15 +96,56 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
             return _eaterComponent.IsVeryHungry();
         }
 
-        public string GetInformation()
+        public void SetOwner(PetsOwnerComponent petsOwnerComponent)
+        {
+            if (CheckWereDestroyed(petsOwnerComponent))
+                return;
+            _petOwner = petsOwnerComponent;
+            _eaterComponent.Exclude(CreatureType.Human);
+        }
+
+        public PetsOwnerComponent GetOwner()
+        {
+            return _petOwner;
+        }
+
+        public void RemoveOwner()
+        {
+            _petOwner = null;
+            _eaterComponent.Include(CreatureType.Human);
+        }
+        
+        public override string ToString()
         {
             var info = "";
             info += "Owner: ";
-            if (CheckWereDestroyed(PetOwner))
+            if (CheckWereDestroyed(_petOwner))
                 info += "none";
             else
-                info += "on " + InformationComponent.GetInfoAboutCoords(PetOwner);
+                info += "on " + InformationComponent.GetInfoAboutCoords(_petOwner);
             return info;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>
+        /// 12 if it's very hungry and owner has meal,
+        /// 6 if it's hungry and owner has meal,
+        /// 2 if it has present
+        /// </returns>
+        public int GetPriority()
+        {
+            return CheckWereDestroyed(_petOwner) ? 0
+                : IsVeryHungry() && _petOwner.HasMealFor(GetMealType(), 50) ? 21
+                : IsHungry() && _petOwner.HasMealFor(GetMealType(), 20) ? 11
+                : HasPresent() ? 2
+                : 0;
+        }
+
+        public WorldObject GetTarget()
+        {
+            return CheckWereDestroyed(_petOwner) ? null : _petOwner.WorldObject;
         }
     }
 }

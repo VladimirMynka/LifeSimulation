@@ -13,6 +13,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         private MatingComponent _matingComponent;
         private MovingComponent _movingComponent;
         private VisibilityComponent _visibilityComponent;
+        private PetComponent _petComponent;
         
         public AnimalInformationComponent(WorldObject owner) : base(owner)
         {
@@ -26,22 +27,25 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
             _animalAgeComponent = GetComponent<AnimalAgeComponent>();
             _movingComponent = GetComponent<MovingComponent>();
             _visibilityComponent = GetComponent<VisibilityComponent>();
+            _petComponent = GetComponent<PetComponent>();
         }
 
         protected override string GetAllInformation()
         {
             string info = "";
             info += GetInfoAboutCoords() + "\n\n";
-            info += _eaterComponent.GetInformation() + "\n\n";
-            info += _healthComponent.GetInformation() + "\n\n";
-            info += _visibilityComponent.GetInformation() + "\n\n";
-            info += _animalAgeComponent.GetInformation() + "\n\n";
-            info += _movingComponent.GetInformation() + "\n\n";
+            info += _eaterComponent + "\n\n";
+            info += _healthComponent + "\n\n";
+            info += _visibilityComponent + "\n\n";
+            info += _animalAgeComponent + "\n\n";
+            info += _movingComponent.ToString() + "\n\n";
             if (_matingComponent == null)
                 _matingComponent = GetComponent<MatingComponent>();
             else
-                info += _matingComponent.GetInformation();
-            
+                info += _matingComponent.ToString();
+
+            if (_petComponent != null)
+                info += "\n\n" + _petComponent;
             
             return info;
         }

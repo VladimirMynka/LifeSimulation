@@ -35,7 +35,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans
             components.Add(new HumanAgeComponent(this, isMale, afterDiedImage, layer, 20));
             components.Add(new EatableComponent(this, CreatureType.Human, MealType.FreshMeat, Effect.None));
             components.Add(new MovingComponent(this));
+            components.Add(new PetsOwnerComponent(this));
+            
+            components.Add(new BehaviourChangerComponent(this));
             components.Add(new HumanInformationComponent(this));
+            components.Add(new DependingOnWeatherComponent(this));
             Start();
         }
         

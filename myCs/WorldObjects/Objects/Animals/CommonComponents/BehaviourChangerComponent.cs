@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Moving;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 {
-    public class BehaviourChangerComponent : WorldObjectComponent
+    public class BehaviourChangerComponent : WorldObjectComponent, IHaveInformation
     {
         private List<IHaveTarget> _competitors;
         private MovingComponent _movingComponent;
+        private int _lastPriority;
         
         public BehaviourChangerComponent(WorldObject owner) : base(owner)
         {
@@ -36,20 +38,30 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 
         private IHaveTarget ComponentWithLargestPriority()
         {
-            var max = 0;
+            _lastPriority = 0;
             IHaveTarget component = null;
             
             foreach (var competitor in _competitors)
             {
                 var priority = competitor.GetPriority();
-                if (priority > max)
+                if (priority > _lastPriority)
                 {
-                    max = priority;
+                    _lastPriority = priority;
                     component = competitor;
                 }
             }
 
             return component;
+        }
+
+        public void Add(IHaveTarget component)
+        {
+            _competitors.Add(component);
+        }
+
+        public override string ToString()
+        {
+            return "Last priority: " + _lastPriority;
         }
     }
 }

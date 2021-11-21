@@ -48,7 +48,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable
         
         private void Damage(EaterComponent eater)
         {
-            if (eater == null)
+            if (CheckWereDestroyed(eater))
                 return;
             eater.GetComponent<HealthComponent>().AddHealth(-NutritionalValue / 2);
         }

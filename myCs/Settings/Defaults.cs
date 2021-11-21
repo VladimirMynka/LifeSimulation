@@ -13,7 +13,7 @@
         public const int FruitLivePeriod = 20;
         public const int FruitRotAge = 30;
 
-        public const int AnimalTeenagePeriod = 1;
+        public const int AnimalTeenagePeriod = 5;
         public const int AnimalDiedAge = 700;
         public const int AnimalRotAge = 750;
         public const int AnimalEggPeriod = 20;

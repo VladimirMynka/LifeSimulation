@@ -111,7 +111,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
                 WorldObject.Cell.ReportAboutUpdating();
         }
 
-        public override string GetInformation()
+        public override string ToString()
         {
             var info = "Type: " + CreatureType + '\n';
             info += "On eat effect: " + effect + '\n';
@@ -121,7 +121,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
             else
                 info += "yes";
             info += '\n';
-                info += base.GetInformation();
+                info += base.ToString();
             return info;
         }
     }

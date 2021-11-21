@@ -39,13 +39,17 @@
 
         public static string GetInfoAboutCoords(WorldObjectComponent component)
         {
-            return GetInfoAboutCoords(component.WorldObject);
+            return CheckWereDestroyed(component)
+                ? "none" 
+                : GetInfoAboutCoords(component.WorldObject);
         }
         
         public static string GetInfoAboutCoords(WorldObject worldObject)
         {
-            return worldObject.Cell.Coords[0].ToString() +
-                   ',' + worldObject.Cell.Coords[1];
+            return CheckWereDestroyed(worldObject) 
+                ? "none" 
+                : worldObject.Cell.Coords[0].ToString() +
+                  ',' + worldObject.Cell.Coords[1];
         }
     }
 }

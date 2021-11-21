@@ -20,7 +20,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.RotMeat.Compo
         {
             string info = "";
             info += GetInfoAboutCoords() + '\n';
-            info += _rotMeatComponent.GetInformation() + '\n';
+            info += _rotMeatComponent.ToString() + '\n';
             
             return info;
         }

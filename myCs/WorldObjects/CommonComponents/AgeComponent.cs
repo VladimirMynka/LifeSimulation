@@ -61,7 +61,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
             return (AgeStage) index;
         }
 
-        public virtual string GetInformation()
+        public override string ToString()
         {
             var info = "Age: " + age + '/' + transitionalAges[transitionalAges.Length - 1] + '\n';
             info += "Age stage: " + AgeStage;

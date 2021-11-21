@@ -2,6 +2,7 @@
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.RotMeat.Components;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
@@ -12,8 +13,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         private readonly CreatureType _creatureType;
         private readonly int _pregnantPeriod;
         private readonly bool _byEggs;
+        private BehaviourChangerComponent _behaviourChanger;
         
-        public AbstractAnimalAgeComponent(
+        protected AbstractAnimalAgeComponent(
             WorldObject owner,
             CreatureType creatureType,
             Effect effect, 
@@ -36,6 +38,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             transitionalAges[0] = Defaults.AnimalTeenagePeriod;
             transitionalAges[1] = Defaults.AnimalDiedAge;
             transitionalAges[2] = Defaults.AnimalDiedAge;
+        }
+
+        public override void Start()
+        {
+            base.Start();
+            _behaviourChanger = GetComponent<BehaviourChangerComponent>();
         }
 
         protected override void NextStage()
@@ -81,14 +89,15 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 
         protected virtual void GrowToMother()
         {
-            if (_isMale)
-                AddMaleComponent();
-            else 
-                AddFemaleComponent(_byEggs, _pregnantPeriod);
+            var matingComponent = _isMale
+                ? NewMaleComponent()
+                : NewFemaleComponent(_byEggs, _pregnantPeriod);
+            WorldObject.AddComponent(matingComponent);
+            _behaviourChanger.Add(matingComponent);
         }
 
-        protected abstract void AddMaleComponent();
-        protected abstract void AddFemaleComponent(bool byEggs, int pregnantPeriod);
+        protected abstract MatingComponent NewMaleComponent();
+        protected abstract MatingComponent NewFemaleComponent(bool byEggs, int pregnantPeriod);
 
         protected override void OnDestroy()
         {

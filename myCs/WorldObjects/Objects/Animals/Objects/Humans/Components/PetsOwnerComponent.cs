@@ -14,6 +14,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private PetComponent _targetPet;
         private VisibilityComponent _visibility;
         private InventoryComponent _inventory;
+        private EaterComponent _eaterComponent;
 
         public PetsOwnerComponent(WorldObject owner) : base(owner)
         {
@@ -25,6 +26,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             base.Start();
             _visibility = GetComponent<VisibilityComponent>();
             _inventory = GetComponent<InventoryComponent>();
+            _eaterComponent = GetComponent<EaterComponent>();
         }
 
         public override void Update()
@@ -41,7 +43,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private void TryTame()
         {
-            if (!CheckItIsTamable(_targetPet))
+            if (CheckWereDestroyed(_targetPet))
             {
                 _targetPet = null;
                 return;
@@ -51,22 +53,21 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 Tame();
         }
 
-        private bool Tame()
+        private void Tame()
         {
+            if (_pets.Contains(_targetPet))
+                return;
             var someEat = _inventory.Remove(20, _targetPet.GetMealType());
             
             if (someEat < 20)
             {
-                _targetPet.PetOwner = null;
                 _inventory.Add(someEat, _targetPet.GetMealType());
-                _targetPet = null;
-                return false;
+                return;
             }
             
             _targetPet.AddSatiety(20);
             AddPet(_targetPet);
             _targetPet = null;
-            return true;
         }
 
         private void SearchPet()
@@ -77,7 +78,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private bool CheckItIsTamable(PetComponent pet)
         {
             return !CheckWereDestroyed(pet) 
-                   && pet.PetOwner == null 
+                   && pet.GetOwner() == null 
                    && _inventory.CheckHave(20, pet.GetMealType());
         }
 
@@ -89,14 +90,17 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private void SetTargetPet(PetComponent pet)
         {
+            if (CheckWereDestroyed(pet))
+                return;
             _targetPet = pet;
-            pet.PetOwner = this;
+            pet.SetOwner(this);
+            _eaterComponent.Exclude(pet.WorldObject);
         }
 
         private void AddPet(PetComponent pet)
         {
             _pets.Add(pet);
-            pet.PetOwner = this;
+            pet.SetOwner(this);
         }
 
         public void GetSignal(PetComponent pet, bool isVeryHungry = false)
@@ -105,17 +109,22 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 _targetPet = pet;
         }
 
+        public bool HasMealFor(MealType mealType, int quantity = 20)
+        {
+            return _inventory.CheckHave(quantity, mealType);
+        }
+
         private bool TargetPetIsMyAndHungry()
         {
             return !CheckWereDestroyed(_targetPet) &&
-                   _targetPet.PetOwner == this &&
+                   _targetPet.GetOwner() == this &&
                    _targetPet.IsHungry();
         }
 
         private bool TargetPetIsMyAndVeryHungry()
         {
             return !CheckWereDestroyed(_targetPet) &&
-                   _targetPet.PetOwner == this &&
+                   _targetPet.GetOwner() == this &&
                    _targetPet.IsVeryHungry();
         }
 
@@ -124,6 +133,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _inventory.Add(quantity, mealType);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>
+        /// 6 if pet is very hungry, 4 if pet is hungry, 2 if pet has present, 0 in others
+        /// </returns>
         public int GetPriority()
         {
             return CheckWereDestroyed(_targetPet) ? 0
@@ -131,24 +146,29 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 : _targetPet.IsHungry() ? 4
                 : _targetPet.HasPresent() ? 2
                 : 0;
-
-
         }
         
         public WorldObject GetTarget()
         {
-            return _targetPet == null 
+            return CheckWereDestroyed(_targetPet) 
                 ? null 
                 : _targetPet.WorldObject;
         }
 
-        public string GetInformation()
+        public override string ToString()
         {
-            var info = 
-                _pets.Aggregate("Pets: ", 
-                    (current, pet) => 
-                        current + ("\non " + InformationComponent.GetInfoAboutCoords(pet)));
-            info += "Target pet: on " + InformationComponent.GetInfoAboutCoords(_targetPet);
+            var info = _pets.Where(
+                pet => !CheckWereDestroyed(pet)
+                ).Aggregate(
+                "Pets: ", (current, pet) => current + 
+                                            ("\n" 
+                                             + pet.GetCreatureType()
+                                             + " on " 
+                                             + InformationComponent.GetInfoAboutCoords(pet)));
+
+            if (!CheckWereDestroyed(_targetPet))
+                info += "\nTarget pet: " + _targetPet.GetCreatureType() + " on "
+                        + InformationComponent.GetInfoAboutCoords(_targetPet);
             return info;
         }
     }

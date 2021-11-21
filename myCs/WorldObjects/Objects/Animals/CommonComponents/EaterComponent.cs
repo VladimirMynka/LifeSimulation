@@ -1,4 +1,5 @@
-﻿using LifeSimulation.myCs.Settings;
+﻿using System.Collections.Generic;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldStructure;
@@ -21,6 +22,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         private VisibilityComponent _visibilityComponent;
         private Cell _cell;
 
+        private List<WorldObject> _excluded;
+        private List<CreatureType> _excludedTypes;
+
         protected EaterComponent(
             WorldObject owner, 
             MealType mealType, 
@@ -33,6 +37,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             maxSatiety = satiety;
             _destruction = destruction;
             _normalDestruction = destruction;
+            _excluded = new List<WorldObject>();
+            _excludedTypes = new List<CreatureType>();
         }
 
         public override void Start()
@@ -47,20 +53,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         {
             AddSatiety(-_destruction);
             ChangeHealth();
-
+            
             if (!IsHungry())
             {
                 mealTarget = null;
                 return;
             }
-
+            
             EatSomething();
-            
-            if (IsHungry() && mealTarget == null) 
-                SearchMeal();
-            
-            if (CheckWereDestroyed(mealTarget))
-                mealTarget = null;
         }
 
         public void AddSatiety(int delta)
@@ -117,6 +117,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 
             if (MealType != MealType.AllTypes && meal.MealType != MealType) 
                 return false;
+
+            if (_excludedTypes.Contains(meal.CreatureType))
+                return false;
+
+            if (_excluded.Contains(meal.WorldObject))
+                return false;
+            
             return _creatureType != meal.CreatureType;
         }
 
@@ -132,7 +139,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             return null;
         }
 
-        public virtual string GetInformation()
+        public override string ToString()
         {
             var info = "Type: " + _creatureType + '\n';
             info += "Meal type: " + MealType + '\n';
@@ -167,14 +174,43 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             return maxSatiety;
         }
 
-        public int GetPriority()
+        /// <summary></summary>
+        /// <returns>
+        /// 10 if it's very hungry, 5 if it's hungry, 0 in others
+        /// </returns>
+        public virtual int GetPriority()
         {
-            throw new System.NotImplementedException();
+            return CheckWereDestroyed(mealTarget) ? 0 
+                : IsVeryHungry() ? 20
+                : IsHungry() ? 10
+                : 0;
         }
 
         public WorldObject GetTarget()
         {
-            throw new System.NotImplementedException();
+            return CheckWereDestroyed(mealTarget) 
+                ? null 
+                : mealTarget.WorldObject;
+        }
+
+        public void Exclude(WorldObject worldObject)
+        {
+            _excluded.Add(worldObject);
+        }
+
+        public void Exclude(CreatureType creatureType)
+        {
+            _excludedTypes.Add(creatureType);
+        }
+
+        public void Include(WorldObject worldObject)
+        {
+            _excluded.Remove(worldObject);
+        }
+
+        public void Include(CreatureType creatureType)
+        {
+            _excludedTypes.Remove(creatureType);
         }
     }
 }

@@ -79,11 +79,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits
                 WorldObject.Cell.ReportAboutUpdating();
         }
 
-        public override string GetInformation()
+        public override string ToString()
         {
             var info = "Type: " + _creatureType + "(fruit)\n";
             info += "Effect: " + effect + '\n';
-            info += base.GetInformation();
+            info += base.ToString();
             return info;
         }
     }

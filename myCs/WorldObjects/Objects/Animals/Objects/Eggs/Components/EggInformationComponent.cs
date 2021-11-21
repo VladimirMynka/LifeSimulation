@@ -20,7 +20,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Eggs.Componen
         {
             string info = "";
             info += GetInfoAboutCoords() + '\n';
-            info += _eggComponent.GetInformation() + '\n';
+            info += _eggComponent.ToString() + '\n';
             
             return info;
         }

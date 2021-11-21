@@ -3,7 +3,7 @@ using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating
 {
-    public class ManComponent : MaleMatingComponent, IHaveTarget
+    public class ManComponent : MaleComponent, IHaveTarget
     {
         private InventoryComponent _inventory;
         private WomanComponent _woman;
@@ -25,27 +25,26 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             if (partner != null && _woman == null)
                 _woman = (WomanComponent) partner;
             
-            if (!CheckWereDestroyed(_woman) && _woman.IsHungry() && CheckPartnerHere())
+            if (!CheckWereDestroyed(_woman) && CheckPartnerHere() 
+                                            && (_woman.IsHungry() || IsHungry()))
                 _woman.AverageEatWith(_inventory);
         }
 
-        public int GetPriority()
+        
+        /// <summary></summary>
+        /// <returns>
+        /// 7 if partner is very hungry,
+        /// 5 if partner is hungry,
+        /// 3 if it's time to mating,
+        /// 0 in others
+        /// </returns>
+        public override int GetPriority()
         {
-            if (partner == null)
-                return 0;
-            var woman = (IHaveTarget) partner;
-            if (woman.IsVeryHungry())
-                return 7;
-            if (woman.IsHungry())
-                return 5;
-            if (partner.IsReady() && IsReady())
-                return 3;
-            return 0;
-        }
-
-        public WorldObject GetTarget()
-        {
-            return partner != null ? partner.WorldObject : null;
+            return CheckWereDestroyed(_woman) ? 0 
+                : _woman.IsVeryHungry() ? 7 
+                : _woman.IsHungry() ? 5 
+                : _woman.IsReady() && IsReady() ? 3 
+                : 0;
         }
 
         public bool IsHungry()
@@ -58,7 +57,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return eaterComponent.IsVeryHungry();
         }
 
-        protected override bool CanMateWith(FemaleMatingComponent female)
+        protected override bool CanMateWith(FemaleComponent female)
         {
             return female != null && female.IsReady() && female is WomanComponent;
         }

@@ -5,30 +5,36 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 {
     public class InventoryComponent : WorldObjectComponent, IHaveInformation
     {
-        private int _plantReserve;
-        private int _meatReserve;
-        private int _rotMeatReserve;
+        private class Wrapper<T>
+        {
+            public T inner;
+
+            public override string ToString()
+            {
+                return inner.ToString();
+            }
+        }
+        private readonly Wrapper<int> _plantReserve = new Wrapper<int>();
+        private readonly Wrapper<int> _meatReserve = new Wrapper<int>();
+        private readonly Wrapper<int> _rotMeatReserve = new Wrapper<int>();
         private readonly int _maxReserve;
         public InventoryComponent(WorldObject owner, int reserve) : base(owner)
         {
-            _plantReserve = 0;
-            _meatReserve = 0;
-            _rotMeatReserve = 0;
             _maxReserve = reserve;
         }
 
-        private ref int ReserveByMealType(MealType mealType)
+        private Wrapper<int> ReserveByMealType(MealType mealType)
         {
             switch (mealType)
             {
                 case MealType.Plant:
-                    return ref _plantReserve;
+                    return _plantReserve;
                 case MealType.FreshMeat:
-                    return ref _meatReserve;
+                    return _meatReserve;
                 case MealType.DeadMeat:
-                    return ref _rotMeatReserve;
+                    return _rotMeatReserve;
                 default:
-                    return ref _plantReserve;
+                    return _plantReserve;
             }
         }
 
@@ -45,29 +51,29 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             
             if (mealType == MealType.AllTypes)
             {
-                int removed = RemoveFrom(ref _plantReserve, quantity / 3);
-                removed += RemoveFrom(ref _meatReserve, quantity / 3 * 2 - removed);
-                removed += RemoveFrom(ref _rotMeatReserve, quantity - removed);
-                removed += RemoveFrom(ref _plantReserve, quantity - removed);
-                removed += RemoveFrom(ref _meatReserve, quantity - removed);
+                int removed = RemoveFrom(_plantReserve, quantity / 3);
+                removed += RemoveFrom(_meatReserve, quantity / 3 * 2 - removed);
+                removed += RemoveFrom(_rotMeatReserve, quantity - removed);
+                removed += RemoveFrom(_plantReserve, quantity - removed);
+                removed += RemoveFrom(_meatReserve, quantity - removed);
                 return removed;
             }
             
-            ref var reserve = ref ReserveByMealType(mealType);
-            return RemoveFrom(ref reserve, quantity);
+            var reserve = ReserveByMealType(mealType);
+            return RemoveFrom(reserve, quantity);
         }
 
-        private static int RemoveFrom(ref int reserve, int quantity)
+        private static int RemoveFrom(Wrapper<int> reserve, int quantity)
         {
             if (quantity < 0)
                 return 0;
-            if (reserve > quantity)
+            if (reserve.inner > quantity)
             {
-                reserve -= quantity;
+                reserve.inner -= quantity;
                 return quantity;
             }
-            var forReturn = reserve;
-            reserve = 0;
+            var forReturn = reserve.inner;
+            reserve.inner = 0;
             return forReturn;
         }
 
@@ -79,44 +85,44 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             if (mealType == MealType.AllTypes)
             {
-                int excess = RemoveFrom(ref _plantReserve, quantity / 3);
-                excess = RemoveFrom(ref _meatReserve, quantity / 3 + excess);
-                excess = RemoveFrom(ref _rotMeatReserve, quantity - quantity / 3 * 2 + excess);
-                excess = RemoveFrom(ref _plantReserve, excess);
-                excess = RemoveFrom(ref _meatReserve, excess);
+                int excess = AddTo(_plantReserve, quantity / 3);
+                excess = AddTo(_meatReserve, quantity / 3 + excess);
+                excess = AddTo(_rotMeatReserve, quantity - quantity / 3 * 2 + excess);
+                excess = AddTo(_plantReserve, excess);
+                excess = AddTo(_meatReserve, excess);
                 return excess;
             }
             
-            ref var reserve = ref ReserveByMealType(mealType);
-            return AddTo(ref reserve, quantity);
+            var reserve = ReserveByMealType(mealType);
+            return AddTo(reserve, quantity);
         }
 
-        private int AddTo(ref int reserve, int quantity)
+        private int AddTo(Wrapper<int> reserve, int quantity)
         {
             if (quantity < 0)
                 return 0;
-            if (quantity + _plantReserve + _meatReserve + _rotMeatReserve <= _maxReserve)
+            if (quantity + _plantReserve.inner + _meatReserve.inner + _rotMeatReserve.inner <= _maxReserve)
             {
-                reserve += quantity;
+                reserve.inner += quantity;
                 return 0;
             }
-            var empty = _maxReserve - _meatReserve - _plantReserve - _rotMeatReserve;
-            reserve += empty;
-            return quantity - empty;
+            var freeSpace = _maxReserve - _meatReserve.inner - _plantReserve.inner - _rotMeatReserve.inner;
+            reserve.inner += freeSpace;
+            return quantity - freeSpace;
         }
 
         public int RemoveAll()
         {
-            var removedQuantity = _plantReserve + _meatReserve + _rotMeatReserve;
-            _plantReserve = 0;
-            _meatReserve = 0;
-            _rotMeatReserve = 0;
+            var removedQuantity = _plantReserve.inner + _meatReserve.inner + _rotMeatReserve.inner;
+            _plantReserve.inner = 0;
+            _meatReserve.inner = 0;
+            _rotMeatReserve.inner = 0;
             return removedQuantity;
         }
 
         public bool IsFilled()
         {
-            return _plantReserve + _meatReserve + _rotMeatReserve == _maxReserve;
+            return _plantReserve.inner + _meatReserve.inner + _rotMeatReserve.inner == _maxReserve;
         }
 
         public void AverageReserveWith(InventoryComponent other)
@@ -134,26 +140,26 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public int AllReserve()
         {
-            return _meatReserve + _plantReserve + _rotMeatReserve;
+            return _meatReserve.inner + _plantReserve.inner + _rotMeatReserve.inner;
         }
 
         public bool CheckHave(int quantity, MealType mealType)
         {
             if (mealType == MealType.AllTypes)
                 return AllReserve() > quantity;
-            return CheckHaveIn(ref ReserveByMealType(mealType), quantity);
+            return CheckHaveIn(ReserveByMealType(mealType).inner, quantity);
         }
 
-        private static bool CheckHaveIn(ref int reserve, int quantity)
+        private static bool CheckHaveIn(int reserve, int quantity)
         {
             return reserve >= quantity;
         }
 
-        public string GetInformation()
+        public override string ToString()
         {
             var info = "Inventory: \n";
-            info += "plants: " + _plantReserve + '/' + _maxReserve;
-            info += "meat: " + _meatReserve + '/' + _maxReserve;
+            info += "plants: " + _plantReserve + '/' + _maxReserve + '\n';
+            info += "meat: " + _meatReserve + '/' + _maxReserve + '\n';
             info += "rot meat: " + _rotMeatReserve + '/' + _maxReserve;
             return info;
         }

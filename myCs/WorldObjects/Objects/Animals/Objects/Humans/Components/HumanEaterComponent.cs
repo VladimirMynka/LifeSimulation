@@ -1,6 +1,6 @@
-﻿using LifeSimulation.myCs.WorldObjects.CommonComponents;
-using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
+﻿using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Components;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 {
@@ -18,12 +18,21 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _inventory = GetComponent<InventoryComponent>();
         }
 
+        public override void Update()
+        {
+            base.Update();
+            
+            if (_inventory.IsFilled()) 
+                return;
+            
+            CollectFrom(GetMeal());
+            if (CheckWereDestroyed(mealTarget))
+                SearchMeal();
+        }
+
         protected override void EatSomething()
         {
             AddSatiety(_inventory.Remove(maxSatiety - satiety));
-            if (_inventory.IsFilled())
-                return;
-            CollectFrom(GetMeal());
         }
 
         private void CollectFrom(EatableComponent meal)
@@ -36,11 +45,35 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         protected override bool CheckIEatIt(EatableComponent meal)
         {
+            return base.CheckIEatIt(meal) && !meal.IsPoisonous() && HasNotOwner(meal);
+        }
+
+        private static bool HasNotOwner(WorldObjectComponent meal)
+        {
             if (CheckWereDestroyed(meal))
-                return false;
-            if (meal.CreatureType == CreatureType.Human)
-                return false;
-            return !meal.IsPoisonous();
+                return true;
+            var petComponent = meal.GetComponent<PetComponent>();
+            if (CheckWereDestroyed(petComponent))
+                return true;
+            return petComponent.GetOwner() == null;
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>
+        /// 20 if it's very hungry,
+        /// 10 if it's hungry,
+        /// 1 if inventory isn't filled,
+        /// 0 in others
+        /// </returns>
+        public override int GetPriority()
+        {
+            return CheckWereDestroyed(mealTarget) ? 0 
+                : IsVeryHungry() ? 20
+                : IsHungry() ? 10 
+                : !_inventory.IsFilled() ? 1
+                : 0;
         }
     }
 }
