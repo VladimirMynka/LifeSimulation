@@ -59,7 +59,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             return info;
         }
 
-        public virtual int GetPriority()
+        public int GetInformationPriority()
+        {
+            return 60;
+        }
+
+        public virtual int GetPriorityInBehaviour()
         {
             return 0;
         }

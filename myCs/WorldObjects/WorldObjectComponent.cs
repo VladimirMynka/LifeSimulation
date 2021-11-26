@@ -39,7 +39,9 @@ namespace LifeSimulation.myCs.WorldObjects
         public void Destroy()
         {
             OnDestroy();
-            WorldObject.RemoveComponent(this);
+            if (WorldObject != null)
+                WorldObject.RemoveComponent(this);
+            WorldObject = null;
         }
         
         public virtual void Start()
@@ -52,7 +54,7 @@ namespace LifeSimulation.myCs.WorldObjects
             
         }
 
-        protected virtual void OnDestroy()
+        public virtual void OnDestroy()
         {
             
         }

@@ -134,6 +134,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
             return info;
         }
 
+        public int GetInformationPriority()
+        {
+            return 70;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -142,7 +147,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         /// 6 if it's hungry and owner has meal,
         /// 2 if it has present
         /// </returns>
-        public int GetPriority()
+        public int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(_petOwner) ? 0
                 : IsVeryHungry() && _petOwner.HasMealFor(GetMealType(), 50) ? 21

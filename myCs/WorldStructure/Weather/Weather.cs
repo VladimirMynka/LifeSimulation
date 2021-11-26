@@ -143,5 +143,10 @@ namespace LifeSimulation.myCs.WorldStructure.Weather
             info += "Temperature: " + _temperature;
             return info;
         }
+
+        public int GetInformationPriority()
+        {
+            return 0;
+        }
     }
 }

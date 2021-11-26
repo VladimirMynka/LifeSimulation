@@ -3,5 +3,6 @@
     public interface IHaveInformation
     { 
         string ToString();
+        int GetInformationPriority();
     }
 }

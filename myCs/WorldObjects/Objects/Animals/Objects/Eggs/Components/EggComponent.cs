@@ -29,7 +29,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Eggs.Componen
                 WorldObject.Destroy();
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             Animal.SpawnWithRandomGender(WorldObject.Cell, _creatureType);
         }
@@ -39,6 +39,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Eggs.Componen
             var info = "Type: " + _creatureType + '\n';
             info += "Ticks to birthday: " + _ticksToBirthday;
             return info;
+        }
+
+        public int GetInformationPriority()
+        {
+            return 5;
         }
     }
 }

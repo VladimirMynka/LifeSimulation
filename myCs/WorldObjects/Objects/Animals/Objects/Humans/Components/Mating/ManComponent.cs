@@ -38,7 +38,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         /// 3 if it's time to mating,
         /// 0 in others
         /// </returns>
-        public override int GetPriority()
+        public override int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(_woman) ? 0 
                 : _woman.IsVeryHungry() ? 7 

@@ -3,6 +3,7 @@ using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.RotMeat;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.RotMeat.Components;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
@@ -14,6 +15,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         private readonly int _pregnantPeriod;
         private readonly bool _byEggs;
         private BehaviourChangerComponent _behaviourChanger;
+        private InformationComponent _informationComponent;
         
         protected AbstractAnimalAgeComponent(
             WorldObject owner,
@@ -44,6 +46,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         {
             base.Start();
             _behaviourChanger = GetComponent<BehaviourChangerComponent>();
+            _informationComponent = GetComponent<InformationComponent>();
         }
 
         protected override void NextStage()
@@ -94,12 +97,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
                 : NewFemaleComponent(_byEggs, _pregnantPeriod);
             WorldObject.AddComponent(matingComponent);
             _behaviourChanger.Add(matingComponent);
+            _informationComponent.AddComponent(matingComponent);
         }
 
         protected abstract MatingComponent NewMaleComponent();
         protected abstract MatingComponent NewFemaleComponent(bool byEggs, int pregnantPeriod);
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.OnDestroy();
             new RotMeat(WorldObject.Cell, image, _creatureType, layer);

@@ -153,7 +153,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         /// <returns>
         /// 6 if pet is very hungry, 4 if pet is hungry, 2 if pet has present, 0 in others
         /// </returns>
-        public int GetPriority()
+        public int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(_targetPet) ? 0
                 : _targetPet.IsVeryHungry() 
@@ -186,6 +186,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 info += "\nTarget pet: " + _targetPet.GetCreatureType() + " on "
                         + InformationComponent.GetInfoAboutCoords(_targetPet);
             return info;
+        }
+
+        public int GetInformationPriority()
+        {
+            return 70;
         }
     }
 }

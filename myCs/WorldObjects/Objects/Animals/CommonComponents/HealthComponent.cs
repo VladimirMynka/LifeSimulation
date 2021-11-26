@@ -69,6 +69,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             return info;
         }
 
-        
+        public int GetInformationPriority()
+        {
+            return 10;
+        }
     }
 }

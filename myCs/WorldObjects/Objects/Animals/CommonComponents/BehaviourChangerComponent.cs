@@ -43,7 +43,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             
             foreach (var competitor in _competitors)
             {
-                var priority = competitor.GetPriority();
+                var priority = competitor.GetPriorityInBehaviour();
                 if (priority > _lastPriority)
                 {
                     _lastPriority = priority;
@@ -62,6 +62,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         public override string ToString()
         {
             return "Last priority: " + _lastPriority;
+        }
+
+        public int GetInformationPriority()
+        {
+            return 80;
         }
     }
 }

@@ -163,5 +163,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             info += "rot meat: " + _rotMeatReserve + '/' + _maxReserve;
             return info;
         }
+
+        public int GetInformationPriority()
+        {
+            return 15;
+        }
     }
 }

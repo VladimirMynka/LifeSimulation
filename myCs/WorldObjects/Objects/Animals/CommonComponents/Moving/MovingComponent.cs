@@ -296,7 +296,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Movi
             _ticksToStep += ticks;
         }
 
-        public string ToString()
+        public override string ToString()
         {
             var info = "Ticks to step: " + _ticksToStep + '\n';
             info += "Speed state: " + _speedState + '\n';
@@ -310,6 +310,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Movi
                 info += "on " + InformationComponent.GetInfoAboutCoords(_target);
             
             return info;
+        }
+
+        public int GetInformationPriority()
+        {
+            return 50;
         }
     }
 }

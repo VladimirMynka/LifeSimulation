@@ -36,7 +36,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
             DeletePartner();
         }
         
-        public override int GetPriority()
+        public override int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(partner) ? 0 
                 : 5;

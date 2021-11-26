@@ -16,7 +16,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _eatableComponent.SetEffect(Effect.Uneatable);
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             _eatableComponent.SetEffect(Effect.None);
         }

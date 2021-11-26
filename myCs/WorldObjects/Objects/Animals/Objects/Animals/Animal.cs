@@ -55,7 +55,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals
             if (isTamable)
                 components.Add(new PetComponent(this, presentsTimer, petEffect, presentValue));
 
-            components.Add(new AnimalInformationComponent(this));
+            components.Add(new InformationComponent(this));
             components.Add(new DependingOnWeatherComponent(this));
             components.Add(new BehaviourChangerComponent(this));
             Start();

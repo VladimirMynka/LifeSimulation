@@ -48,5 +48,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         {
             return "IsSleeping: " + _active;
         }
+
+        public int GetInformationPriority()
+        {
+            return 7;
+        }
     }
 }

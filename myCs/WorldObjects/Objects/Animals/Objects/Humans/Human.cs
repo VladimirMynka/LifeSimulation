@@ -39,7 +39,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans
             components.Add(new PetsOwnerComponent(this));
             
             components.Add(new BehaviourChangerComponent(this));
-            components.Add(new HumanInformationComponent(this));
+            components.Add(new InformationComponent(this));
             components.Add(new DependingOnWeatherComponent(this));
             Start();
         }

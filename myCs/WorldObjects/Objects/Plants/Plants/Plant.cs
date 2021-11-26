@@ -21,7 +21,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
             components.Add(new PlantAgeComponent(this, creatureType, effect, image, layer, transAges));
             components.Add(new PlantOnWeatherComponent(this, isAnnual));
             components.Add(new DependingOnWeatherComponent(this));
-            components.Add(new PlantInformationComponent(this));
+            components.Add(new InformationComponent(this));
             Start();
         }
         

@@ -26,5 +26,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.RotMeat.Compo
             info += "Ticks to rot at all: " + _ticksToRot;
             return info;
         }
+
+        public int GetInformationPriority()
+        {
+            return 1;
+        }
     }
 }

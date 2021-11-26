@@ -2,7 +2,7 @@
 {
     public interface IHaveTarget
     {
-        int GetPriority();
+        int GetPriorityInBehaviour();
         WorldObject GetTarget();
     }
 }

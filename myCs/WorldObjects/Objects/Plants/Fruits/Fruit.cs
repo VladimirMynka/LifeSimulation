@@ -22,7 +22,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits
             components.Add(new RotComponent(this, creatureType));
             components.Add(new PlantOnWeatherComponent(this, false));
             components.Add(new DependingOnWeatherComponent(this));
-            components.Add(new FruitInformationComponent(this));
+            components.Add(new InformationComponent(this));
             Start();
         }
         

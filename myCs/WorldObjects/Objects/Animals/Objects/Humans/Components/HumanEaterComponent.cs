@@ -67,7 +67,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         /// 1 if inventory isn't filled,
         /// 0 in others
         /// </returns>
-        public override int GetPriority()
+        public override int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(mealTarget) ? 0 
                 : IsVeryHungry() ? 20

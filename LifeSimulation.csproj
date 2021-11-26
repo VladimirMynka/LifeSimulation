@@ -68,6 +68,7 @@
     <Compile Include="myCs\WorldObjects\CommonComponents\Eatable\MealType.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\IDependingOnWeather.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\IHaveInformation.cs" />
+    <Compile Include="myCs\WorldObjects\CommonComponents\IHaveInformationComparer.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\InformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\AbstractAnimalAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\BehaviourChangerComponent.cs" />
@@ -86,18 +87,15 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Animal.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\AnimalAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\AnimalEaterComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\AnimalInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\Mating\AnimalFemaleComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\Mating\AnimalMaleComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\PetComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\PlanterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\SleeperComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Eggs\Components\EggComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Eggs\Components\EggInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Eggs\Egg.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\HumanAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\HumanEaterComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\HumanInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\InventoryComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Mating\ManComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Mating\WomanComponent.cs" />
@@ -107,16 +105,13 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\ProtectionComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\WarmClothesComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Human.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\Components\RotMeat.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\Components\RotMeatComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\Components\RotMeatInformationComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\RotMeat.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\Fruit.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\FruitAgeComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\FruitInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\RotComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\Plant.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantAgeComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantInformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantOnWeatherComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantReproducerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Smells\Smell.cs" />
@@ -159,7 +154,7 @@
     <Content Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="myCs\WorldObjects\Objects" />
+    <Folder Include="myCs\WorldObjects\Objects\Buildings" />
     <Folder Include="sources\pictures" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

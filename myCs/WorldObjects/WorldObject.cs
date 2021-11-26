@@ -63,7 +63,7 @@ namespace LifeSimulation.myCs.WorldObjects
             _isDestroyed = true;
             foreach (var component in components)
             {
-                component.Destroy();
+                component.OnDestroy();
             }
             Cell.RemoveObject(this);
             Cell = null;

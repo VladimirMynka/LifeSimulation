@@ -125,7 +125,6 @@ namespace LifeSimulation.myCs.Drawing
                     )
                 );
             }
-
         }
         
         private void DrawTopOffset()

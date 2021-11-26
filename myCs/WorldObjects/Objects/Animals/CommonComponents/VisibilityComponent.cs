@@ -100,5 +100,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             info += "Visibility: " + _visibility;
             return info;
         }
+
+        public int GetInformationPriority()
+        {
+            return 40;
+        }
     }
 }

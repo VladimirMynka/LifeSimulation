@@ -11,7 +11,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits
             _creatureType = creatureType;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             SpawnPlant();
         }

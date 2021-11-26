@@ -36,7 +36,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
                 Destroy();
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if(_byEggs) 
                 SpawnEgg();
@@ -63,6 +63,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             var info = "";
             info += "Ticks to birthday: " + _ticksToBirthday;
             return info;
+        }
+
+        public int GetInformationPriority()
+        {
+            return 6;
         }
     }
 }
