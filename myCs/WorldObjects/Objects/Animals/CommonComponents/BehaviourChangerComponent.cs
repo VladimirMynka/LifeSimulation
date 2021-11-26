@@ -25,6 +25,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         {
             base.Update();
             
+            CheckAndRemove();
             _movingComponent.SetTarget(GetTarget());
         }
 
@@ -67,6 +68,23 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         public int GetInformationPriority()
         {
             return 80;
+        }
+
+        private void CheckAndRemove()
+        {
+            var clone = new IHaveTarget[_competitors.Count];
+            _competitors.CopyTo(clone);
+
+            foreach (var component in clone)
+            {
+                if (CheckWereDestroyed(component))
+                    _competitors.Remove(component);
+            }
+        }
+
+        private static bool CheckWereDestroyed(IHaveTarget component)
+        {
+            return CheckWereDestroyed(component as WorldObjectComponent);
         }
     }
 }

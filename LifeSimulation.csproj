@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="myCs\WorldObjects\Objects\Buildings" />

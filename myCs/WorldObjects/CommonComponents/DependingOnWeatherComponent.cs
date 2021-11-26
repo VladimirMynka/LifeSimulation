@@ -22,6 +22,12 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
         public override void Update()
         {
             base.Update();
+            ConfigureAll();
+            CheckAndRemove();
+        }
+
+        private void ConfigureAll()
+        {
             foreach (var component in _dependingComponents)
             {
                 component.ConfigureByWeather(_weather);
@@ -31,6 +37,23 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
         public void AddComponent(IDependingOnWeather component)
         {
             _dependingComponents.Add(component);
+        }
+
+        private void CheckAndRemove()
+        {
+            var clone = new IDependingOnWeather[_dependingComponents.Count];
+            _dependingComponents.CopyTo(clone);
+
+            foreach (var component in clone)
+            {
+                if (CheckWereDestroyed(component))
+                    _dependingComponents.Remove(component);
+            }
+        }
+
+        private static bool CheckWereDestroyed(IDependingOnWeather component)
+        {
+            return CheckWereDestroyed(component as WorldObjectComponent);
         }
     }
 }
