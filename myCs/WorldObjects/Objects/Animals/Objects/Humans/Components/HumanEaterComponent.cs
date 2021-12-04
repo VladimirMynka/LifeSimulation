@@ -1,4 +1,7 @@
-﻿using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
+﻿using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.Resources.EatableResources;
+using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Components;
 
@@ -6,7 +9,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 {
     public class HumanEaterComponent : EaterComponent
     {
-        private InventoryComponent _inventory;
+        private InventoryComponent<Resource> _inventory;
         public HumanEaterComponent(WorldObject owner, MealType mealType, int satiety, int destruction) 
             : base(owner, mealType, satiety, destruction)
         {
@@ -15,7 +18,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void Start()
         {
             base.Start();
-            _inventory = GetComponent<InventoryComponent>();
+            _inventory = GetComponent<InventoryComponent<Resource>>();
         }
 
         public override void Update()
@@ -32,14 +35,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         protected override void EatSomething()
         {
-            AddSatiety(_inventory.Remove(maxSatiety - satiety));
+            AddSatiety(_inventory.Remove<EatableResource>(maxSatiety - satiety));
         }
 
         private void CollectFrom(EatableComponent meal)
         {
             if (!CheckIEatIt(meal)) 
                 return;
-            _inventory.Add(meal.NutritionalValue / 2, meal.MealType);
+            _inventory.Add(meal.GetResource());
             meal.WorldObject.Destroy();
         }
 

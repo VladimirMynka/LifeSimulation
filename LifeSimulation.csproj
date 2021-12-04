@@ -56,6 +56,19 @@
     <Compile Include="myCs\Drawing\Drawer.cs" />
     <Compile Include="myCs\Drawing\Pictures.cs" />
     <Compile Include="myCs\Informer\Informant.cs" />
+    <Compile Include="myCs\Resources\EatableResources\EatableResource.cs" />
+    <Compile Include="myCs\Resources\EatableResources\MeatResource.cs" />
+    <Compile Include="myCs\Resources\EatableResources\PlantResource.cs" />
+    <Compile Include="myCs\Resources\EatableResources\RotMeatResource.cs" />
+    <Compile Include="myCs\Resources\EatableResources\UntypedMealResource.cs" />
+    <Compile Include="myCs\Resources\Instruments\Instrument.cs" />
+    <Compile Include="myCs\Resources\Instruments\InstrumentType.cs" />
+    <Compile Include="myCs\Resources\Resource.cs" />
+    <Compile Include="myCs\Resources\UneatableResources\CompostResource.cs" />
+    <Compile Include="myCs\Resources\UneatableResources\GoldResource.cs" />
+    <Compile Include="myCs\Resources\UneatableResources\IronResource.cs" />
+    <Compile Include="myCs\Resources\UneatableResources\UneatableResource.cs" />
+    <Compile Include="myCs\Resources\UneatableResources\WoodResource.cs" />
     <Compile Include="myCs\Settings\Colors.cs" />
     <Compile Include="myCs\Settings\Defaults.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\AgeComponent.cs" />
@@ -70,6 +83,8 @@
     <Compile Include="myCs\WorldObjects\CommonComponents\IHaveInformation.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\IHaveInformationComparer.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\InformationComponent.cs" />
+    <Compile Include="myCs\WorldObjects\CommonComponents\InventoryComponent.cs" />
+    <Compile Include="myCs\WorldObjects\CommonComponents\ResourceKeeperComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\AbstractAnimalAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\BehaviourChangerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\CommonComponents\EaterComponent.cs" />
@@ -96,7 +111,7 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Eggs\Egg.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\HumanAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\HumanEaterComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\InventoryComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\InstrumentsOwnerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Mating\ManComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Mating\WomanComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\GoodEffectComponent.cs" />
@@ -104,9 +119,14 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\PetsOwnerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\ProtectionComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\WarmClothesComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\WarehousesOwnerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Human.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\Components\RotMeatComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\RotMeat.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Buildings\Building.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Buildings\BuildingComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Buildings\House.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Buildings\Warehouse.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\Fruit.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\FruitAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\RotComponent.cs" />
@@ -155,7 +175,6 @@
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="myCs\WorldObjects\Objects\Buildings" />
     <Folder Include="sources\pictures" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

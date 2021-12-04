@@ -6,17 +6,17 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
     public class DependingOnWeatherComponent : WorldObjectComponent
     {
         private List<IDependingOnWeather> _dependingComponents;
-        private Weather _weather;
+        private readonly Weather _weather;
 
         public DependingOnWeatherComponent(WorldObject owner) : base(owner)
         {
+            _weather = world.Weather;
         }
 
         public override void Start()
         {
             base.Start();
             _dependingComponents = GetComponents<IDependingOnWeather>();
-            _weather = world.Weather;
         }
 
         public override void Update()

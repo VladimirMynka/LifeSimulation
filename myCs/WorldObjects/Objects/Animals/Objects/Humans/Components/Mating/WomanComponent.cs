@@ -1,11 +1,13 @@
-﻿using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
+﻿using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating
 {
     public class WomanComponent : FemaleComponent, IHaveTarget
     {
-        private InventoryComponent _inventory;
+        private InventoryComponent<Resource> _inventory;
         private ManComponent _man;
         
         public WomanComponent(WorldObject owner, int pregnantPeriod) 
@@ -16,7 +18,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void Start()
         {
             base.Start();
-            _inventory = GetComponent<InventoryComponent>();
+            _inventory = GetComponent<InventoryComponent<Resource>>();
         }
 
         public override void Update()
