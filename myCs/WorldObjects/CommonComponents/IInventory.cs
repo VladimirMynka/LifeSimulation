@@ -20,10 +20,8 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 
         public int Add(T resource);
 
-        public int Add<TExact>(int addingCount) where TExact : T;
-
-        int SetTo(T resource, int count);
-
+        public int Add<TExact>(int addingCount) where TExact : T, new();
+        
         int RemoveAll<TExact>() where TExact : T;
 
         bool IsFilled();
