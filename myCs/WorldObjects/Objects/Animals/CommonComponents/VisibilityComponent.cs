@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LifeSimulation.myCs.WorldObjects.CommonComponents;
+﻿using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldStructure;
 using LifeSimulation.myCs.WorldStructure.Weather;
 

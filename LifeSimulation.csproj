@@ -136,6 +136,7 @@
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantOnWeatherComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantReproducerComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\ResourceKeepers\ResourceKeeper.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Smells\Smell.cs" />
     <Compile Include="myCs\WorldObjects\WorldObjectComponent.cs" />
     <Compile Include="myCs\WorldObjects\WorldObject.cs" />

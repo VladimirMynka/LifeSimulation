@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using LifeSimulation.myCs.Resources;
+﻿using LifeSimulation.myCs.Resources;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 {

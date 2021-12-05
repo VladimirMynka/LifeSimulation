@@ -1,5 +1,7 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Drawing;
+using LifeSimulation.myCs.Resources.Instruments;
+using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
@@ -91,6 +93,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
                 _eatableComponent = new EatableComponent(WorldObject, CreatureType, MealType.Plant, effect);
                 WorldObject.AddComponent(_eatableComponent);
             }
+            else
+                WorldObject.AddComponent(new ResourceKeeperComponent<WoodResource>(
+                    WorldObject, 
+                    new WoodResource(0), 
+                    100, 
+                    new InstrumentType[]{InstrumentType.Axe})
+                );
             WorldObject.Cell.ReportAboutUpdating();
         }
         

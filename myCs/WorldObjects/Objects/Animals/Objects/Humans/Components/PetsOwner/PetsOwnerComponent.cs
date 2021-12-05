@@ -3,7 +3,6 @@ using System.Linq;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
-using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Components;
 using LifeSimulation.myCs.WorldStructure;

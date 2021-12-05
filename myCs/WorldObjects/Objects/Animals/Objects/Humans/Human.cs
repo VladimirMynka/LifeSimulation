@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.Resources;
-using LifeSimulation.myCs.Resources.Instruments;
-using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;

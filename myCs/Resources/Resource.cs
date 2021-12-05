@@ -1,4 +1,4 @@
-﻿using LifeSimulation.myCs.WorldObjects.CommonComponents;
+﻿using System.Drawing;
 
 namespace LifeSimulation.myCs.Resources
 {

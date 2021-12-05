@@ -1,6 +1,4 @@
-﻿using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
-
-namespace LifeSimulation.myCs.Resources.EatableResources
+﻿namespace LifeSimulation.myCs.Resources.EatableResources
 {
     public class UntypedMealResource : EatableResource
     {
