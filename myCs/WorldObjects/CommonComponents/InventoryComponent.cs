@@ -5,7 +5,7 @@ using LifeSimulation.myCs.Resources;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 {
-    public class InventoryComponent<T> : WorldObjectComponent, IHaveInformation where T : Resource
+    public class InventoryComponent<T> : WorldObjectComponent, IHaveInformation, IInventory<T> where T : Resource
     {
         private readonly List<T> _reserves;
         private int _currentCount;
@@ -244,7 +244,19 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 
         public bool RemoveIfHave(T resource)
         {
-            return CheckHave(resource) && Remove(resource) == resource.GetCount();
+            return CheckHave(resource) && Remove(resource) != -1;
+        }
+        
+        public bool RemoveIfHave(T[] resources)
+        {
+            if (!CheckHave(resources))
+                return false;
+            foreach (var resource in resources)
+            {
+                Remove(resource);
+            }
+
+            return true;
         }
     }
 }

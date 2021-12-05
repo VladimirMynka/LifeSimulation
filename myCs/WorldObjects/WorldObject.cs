@@ -114,5 +114,15 @@ namespace LifeSimulation.myCs.WorldObjects
             }
             return componentsOfType;
         }
+        
+        public T GetComponentOf<T>() where T : class
+        {
+            foreach (var component in components)
+            {
+                if (component is T) 
+                    return component as T;
+            }
+            return null;
+        }
     }
 }

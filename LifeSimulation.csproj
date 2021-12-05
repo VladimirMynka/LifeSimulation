@@ -82,6 +82,8 @@
     <Compile Include="myCs\WorldObjects\CommonComponents\IDependingOnWeather.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\IHaveInformation.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\IHaveInformationComparer.cs" />
+    <Compile Include="myCs\WorldObjects\CommonComponents\IInventory.cs" />
+    <Compile Include="myCs\WorldObjects\CommonComponents\IResourceKeeper.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\InformationComponent.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\InventoryComponent.cs" />
     <Compile Include="myCs\WorldObjects\CommonComponents\ResourceKeeperComponent.cs" />

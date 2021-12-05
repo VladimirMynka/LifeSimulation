@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LifeSimulation.myCs.Resources.UneatableResources;
+﻿using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 
 namespace LifeSimulation.myCs.Resources.Instruments
@@ -28,26 +27,23 @@ namespace LifeSimulation.myCs.Resources.Instruments
             return _instrumentType;
         }
 
-        public bool isDestroyed()
+        public bool IsDestroyed()
         {
             return _stability <= 0;
         }
 
-        public void ExtractFromTo<TKeeper, TInventory>(
-            ResourceKeeperComponent<TKeeper> keeper,
-            InventoryComponent<TInventory> inventory
-        ) where TKeeper : TInventory where TInventory : Resource
+        public TKeeper ExtractFrom<TKeeper>(IResourceKeeper<TKeeper> keeper) 
+            where TKeeper : Resource
         {
             if (_stability <= 0)
-                return;
-            var resource = keeper.Extract(this);
-            if (resource == null)
-                return;
-            inventory.Add(resource);
-            _stability--;
+                return null;
+            var resource = keeper.Extract(GetInstrumentType());
+            if (resource != null)
+                _stability--;
+            return resource;
         }
 
-        public static Instrument Create(int level, InstrumentType type, List<Resource> list)
+        public static Instrument Create(InstrumentType type, InventoryComponent<Resource> inventory)
         {
             var listNumber = 0;
             switch (type)
@@ -56,47 +52,23 @@ namespace LifeSimulation.myCs.Resources.Instruments
                     listNumber = 0;
                     break;
                 case InstrumentType.Pickaxe:
-                    listNumber = level > 1 ? 1 : 2;
+                    listNumber = 2;
                     break;
                 case InstrumentType.Shovel:
                     listNumber = 3;
                     break;
             }
 
-            return CreateByList(listNumber, 25 * (3 + level), 20 + 20 * level, type, list);
+            return CreateByList(listNumber, type, inventory);
         }
 
         private static Instrument CreateByList(int listNumber,
-            int percents,
-            int stability,
             InstrumentType type,
-            List<Resource> list)
+            InventoryComponent<Resource> inventory)
         {
-            return CanBeCreated(listNumber, percents, list)
-                ? new Instrument(stability, type)
-                : null;
-        }
-
-        private static bool CanBeCreated(int listNumber, int percents, List<Resource> list)
-        {
-            foreach (var neededResource in CreatingLists[listNumber])
-            {
-                var allCheckedResourceEnough = false;
-                foreach (var resource in list)
-                {
-                    if (resource.GetType() != neededResource.GetType())
-                        continue;
-                    if (resource.GetCount() < neededResource.GetCount() * percents / 100)
-                        return false;
-                    allCheckedResourceEnough = true;
-                    break;
-                }
-
-                if (!allCheckedResourceEnough)
-                    return false;
-            }
-
-            return true;
+            if (inventory.RemoveIfHave(CreatingLists[listNumber]))
+                return new Instrument(40, type);
+            return null;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.Resources.Instruments;
+using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
@@ -42,6 +44,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans
             components.Add(new BehaviourChangerComponent(this));
             components.Add(new InformationComponent(this));
             components.Add(new DependingOnWeatherComponent(this));
+
             Start();
         }
         

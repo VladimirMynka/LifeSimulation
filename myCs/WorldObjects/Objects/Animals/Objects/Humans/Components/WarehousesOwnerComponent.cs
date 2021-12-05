@@ -5,7 +5,6 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 {
     public class WarehousesOwnerComponent : WorldObjectComponent
     {
-        InventoryComponent<>
         public WarehousesOwnerComponent(WorldObject owner) : base(owner)
         {
         }

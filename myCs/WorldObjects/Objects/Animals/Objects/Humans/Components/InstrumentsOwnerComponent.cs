@@ -3,6 +3,7 @@ using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.Instruments;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
+using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 {
@@ -12,7 +13,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private readonly List<Instrument> _instruments;
         private VisibilityComponent _visibilityComponent;
 
-        private WorldObject _target;
+        private IResourceKeeper<Resource> _target;
 
         public InstrumentsOwnerComponent(WorldObject owner) : base(owner)
         {
@@ -29,15 +30,21 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void Update()
         {
             base.Update();
+            if (_target != null && _target.CheckWereDestroyed())
+                _target = null;
+            if (_target == null)
+                SearchSource();
+            if (ResourceHere())
+                Extract();
             CheckAndRemoveInstruments();
         }
 
-        private void SearchSource<T>() where T : Resource
+        private void SearchSource()
         {
-            _target = _visibilityComponent.Search<ResourceKeeperComponent<T>>(CanExtractFrom).WorldObject;
+            _target = _visibilityComponent.SearchOf<IResourceKeeper<Resource>>(CanExtractFrom);
         }
 
-        private bool CanExtractFrom<T>(ResourceKeeperComponent<T> component) where T : Resource
+        private bool CanExtractFrom(IResourceKeeper<Resource> component)
         {
             foreach (var instrument in _instruments)
             {
@@ -50,7 +57,36 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private void CheckAndRemoveInstruments()
         {
-            _instruments.RemoveAll((instrument) => instrument.isDestroyed());
+            _instruments.RemoveAll((instrument) => instrument.IsDestroyed());
+        }
+
+        private bool ResourceHere()
+        {
+            if (_target != null && !_target.CheckWereDestroyed())
+                return Direction.CheckEqual(WorldObject.Cell.Coords, _target.GetCoords());
+            return false;
+        }
+
+        private void Extract()
+        {
+            if (_target.CanBeExtractUsing(InstrumentType.None))
+                _inventoryComponent.Add(_target.Extract(InstrumentType.None));
+            foreach (var instrument in _instruments)
+            {
+                if (_target.CanBeExtractUsing(instrument.GetInstrumentType()))
+                {
+                    _inventoryComponent.Add(instrument.ExtractFrom(_target));
+                    return;
+                }
+            }
+        }
+
+        private void CreateNewInstrument()
+        {
+            int random = World.Random.Next((int) InstrumentType.Shovel + 1);
+            var instrument = Instrument.Create((InstrumentType) random, _inventoryComponent);
+            if (instrument != null)
+                _instruments.Add(instrument);
         }
 
         public int GetInformationPriority()
@@ -69,7 +105,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public WorldObject GetTarget()
         {
-            return _target;
+            return _target.GetWorldObject();
+        }
+
+        public override string ToString()
+        {
+            return _instruments.Count.ToString();
         }
     }
 }
