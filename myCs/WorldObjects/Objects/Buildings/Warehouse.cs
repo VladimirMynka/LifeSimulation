@@ -11,6 +11,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
             Image[] images,
             int layer = 0
         ) : base(keeper, images, layer)
-        {}
+        {
+            Start();
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using LifeSimulation.myCs.WorldObjects.CommonComponents;
+﻿using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.Resources.EatableResources;
+using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner;
@@ -76,9 +78,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
             return _toPresentTimer == 0;
         }
 
-        public MealType GetMealType()
+        public EatableResource GetMealType(int quantity = 20)
         {
-            return _eaterComponent.MealType;
+            return EatableResource.CreateResource(_eaterComponent.MealType, quantity);
         }
 
         public CreatureType GetCreatureType()
@@ -150,8 +152,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         public int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(_petOwner) ? 0
-                : IsVeryHungry() && _petOwner.HasMealFor(GetMealType(), 50) ? 21
-                : IsHungry() && _petOwner.HasMealFor(GetMealType(), 20) ? 11
+                : IsVeryHungry() && _petOwner.HasMealFor(GetMealType(50)) ? 21
+                : IsHungry() && _petOwner.HasMealFor(GetMealType(20)) ? 11
                 : HasPresent() ? 2
                 : 0;
         }

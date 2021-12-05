@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LifeSimulation.myCs.Resources;
-using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 {
@@ -21,7 +21,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
         {
             return _reserves.OfType<TExact>().ToList();
         }
-        
+
         private TExact GetReserveWithType<TExact>() where TExact : T
         {
             foreach (var reserve in _reserves)
@@ -29,6 +29,16 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
                 var resource = reserve as TExact;
                 if (resource != null)
                     return resource;
+            }
+            return null;
+        }
+        
+        private T GetReserveWithType(Type type)
+        {
+            foreach (var reserve in _reserves)
+            {
+                if (reserve.GetType() == type)
+                    return reserve;
             }
             return null;
         }
@@ -53,36 +63,61 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
             _currentCount -= realRemoved;
             return realRemoved;
         }
+        
+        public int Remove<TExact>(TExact resource) where TExact : T
+        {
+            var quantity = resource.GetCount();
+            return Remove<TExact>(quantity);
+        }
 
         public TExact Remove<TExact>() where TExact : T
         {
             var reserve = GetReserveWithType<TExact>();
             _reserves.Remove(reserve);
+            _currentCount -= reserve.GetCount();
             return reserve;
         }
-        
-        public int Add<TExact>(TExact resource) where TExact : T
-        {
-            if (resource == null)
-                return 0;
-            var addingCount = resource.GetCount();
-            var excess = addingCount + _currentCount - _maxCount;
-            if (excess == addingCount)
-                return 0;
-            if (excess > 0)
-                addingCount -= excess;
 
-            var reserve = GetReserveWithType<TExact>();
+        public TExact RemoveWithTypeAs<TExact>(TExact resource) where TExact : T
+        {
+            return Remove<TExact>();
+        }
+
+        public int Remove(T resource)
+        {
+            var reserve = GetReserveWithType(resource.GetType());
+            if (reserve == null)
+                return 0;
+            int count = reserve.Take(resource.GetCount());
+            if (reserve.GetCount() == 0)
+                _reserves.Remove(reserve);
+            _currentCount -= count;
+            return count;
+        }
+
+        public bool Remove(T[] resources)
+        {
+            if (!CheckHave(resources))
+                return false;
+            foreach (var resource in resources)
+            {
+                Remove(resource);
+            }
+            return true;
+        }
+
+        public int Add(T resource)
+        {
+            var reserve = GetReserveWithType(resource.GetType());
+            var addingCount = Math.Min(_maxCount - _currentCount, resource.GetCount());
             if (reserve == null)
             {
                 reserve = resource;
+                resource.Set(addingCount);
                 _reserves.Add(reserve);
             }
-            else
-            {
+            else 
                 reserve.Add(addingCount);
-            }
-
             _currentCount += addingCount;
             return addingCount;
         }
@@ -110,6 +145,14 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
             _currentCount += addingCount;
             return addingCount;
         }
+        
+        private int SetTo(T resource, int count)
+        {
+            _currentCount -= resource.GetCount();
+            resource.Set(Math.Min(count, _maxCount - _currentCount));
+            _currentCount += resource.GetCount();
+            return count - resource.GetCount();
+        }
 
         public int RemoveAll<TExact>() where TExact : T
         {
@@ -121,12 +164,8 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
                 _reserves.Remove(reserve);
             }
 
+            _currentCount -= removingCount;
             return removingCount;
-        }
-
-        public int RemoveAllWithTypeAs<TExact>(TExact reserve) where TExact : T
-        {
-            return RemoveAll<TExact>();
         }
 
         public bool IsFilled()
@@ -135,41 +174,34 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
         }
 
         public void AverageReserveWith<TCommon, TOther>(InventoryComponent<TOther> other) 
-            where TCommon : T, TOther, new()
+            where TCommon : T, TOther
             where TOther : Resource
         {
             var commonReserves = GetComponents<TCommon>();
             foreach (var reserve in commonReserves)
             {
-                var type = reserve.GetType();
-                var taken = reserve.TakeAll();
-                _currentCount -= taken;
-                var commonCount = reserve.TakeAll() + other.RemoveAllWithTypeAs(reserve);
+                var otherReserve = other.GetReserveWithType(reserve.GetType()); 
+                var taken1 = reserve.TakeAll();
+                var taken2 = otherReserve.TakeAll();
+                
+                _currentCount -= taken1;
+                other._currentCount -= taken2;
+                int commonCount = taken1 + taken2;
                 
                 var part1 = commonCount / 2;
-                var excees1 = reserve.AddWithExcess(part1, _maxCount - _currentCount);
-                
-                var forAdding = Resource.Clone(reserve);
-                forAdding.Set(commonCount - part1);
-                var excees2 = commonCount - part1 - Add(forAdding);
-                
-                if (excees1 > excees2)
+                var excess1 = reserve.AddWithExcess(part1, _maxCount - _currentCount);
+
+                var excess2 = other.SetTo(otherReserve, commonCount - part1);
+
+                if (excess1 == 0)
                 {
-                    forAdding = Resource.Clone(reserve);
-                    forAdding.Set(excees1);
-                    
+                    reserve.Add(excess2);
+                    _currentCount += reserve.GetCount();
+                    continue;
                 }
-                    
+
+                other.SetTo(otherReserve, excess1 + otherReserve.GetCount());
             }
-            /*var commonReserve = other.RemoveAll<TCommon>();
-            commonReserve += RemoveAll<TCommon>();
-            var part1 = commonReserve / 2;
-            var excess1 = part1 - other.Add<TCommon>(part1);
-            var excess2 = commonReserve - part1 - Add<TCommon>(commonReserve - part1);
-            if (excess1 > excess2)
-                Add<TCommon>(excess1);
-            else
-                other.Add<TCommon>(excess2);*/
         }
 
         public bool CheckHave<TExact>(int quantity) where TExact : T
@@ -180,18 +212,39 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 
             return quantity <= 0;
         }
+        
+        public bool CheckHave(T resource)
+        {
+            var reserve = GetReserveWithType(resource.GetType());
+            return reserve != null && reserve.GetCount() >= resource.GetCount();
+        }
+
+        public bool CheckHave(T[] resources)
+        {
+            foreach (var resource in resources)
+            {
+                if (!CheckHave(resource))
+                    return false;
+            }
+            return true;
+        }
 
         public override string ToString()
         {
             var info = "Inventory: \n";
             foreach (var reserve in _reserves)
-                info += reserve +  '/' + _maxCount + '\n';
+                info += reserve.ToString() +  '/' + _maxCount + '\n';
             return info;
         }
 
         public int GetInformationPriority()
         {
             return 15;
+        }
+
+        public bool RemoveIfHave(T resource)
+        {
+            return CheckHave(resource) && Remove(resource) == resource.GetCount();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LifeSimulation.myCs.Settings;
+﻿using LifeSimulation.myCs.Resources.EatableResources;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable
@@ -63,6 +64,12 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable
         public bool IsPoisonous()
         {
             return _effect != Effect.None;
+        }
+
+        public EatableResource GetResource()
+        {
+            WorldObject.Destroy();
+            return EatableResource.CreateResource(MealType, NutritionalValue);
         }
     }
 }

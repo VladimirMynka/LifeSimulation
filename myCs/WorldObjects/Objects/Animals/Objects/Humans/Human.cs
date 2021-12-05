@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Drawing;
+using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
@@ -29,7 +30,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans
         ) : base(keeper)
         {
             components.Add(new DrawableComponent(this, image, layer));
-            components.Add(new InventoryComponent(this, maxReserve));
+            components.Add(new InventoryComponent<Resource>(this, maxReserve));
             components.Add(new HumanEaterComponent(this, MealType.AllTypes, maxSatiety, satietyDestruction));
             components.Add(new HealthComponent(this, maxHealth, regeneration));
             components.Add(new VisibilityComponent(this, visibility));

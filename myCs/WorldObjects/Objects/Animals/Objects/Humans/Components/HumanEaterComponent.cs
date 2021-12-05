@@ -43,7 +43,6 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             if (!CheckIEatIt(meal)) 
                 return;
             _inventory.Add(meal.GetResource());
-            meal.WorldObject.Destroy();
         }
 
         protected override bool CheckIEatIt(EatableComponent meal)

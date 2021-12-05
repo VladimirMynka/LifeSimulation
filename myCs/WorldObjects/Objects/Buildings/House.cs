@@ -11,13 +11,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
     {
         private House(
             Cell keeper, 
-            Image image,
-            CreatureType creatureType,
-            int layer = 0,
-            Effect effect = Effect.None, 
-            bool isAnnual = false,
-            int[] transAges = null) 
-            : base(keeper)
+            Image[] images,
+            int layer = 0) 
+            : base(keeper, images, layer)
         {
             Start();
         }

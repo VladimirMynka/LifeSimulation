@@ -13,13 +13,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
         protected Building(
             Cell keeper, 
             Image[] images,
-            int layer = 0
-            )            
+            int layer = 0,
+            int buildingTypeNumber = 0
+        )            
             : base(keeper)
         {
             components.Add(new DrawableComponent(this, images[0], layer));
-            components.Add(new BuildingComponent<T>(this));
-            Start();
+            components.Add(new BuildingComponent<T>(this, buildingTypeNumber, images));
         }
     }
 }

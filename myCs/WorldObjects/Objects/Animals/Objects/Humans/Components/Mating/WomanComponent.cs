@@ -1,4 +1,5 @@
 ﻿using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
@@ -28,9 +29,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 _man = (ManComponent) Partner;
         }
 
-        public void AverageEatWith(InventoryComponent otherInventory)
+        public void AverageEatWith(InventoryComponent<Resource> otherInventory)
         {
-            _inventory.AverageReserveWith(otherInventory);
+            _inventory.AverageReserveWith<EatableResource, Resource>(otherInventory);
         }
 
         /// <summary></summary>

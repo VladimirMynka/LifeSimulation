@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
@@ -13,7 +15,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private readonly List<PetComponent> _pets;
         private PetComponent _targetPet;
         private VisibilityComponent _visibility;
-        private InventoryComponent _inventory;
+        private InventoryComponent<Resource> _inventory;
         private EaterComponent _eaterComponent;
 
         public PetsOwnerComponent(WorldObject owner) : base(owner)
@@ -25,7 +27,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             base.Start();
             _visibility = GetComponent<VisibilityComponent>();
-            _inventory = GetComponent<InventoryComponent>();
+            _inventory = GetComponent<InventoryComponent<Resource>>();
             _eaterComponent = GetComponent<EaterComponent>();
         }
 
@@ -57,13 +59,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             if (_pets.Contains(_targetPet))
                 return;
-            var someEat = _inventory.Remove(20, _targetPet.GetMealType());
+            var result = _inventory.RemoveIfHave(_targetPet.GetMealType(20));
             
-            if (someEat < 20)
-            {
-                _inventory.Add(someEat, _targetPet.GetMealType());
+            if (!result)
                 return;
-            }
             
             _targetPet.AddSatiety(20);
             AddPet(_targetPet);
@@ -79,7 +78,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return !CheckWereDestroyed(pet) 
                    && pet.GetOwner() == null 
-                   && _inventory.CheckHave(20, pet.GetMealType());
+                   && _inventory.CheckHave(pet.GetMealType());
         }
 
         private bool CheckPetHere()
@@ -109,9 +108,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 _targetPet = pet;
         }
 
-        public bool HasMealFor(MealType mealType, int quantity = 20)
+        public bool HasMealFor(EatableResource resource)
         {
-            return _inventory.CheckHave(quantity, mealType);
+            return _inventory.CheckHave(resource);
         }
 
         private bool TargetPetIsMyAndHungry()
@@ -128,7 +127,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                    _targetPet.IsVeryHungry();
         }
 
-        public void GetPresent(int value, PetEffect effect, MealType mealType)
+        public void GetPresent(int value, PetEffect effect, EatableResource resource)
         {
             switch (effect)
             {
@@ -142,7 +141,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                     return;
                 case PetEffect.AddMeal:
                 default:
-                    _inventory.Add(value, mealType);
+                    _inventory.Add(resource);
                     return;
             }
         }
@@ -157,9 +156,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return CheckWereDestroyed(_targetPet) ? 0
                 : _targetPet.IsVeryHungry() 
-                  && _inventory.CheckHave(50, _targetPet.GetMealType()) ? 6
+                  && _inventory.CheckHave(_targetPet.GetMealType(50)) ? 6
                 : _targetPet.IsHungry() 
-                  && _inventory.CheckHave(20, _targetPet.GetMealType()) ? 4
+                  && _inventory.CheckHave(_targetPet.GetMealType(20)) ? 4
                 : _targetPet.HasPresent() ? 2
                 : 0;
         }
