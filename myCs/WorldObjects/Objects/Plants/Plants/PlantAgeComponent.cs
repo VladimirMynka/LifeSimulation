@@ -98,7 +98,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
                     WorldObject, 
                     new WoodResource(0), 
                     100, 
-                    new InstrumentType[]{InstrumentType.Axe})
+                    new InstrumentType[]{InstrumentType.None, InstrumentType.Axe})
                 );
             WorldObject.Cell.ReportAboutUpdating();
         }

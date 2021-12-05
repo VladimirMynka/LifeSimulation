@@ -4,21 +4,21 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 {
     public interface IInventory<in T> where T : Resource
     {
-        public int Remove<TExact>(int quantity) where TExact : T;
+        int Remove<TExact>(int quantity) where TExact : T;
 
-        public int Remove<TExact>(TExact resource) where TExact : T;
+        int Remove<TExact>(TExact resource) where TExact : T;
 
-        public TExact Remove<TExact>() where TExact : T;
+        TExact Remove<TExact>() where TExact : T;
 
-        public TExact RemoveWithTypeAs<TExact>(TExact resource) where TExact : T;
+        TExact RemoveWithTypeAs<TExact>(TExact resource) where TExact : T;
 
-        public int Remove(T resource);
+        int Remove(T resource);
 
-        public bool Remove(T[] resources);
+        bool Remove(T[] resources);
 
-        public int Add(T resource);
+        int Add(T resource);
 
-        public int Add<TExact>(int addingCount) where TExact : T, new();
+        int Add<TExact>(int addingCount) where TExact : T, new();
         
         int RemoveAll<TExact>() where TExact : T;
 
