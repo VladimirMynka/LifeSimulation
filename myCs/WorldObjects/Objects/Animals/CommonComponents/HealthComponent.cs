@@ -1,4 +1,5 @@
-﻿using LifeSimulation.myCs.WorldObjects.CommonComponents;
+﻿using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldStructure.Weather;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
@@ -71,7 +72,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 
         public int GetInformationPriority()
         {
-            return 10;
+            return Defaults.InfoPriorityHealth;
         }
     }
 }

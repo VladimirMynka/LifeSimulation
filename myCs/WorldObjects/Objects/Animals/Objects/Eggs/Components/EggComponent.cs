@@ -43,7 +43,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Eggs.Componen
 
         public int GetInformationPriority()
         {
-            return 5;
+            return Defaults.InfoPriorityEgg;
         }
     }
 }

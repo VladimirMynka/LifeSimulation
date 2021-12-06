@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.Settings;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 {
@@ -239,7 +240,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 
         public int GetInformationPriority()
         {
-            return 15;
+            return Defaults.InfoPriorityInventory;
         }
 
         public bool RemoveIfHave(T resource)

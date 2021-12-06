@@ -1,4 +1,5 @@
 ﻿using LifeSimulation.myCs.Resources.EatableResources;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
@@ -137,7 +138,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
 
         public int GetInformationPriority()
         {
-            return 70;
+            return Defaults.InfoPriorityPet;
         }
 
         /// <summary>
@@ -150,11 +151,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         /// </returns>
         public int GetPriorityInBehaviour()
         {
-            return CheckWereDestroyed(_petOwner) ? 0
-                : IsVeryHungry() && _petOwner.HasMealFor(GetMealType(50)) ? 21
-                : IsHungry() && _petOwner.HasMealFor(GetMealType(20)) ? 11
-                : HasPresent() ? 2
-                : 0;
+            return CheckWereDestroyed(_petOwner) ? Defaults.BehaviourHaveNotPriority
+                : IsVeryHungry() && _petOwner.HasMealFor(GetMealType(50)) ? Defaults.BehaviourPetVeryHungry
+                : IsHungry() && _petOwner.HasMealFor(GetMealType(20)) ? Defaults.BehaviourPetHungry
+                : HasPresent() ? Defaults.BehaviourPetHasPresent
+                : Defaults.BehaviourHaveNotPriority;
         }
 
         public WorldObject GetTarget()

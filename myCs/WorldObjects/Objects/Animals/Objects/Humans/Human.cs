@@ -43,6 +43,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans
             components.Add(new InformationComponent(this));
             components.Add(new DependingOnWeatherComponent(this));
 
+            components.Add(new InstrumentsOwnerComponent(this));
+
             Start();
         }
         

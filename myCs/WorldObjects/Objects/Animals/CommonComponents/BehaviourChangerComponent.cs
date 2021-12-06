@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Moving;
 
@@ -67,7 +68,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 
         public int GetInformationPriority()
         {
-            return 80;
+            return Defaults.InfoPriorityBehaviourChanger;
         }
 
         private void CheckAndRemove()

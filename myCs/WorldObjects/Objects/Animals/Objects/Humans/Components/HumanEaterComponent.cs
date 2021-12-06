@@ -1,5 +1,6 @@
 ﻿using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.EatableResources;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
@@ -71,10 +72,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         /// </returns>
         public override int GetPriorityInBehaviour()
         {
-            return CheckWereDestroyed(mealTarget) ? 0 
-                : IsVeryHungry() ? 20
-                : IsHungry() ? 10 
-                : !_inventory.IsFilled() ? 1
+            return CheckWereDestroyed(mealTarget) ? Defaults.BehaviourHaveNotPriority 
+                : IsVeryHungry() ? Defaults.BehaviourVeryHungry
+                : IsHungry() ? Defaults.BehaviourHungry 
+                : !_inventory.IsFilled() ? Defaults.BehaviourSearching
                 : 0;
         }
     }

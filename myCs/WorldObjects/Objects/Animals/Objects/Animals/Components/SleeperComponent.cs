@@ -1,4 +1,5 @@
 ﻿using LifeSimulation.myCs.Drawing;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Moving;
@@ -51,7 +52,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
 
         public int GetInformationPriority()
         {
-            return 7;
+            return Defaults.InfoPrioritySleeper;
         }
     }
 }

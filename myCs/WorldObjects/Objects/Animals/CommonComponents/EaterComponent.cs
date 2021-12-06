@@ -154,7 +154,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 
         public int GetInformationPriority()
         {
-            return 20;
+            return Defaults.InfoPriorityEater;
         }
 
         public void ConfigureByWeather(Weather weather)
@@ -185,10 +185,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         /// </returns>
         public virtual int GetPriorityInBehaviour()
         {
-            return CheckWereDestroyed(mealTarget) ? 0 
-                : IsVeryHungry() ? 20
-                : IsHungry() ? 10
-                : 0;
+            return CheckWereDestroyed(mealTarget) ? Defaults.BehaviourHaveNotPriority 
+                : IsVeryHungry() ? Defaults.BehaviourVeryHungry
+                : IsHungry() ? Defaults.BehaviourHungry
+                : Defaults.BehaviourHaveNotPriority;
         }
 
         public WorldObject GetTarget()

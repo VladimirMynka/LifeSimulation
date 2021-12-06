@@ -1,4 +1,5 @@
 ﻿using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
@@ -42,11 +43,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         /// </returns>
         public override int GetPriorityInBehaviour()
         {
-            return CheckWereDestroyed(_woman) ? 0 
-                : _woman.IsVeryHungry() ? 7 
-                : _woman.IsHungry() ? 5 
-                : _woman.IsReady() && IsReady() ? 3 
-                : 0;
+            return CheckWereDestroyed(_woman) ? Defaults.BehaviourHaveNotPriority 
+                : _woman.IsVeryHungry() ? Defaults.BehaviourPartnerIsVeryHungry 
+                : _woman.IsHungry() ? Defaults.BehaviourPartnerIsHungry 
+                : _woman.IsReady() && IsReady() ? Defaults.BehaviourItIsTimeToMating 
+                : Defaults.BehaviourHaveNotPriority;
         }
 
         public bool IsHungry()

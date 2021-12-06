@@ -61,7 +61,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
 
         public int GetInformationPriority()
         {
-            return 60;
+            return Defaults.InfoPriorityMating;
         }
 
         public virtual int GetPriorityInBehaviour()

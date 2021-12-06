@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents
@@ -71,7 +72,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 
         public int GetInformationPriority()
         {
-            return 30;
+            return Defaults.InfoPriorityAge;
         }
 
         public void Wait()

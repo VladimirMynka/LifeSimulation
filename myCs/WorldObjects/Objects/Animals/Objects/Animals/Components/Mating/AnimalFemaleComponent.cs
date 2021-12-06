@@ -30,8 +30,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
 
         public override int GetPriorityInBehaviour()
         {
-            return CheckWereDestroyed(Partner) ? 0 
-                : 5;
+            return CheckWereDestroyed(Partner) ? Defaults.BehaviourHaveNotPriority 
+                : Defaults.BehaviourAnimalMating;
         }
     }
 }

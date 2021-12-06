@@ -1,4 +1,5 @@
-﻿using LifeSimulation.myCs.WorldObjects.CommonComponents;
+﻿using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.CommonComponents;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.RotMeat.Components
 {
@@ -29,7 +30,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.RotMeat.Compo
 
         public int GetInformationPriority()
         {
-            return 1;
+            return Defaults.InfoPriorityRotMeat;
         }
     }
 }

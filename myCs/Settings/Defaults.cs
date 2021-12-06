@@ -29,5 +29,37 @@
         public const int AnimalNormalTicksToMating = 20;
         public const int TicksToStep = 4;
         public const int PregnantPeriod = 0;
+
+        public const int InfoPriorityRotMeat = 1;
+        public const int InfoPriorityEgg = 5;
+        public const int InfoPriorityPregnant = 6;
+        public const int InfoPrioritySleeper = 7;
+        public const int InfoPriorityHealth = 10;
+        public const int InfoPriorityInventory = 15;
+        public const int InfoPriorityEater = 20;
+        public const int InfoPriorityAge = 30;
+        public const int InfoPriorityVisibility = 40;
+        public const int InfoPriorityMoving = 50;
+        public const int InfoPriorityMating = 60;
+        public const int InfoPriorityPetsOwner = 70;
+        public const int InfoPriorityPet = 70;
+        public const int InfoPriorityBehaviourChanger = 80;
+        public const int InfoPriorityInstrumentsOwner = 110;
+        
+        public const int BehaviourHaveNotPriority = 0;
+        public const int BehaviourSearching = 1;
+        public const int BehaviourInstrumentsTriggered = 2;
+        public const int BehaviourPetHasPresent = 2;
+        public const int BehaviourPetOwnerThereArePresents = 2;
+        public const int BehaviourItIsTimeToMating = 3;
+        public const int BehaviourPetOwnerPetHungry = 4;
+        public const int BehaviourAnimalMating = 5;
+        public const int BehaviourPartnerIsHungry = 5;
+        public const int BehaviourPetOwnerPetVeryHungry = 6;
+        public const int BehaviourPartnerIsVeryHungry = 7;
+        public const int BehaviourHungry = 10;
+        public const int BehaviourPetHungry = 11;
+        public const int BehaviourVeryHungry = 20;
+        public const int BehaviourPetVeryHungry = 21;
     }
 }

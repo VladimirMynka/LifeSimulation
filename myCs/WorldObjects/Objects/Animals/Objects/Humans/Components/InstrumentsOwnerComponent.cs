@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.Instruments;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldStructure;
@@ -91,16 +92,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public int GetInformationPriority()
         {
-            return 110;
+            return Defaults.InfoPriorityInstrumentsOwner;
         }
 
         public int GetPriorityInBehaviour()
         {
             return _target != null
                 ? _inventoryComponent.IsFilled()
-                    ? 2
-                    : 1
-                : 0;
+                    ? Defaults.BehaviourInstrumentsTriggered
+                    : Defaults.BehaviourSearching
+                : Defaults.BehaviourHaveNotPriority;
         }
 
         public WorldObject GetTarget()

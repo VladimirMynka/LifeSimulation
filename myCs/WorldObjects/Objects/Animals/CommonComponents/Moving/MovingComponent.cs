@@ -314,7 +314,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Movi
 
         public int GetInformationPriority()
         {
-            return 50;
+            return Defaults.InfoPriorityMoving;
         }
     }
 }
