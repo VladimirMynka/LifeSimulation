@@ -2,6 +2,7 @@
 {
     public class WarehousesOwnerComponent : WorldObjectComponent
     {
+        
         public WarehousesOwnerComponent(WorldObject owner) : base(owner)
         {
         }

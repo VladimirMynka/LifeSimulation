@@ -4,5 +4,8 @@
     {
         public CompostResource(int count = 0) : base(count)
         { }
+        
+        public CompostResource() : base(0)
+        { }
     }
 }

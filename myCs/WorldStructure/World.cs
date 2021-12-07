@@ -1,8 +1,11 @@
 ﻿using System;
 using LifeSimulation.myCs.Drawing;
+using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans;
 using LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants;
+using LifeSimulation.myCs.WorldObjects.Objects.ResourceKeepers;
 
 namespace LifeSimulation.myCs.WorldStructure
 {
@@ -11,6 +14,7 @@ namespace LifeSimulation.myCs.WorldStructure
         private const int AnimalsNormalCount = 30000;
         private const int HumanNormalCount = 5000;
         private const int PlantsNormalCount = 1000;
+        private const int ResourcesNormalCount = 30000;
 
         private readonly Cell[][] _cells;
         private readonly Drawer _drawer;
@@ -48,6 +52,9 @@ namespace LifeSimulation.myCs.WorldStructure
                     
                     rand = Random.Next(length * width);
                     if (rand < HumanNormalCount) AddHuman(i, j);
+                    
+                    rand = Random.Next(length * width);
+                    if (rand < ResourcesNormalCount) AddResource(i, j);
                 }
             }
         }
@@ -92,6 +99,11 @@ namespace LifeSimulation.myCs.WorldStructure
                 if (worldObject is Animal) return;
             }
             Human.SpawnHumanWithRandomGender(cell);
+        }
+        
+        private void AddResource(int x, int y)
+        {
+            ResourceKeeper<WoodResource>.Spawn(GetCell(x, y));
         }
 
         public static int SmoothRandom(int current, int delta1, int delta2, int min, int max)

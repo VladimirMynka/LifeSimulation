@@ -45,9 +45,15 @@ namespace LifeSimulation.myCs.Drawing
         public static Image PoisonousFruit = Image.FromFile(Path + @"plants\poisonous-fruit.png");
         public static Image DeadFruit = Image.FromFile(Path + @"plants\dead-fruit.png");
 
-
-
         public static Image Sleeper = Image.FromFile(Path + @"animals\sleeper.png");
+
+        public static Image Gold = Image.FromFile(Path + @"resources\gold.png");
+        public static Image Iron = Image.FromFile(Path + @"resources\iron.png");
+        public static Image IronEasy = Image.FromFile(Path + @"resources\iron-easy.png");
+        public static Image Compost = Image.FromFile(Path + @"resources\compost.png");
+        public static Image CompostEasy = Image.FromFile(Path + @"resources\compost-easy.png");
+
+
         
         private static readonly List<Image> AllImages = new List<Image>(){
             Herbivore, Herbivore2, Herbivore3,
@@ -58,7 +64,8 @@ namespace LifeSimulation.myCs.Drawing
             Egg, Human, Human2,
             Plant, UneatablePlant, PoisonousPlant, DeadPlant,
             Fruit, UneatableFruit, PoisonousFruit, DeadFruit,
-            Sleeper
+            Sleeper,
+            Gold, Iron, IronEasy, Compost, CompostEasy
         };
 
         private static readonly List<Brush> AllBrushes = GetBrushesList(AllImages);

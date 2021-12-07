@@ -12,6 +12,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
     {
         private DrawableComponent _drawableComponent;
         private EatableComponent _eatableComponent;
+        private ResourceKeeperComponent<WoodResource> _woodComponent;
         public readonly CreatureType CreatureType;
         public PlantAgeComponent(
             WorldObject owner, 
@@ -94,12 +95,15 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
                 WorldObject.AddComponent(_eatableComponent);
             }
             else
-                WorldObject.AddComponent(new ResourceKeeperComponent<WoodResource>(
-                    WorldObject, 
-                    new WoodResource(0), 
-                    100, 
-                    new InstrumentType[]{InstrumentType.None, InstrumentType.Axe})
-                );
+            {
+                _woodComponent = new ResourceKeeperComponent<WoodResource>(
+                    WorldObject,
+                    new WoodResource(),
+                    50,
+                    new InstrumentType[]{InstrumentType.Axe});
+                WorldObject.AddComponent(_woodComponent);
+            }
+
             WorldObject.Cell.ReportAboutUpdating();
         }
         
@@ -116,7 +120,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
                 WorldObject.RemoveComponent(_eatableComponent);
                 _eatableComponent = null;
             }
-            if (WorldObject != null && WorldObject.Cell != null)
+            else
+            {
+                WorldObject.RemoveComponent(_woodComponent);
+                _woodComponent = null;
+                WorldObject.AddComponent(new ResourceKeeperComponent<WoodResource>(WorldObject,
+                    new WoodResource(), 20, new InstrumentType[]{InstrumentType.None}));
+            }
+            if (!CheckWereDestroyed(this))
                 WorldObject.Cell.ReportAboutUpdating();
         }
 

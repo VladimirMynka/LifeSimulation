@@ -6,7 +6,7 @@ namespace LifeSimulation.myCs.Resources.Instruments
     public class Instrument
     {
         private static readonly Resource[][] CreatingLists = new Resource[][]{
-            new Resource[]{new WoodResource(50), new IronResource(10)},
+            new Resource[]{new WoodResource(50)},
             new Resource[]{new WoodResource(20), new IronResource(10), new GoldResource(5)},
             new Resource[]{new WoodResource(20), new CompostResource(10)},
             new Resource[]{new IronResource(25)}
@@ -69,6 +69,11 @@ namespace LifeSimulation.myCs.Resources.Instruments
             if (inventory.RemoveIfHave(CreatingLists[listNumber]))
                 return new Instrument(40, type);
             return null;
+        }
+
+        public override string ToString()
+        {
+            return _stability.ToString();
         }
     }
 }

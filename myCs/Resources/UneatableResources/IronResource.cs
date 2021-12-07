@@ -4,5 +4,8 @@
     {
         public IronResource(int count = 0) : base(count)
         { }
+        
+        public IronResource() : base(0)
+        { }
     }
 }

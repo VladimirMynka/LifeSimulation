@@ -48,6 +48,7 @@
         
         public const int BehaviourHaveNotPriority = 0;
         public const int BehaviourSearching = 1;
+        public const int BehaviourUneatableSearching = 2;
         public const int BehaviourInstrumentsTriggered = 2;
         public const int BehaviourPetHasPresent = 2;
         public const int BehaviourPetOwnerThereArePresents = 2;

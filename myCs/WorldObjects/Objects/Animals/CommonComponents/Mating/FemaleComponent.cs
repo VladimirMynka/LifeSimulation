@@ -55,7 +55,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
 
         public override bool IsReady()
         {
-            return (base.IsReady() && Partner == null);
+            return (base.IsReady() && Partner == null && _pregnantComponent == null);
         }
 
         public void Mate(MaleComponent partner)

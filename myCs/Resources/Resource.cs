@@ -5,8 +5,13 @@ namespace LifeSimulation.myCs.Resources
     public abstract class Resource
     {
         private int _count;
-
-        public Resource(int count = 0)
+        
+        public Resource()
+        {
+            _count = 0;
+        }
+        
+        protected Resource(int count = 0)
         {
             _count = count < 0 ? 0 : count;
         }

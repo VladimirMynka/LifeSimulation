@@ -2,7 +2,10 @@
 {
     public class GoldResource : UneatableResource
     {
-        public GoldResource(int count = 0) : base(count)
+        public GoldResource(int count) : base(count)
+        { }
+        
+        public GoldResource() : base(0)
         { }
     }
 }

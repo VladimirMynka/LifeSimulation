@@ -4,5 +4,8 @@
     {
         public WoodResource(int count = 0) : base(count)
         { }
+        
+        public WoodResource() : base(0)
+        { }
     }
 }

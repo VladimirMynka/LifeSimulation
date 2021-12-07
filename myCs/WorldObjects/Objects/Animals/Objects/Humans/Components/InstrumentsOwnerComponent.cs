@@ -38,6 +38,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             if (ResourceHere())
                 Extract();
             CheckAndRemoveInstruments();
+            CreateNewInstrument();
         }
 
         private void SearchSource()
@@ -47,6 +48,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private bool CanExtractFrom(IResourceKeeper<Resource> component)
         {
+            if (component.CanBeExtractUsing(InstrumentType.None))
+                return true;
             foreach (var instrument in _instruments)
             {
                 if (component.CanBeExtractUsing(instrument.GetInstrumentType()))
@@ -71,7 +74,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private void Extract()
         {
             if (_target.CanBeExtractUsing(InstrumentType.None))
+            {
                 _inventoryComponent.Add(_target.Extract(InstrumentType.None));
+                return;
+            }
             foreach (var instrument in _instruments)
             {
                 if (_target.CanBeExtractUsing(instrument.GetInstrumentType()))
@@ -100,7 +106,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return _target != null
                 ? _inventoryComponent.IsFilled()
                     ? Defaults.BehaviourInstrumentsTriggered
-                    : Defaults.BehaviourSearching
+                    : Defaults.BehaviourUneatableSearching
                 : Defaults.BehaviourHaveNotPriority;
         }
 
@@ -111,7 +117,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public override string ToString()
         {
-            return _instruments.Count.ToString();
+            var info = "";
+            foreach (var instrument in _instruments)
+            {
+                info += instrument.GetInstrumentType() + ": " + instrument.ToString();
+            }
+
+            return info;
         }
     }
 }
