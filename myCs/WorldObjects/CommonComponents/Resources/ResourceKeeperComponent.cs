@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.Instruments;
+using LifeSimulation.myCs.Settings;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 {
-    public class ResourceKeeperComponent<T> : WorldObjectComponent, IResourceKeeper<T> where T: Resource
+    public class ResourceKeeperComponent<T> : WorldObjectComponent, IHaveInformation, IResourceKeeper<T> where T: Resource
     {
         private readonly T _resource;
         private readonly InstrumentType[] _instrumentTypes;
@@ -43,6 +44,25 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
         public bool CheckWereDestroyed()
         {
             return CheckWereDestroyed(this);
+        }
+
+        public int GetInformationPriority()
+        {
+            return Defaults.InfoPriorityResource;
+        }
+
+        public override string ToString()
+        {
+            var info = _resource.ToString();
+            info += "\nCan be extract using: ";
+            foreach (var instrumentType in _instrumentTypes)
+                info += '\n' + instrumentType.ToString();
+            return info;
+        }
+
+        public string GetResourceString()
+        {
+            return _resource.ToString();
         }
     }
 }

@@ -6,7 +6,7 @@ using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating
 {
-    public class ManComponent : MaleComponent, IHaveTarget
+    public class ManComponent : MaleComponent
     {
         private InventoryComponent<Resource> _inventory;
         private WomanComponent _woman;

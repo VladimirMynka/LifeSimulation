@@ -21,6 +21,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.ResourceKeepers
         {
             components.Add(new DrawableComponent(this, image, layer));
             components.Add(new ResourceKeeperComponent<T>(this, new T(), count, instrumentTypes));
+            components.Add(new InformationComponent(this));
         }
 
         public static void Spawn(Cell cell)

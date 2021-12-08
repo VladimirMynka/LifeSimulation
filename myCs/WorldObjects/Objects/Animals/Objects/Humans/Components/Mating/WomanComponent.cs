@@ -2,12 +2,11 @@
 using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
-using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating
 {
-    public class WomanComponent : FemaleComponent, IHaveTarget
+    public class WomanComponent : FemaleComponent
     {
         private InventoryComponent<Resource> _inventory;
         private ManComponent _man;
@@ -35,13 +34,6 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _inventory.AverageReserveWith<EatableResource, Resource>(otherInventory);
         }
 
-        /// <summary></summary>
-        /// <returns>
-        /// 7 if partner is very hungry,
-        /// 5 if partner is hungry,
-        /// 3 if it's time to mating,
-        /// 0 in others
-        /// </returns>
         public override int GetPriorityInBehaviour()
         {
             var man = (ManComponent) Partner;

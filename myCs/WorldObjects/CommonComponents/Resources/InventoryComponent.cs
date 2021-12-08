@@ -232,9 +232,9 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
 
         public override string ToString()
         {
-            var info = "Inventory: \n";
+            var info = "Inventory: ";
             foreach (var reserve in _reserves)
-                info += reserve.ToString() +  '/' + _maxCount + '\n';
+                info += '\n' + reserve.ToString() +  '/' + _maxCount;
             return info;
         }
 

@@ -90,7 +90,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private void CreateNewInstrument()
         {
-            int random = World.Random.Next((int) InstrumentType.Shovel + 1);
+            int random = World.Random.Next(1, (int) InstrumentType.Shovel + 1);
             var instrument = Instrument.Create((InstrumentType) random, _inventoryComponent);
             if (instrument != null)
                 _instruments.Add(instrument);
@@ -117,11 +117,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public override string ToString()
         {
-            var info = "";
+            var info = "Target resource: " + (_target == null
+                ? "none"
+                : InformationComponent.GetInfoAboutCoords(_target.GetWorldObject()));
+            
+            info += "\nInstruments: ";
             foreach (var instrument in _instruments)
-            {
-                info += instrument.GetInstrumentType() + ": " + instrument.ToString();
-            }
+                info += '\n' + instrument.GetInstrumentType().ToString() + ": " + instrument;
 
             return info;
         }

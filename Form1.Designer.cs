@@ -232,16 +232,16 @@
             this.InfoTextBox.Location = new System.Drawing.Point(1094, 74);
             this.InfoTextBox.Name = "InfoTextBox";
             this.InfoTextBox.ReadOnly = true;
-            this.InfoTextBox.Size = new System.Drawing.Size(191, 312);
+            this.InfoTextBox.Size = new System.Drawing.Size(191, 535);
             this.InfoTextBox.TabIndex = 16;
             this.InfoTextBox.Text = "";
             // 
-            // Form1
+            // MyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
-            this.ClientSize = new System.Drawing.Size(1343, 530);
+            this.ClientSize = new System.Drawing.Size(1343, 742);
             this.Controls.Add(this.InfoTextBox);
             this.Controls.Add(this.textBox10);
             this.Controls.Add(this.textBox9);
@@ -258,7 +258,7 @@
             this.Controls.Add(this.offsetLeftInput);
             this.Controls.Add(this.pixelSizeInput);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "Form1";
+            this.Name = "MyForm";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.pixelSizeInput_TextChanged);

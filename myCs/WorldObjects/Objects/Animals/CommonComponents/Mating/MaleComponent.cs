@@ -54,6 +54,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
 
         protected virtual void Mate(FemaleComponent female)
         {
+            if (!CanMateWith(female))
+                return;
             female.Mate(this);
             ToWaitingStage();
         }

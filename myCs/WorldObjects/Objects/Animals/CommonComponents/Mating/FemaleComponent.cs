@@ -81,9 +81,6 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             else
                 info += "on " + Partner.WorldObject.Cell.Coords[0] + ',' + Partner.WorldObject.Cell.Coords[1];
 
-            if (!CheckWereDestroyed(_pregnantComponent))
-                info += '\n' + _pregnantComponent.ToString();
-
             return info;
         }
 

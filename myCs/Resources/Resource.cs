@@ -83,7 +83,7 @@ namespace LifeSimulation.myCs.Resources
 
         public override string ToString()
         {
-            return GetType().Name + _count;
+            return GetType().Name + ' ' + _count;
         }
 
         public static implicit operator int(Resource resource)

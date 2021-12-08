@@ -45,6 +45,8 @@
         public const int InfoPriorityPet = 70;
         public const int InfoPriorityBehaviourChanger = 80;
         public const int InfoPriorityInstrumentsOwner = 110;
+        public const int InfoPriorityResource = 120;
+
         
         public const int BehaviourHaveNotPriority = 0;
         public const int BehaviourSearching = 1;
