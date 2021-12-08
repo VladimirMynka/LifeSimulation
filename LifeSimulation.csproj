@@ -111,6 +111,7 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\SleeperComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Eggs\Components\EggComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Eggs\Egg.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\BuilderComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\HumanAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\HumanEaterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\InstrumentsOwnerComponent.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="myCs\WorldObjects\Objects\Buildings\Building.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Buildings\BuildingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Buildings\House.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Buildings\IBuilding.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Buildings\Warehouse.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\Fruit.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\FruitAgeComponent.cs" />

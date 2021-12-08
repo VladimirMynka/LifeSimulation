@@ -7,7 +7,7 @@ using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
 {
-    public class BuildingComponent<T> : WorldObjectComponent where T : Resource
+    public class BuildingComponent<T> : WorldObjectComponent, IBuilding<T> where T : Resource
     {
         private readonly List<WarehousesOwnerComponent> _owners;
         private readonly Image[] _images;
@@ -62,6 +62,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
             _drawableComponent.Image = _images[_stage];
             if (_stage == Resources[_buildingTypeNumber].Length - 1)
                 ToLastStage();
+        }
+
+        public WorldObject GetWorldObject()
+        {
+            return WorldObject;
         }
 
         private void ToLastStage()

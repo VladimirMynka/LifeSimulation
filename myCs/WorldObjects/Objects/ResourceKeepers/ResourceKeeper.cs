@@ -26,7 +26,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.ResourceKeepers
 
         public static void Spawn(Cell cell)
         {
-            Spawn((ResourceKeeperType) World.Random.Next((int) ResourceKeeperType.EasyCompostResource), 
+            Spawn((ResourceKeeperType) World.Random.Next((int) ResourceKeeperType.EasyCompostResource + 1), 
                 cell);
         }
 
