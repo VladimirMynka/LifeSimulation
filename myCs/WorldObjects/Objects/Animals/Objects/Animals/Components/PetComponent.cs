@@ -2,7 +2,9 @@
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner;
 using LifeSimulation.myCs.WorldStructure;
 
@@ -64,7 +66,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         private bool OwnerHere()
         {
             return !CheckWereDestroyed(_petOwner) &&
-                   Direction.CheckEqual(WorldObject.Cell.Coords, _petOwner.WorldObject.Cell.Coords);
+                   OnOneCellWith(_petOwner);
         }
 
         private void GivePresent()

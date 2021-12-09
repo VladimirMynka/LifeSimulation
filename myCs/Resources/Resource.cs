@@ -1,16 +1,18 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace LifeSimulation.myCs.Resources
 {
     public abstract class Resource
+
     {
         private int _count;
-        
+
         public Resource()
         {
             _count = 0;
         }
-        
+
         protected Resource(int count = 0)
         {
             _count = count < 0 ? 0 : count;
@@ -25,7 +27,7 @@ namespace LifeSimulation.myCs.Resources
 
         public int Take(int count = -1)
         {
-            if (_count <= count || count < 0) 
+            if (_count <= count || count < 0)
                 return TakeAll();
             _count -= count;
             return count;
@@ -61,6 +63,7 @@ namespace LifeSimulation.myCs.Resources
                 Add(count - excess);
                 return excess;
             }
+
             Add(count);
             return 0;
         }
@@ -89,6 +92,13 @@ namespace LifeSimulation.myCs.Resources
         public static implicit operator int(Resource resource)
         {
             return resource._count;
+        }
+        
+        public T Clone<T>() where T : Resource, new()
+        {
+            var clone = new T();
+            clone.Set(_count);
+            return clone;
         }
     }
 }

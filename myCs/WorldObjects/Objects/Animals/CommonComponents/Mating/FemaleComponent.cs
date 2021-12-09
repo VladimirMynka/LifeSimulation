@@ -44,7 +44,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             if (CheckWereDestroyed(Partner)) 
                 return false;
             var sqrLength = 
-                Direction.SqrLength(WorldObject.Cell.Coords, Partner.WorldObject.Cell.Coords);
+                GetSqrLengthWith(Partner);
             return 0 < sqrLength && sqrLength < 2;
         }
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LifeSimulation.myCs.WorldObjects.CommonComponents
+namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Information
 {
     public class HaveInformationComparer : IComparer<IHaveInformation>
     {

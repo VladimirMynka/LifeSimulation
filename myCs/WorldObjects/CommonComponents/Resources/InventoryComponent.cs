@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 
-namespace LifeSimulation.myCs.WorldObjects.CommonComponents
+namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
 {
     public class InventoryComponent<T> : WorldObjectComponent, IHaveInformation, IInventory<T> where T : Resource
     {
@@ -84,7 +85,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
             return Remove<TExact>();
         }
 
-        public int Remove(T resource)
+        public int Remove(Resource resource)
         {
             var reserve = GetReserveWithType(resource.GetType());
             if (reserve == null)
@@ -96,7 +97,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
             return count;
         }
 
-        public bool Remove(T[] resources)
+        public bool Remove(Resource[] resources)
         {
             if (!CheckHave(resources))
                 return false;
@@ -107,13 +108,13 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
             return true;
         }
 
-        public int Add(T resource)
+        public int Add(Resource resource)
         {
             var reserve = GetReserveWithType(resource.GetType());
             var addingCount = Math.Min(_maxCount - _currentCount, resource.GetCount());
             if (reserve == null)
             {
-                reserve = resource;
+                reserve = (T)resource;
                 resource.Set(addingCount);
                 _reserves.Add(reserve);
             }
@@ -214,13 +215,19 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
             return quantity <= 0;
         }
         
-        public bool CheckHave(T resource)
+        public bool CheckHave(Resource resource)
         {
             var reserve = GetReserveWithType(resource.GetType());
             return reserve != null && reserve.GetCount() >= resource.GetCount();
         }
+        
+        public bool HasMoreThanNothing(Resource resource)
+        {
+            var reserve = GetReserveWithType(resource.GetType());
+            return reserve != null && reserve.GetCount() > 0;
+        }
 
-        public bool CheckHave(T[] resources)
+        public bool CheckHave(Resource[] resources)
         {
             foreach (var resource in resources)
             {
@@ -243,12 +250,12 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
             return Defaults.InfoPriorityInventory;
         }
 
-        public bool RemoveIfHave(T resource)
+        public bool RemoveIfHave(Resource resource)
         {
             return CheckHave(resource) && Remove(resource) != -1;
         }
         
-        public bool RemoveIfHave(T[] resources)
+        public bool RemoveIfHave(Resource[] resources)
         {
             if (!CheckHave(resources))
                 return false;
@@ -258,6 +265,16 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents
             }
 
             return true;
+        }
+
+        public WorldObject GetWorldObject()
+        {
+            return WorldObject;
+        }
+
+        public int[] GetCoords()
+        {
+            return WorldObject.Cell.Coords;
         }
     }
 }

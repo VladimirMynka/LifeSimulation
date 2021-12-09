@@ -1,5 +1,6 @@
 ﻿using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
 {

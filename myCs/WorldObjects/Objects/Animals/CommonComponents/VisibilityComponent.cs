@@ -1,5 +1,7 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.DependingOnWeather;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldStructure;
 using LifeSimulation.myCs.WorldStructure.Weather;
 

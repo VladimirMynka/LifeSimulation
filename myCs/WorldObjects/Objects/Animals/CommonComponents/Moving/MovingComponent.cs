@@ -1,5 +1,6 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Moving
@@ -267,7 +268,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Movi
             if (_target == null) 
                 return false;
             return _target.Cell == null || 
-                   Direction.CheckEqual(WorldObject.Cell.Coords, _target.Cell.Coords);
+                   OnOneCellWith(_target);
         }
 
         private void GoAway()

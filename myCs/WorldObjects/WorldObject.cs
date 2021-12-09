@@ -124,5 +124,15 @@ namespace LifeSimulation.myCs.WorldObjects
             }
             return null;
         }
+        
+        public static int GetSqrLengthBetween(WorldObject object1, WorldObject object2)
+        {
+            return Direction.SqrLength(object1.Cell.Coords, object2.Cell.Coords);
+        }
+        
+        public static bool CheckOnOneCell(WorldObject object1, WorldObject object2)
+        {
+            return Direction.CheckEqual(object1.Cell.Coords, object2.Cell.Coords);
+        }
     }
 }

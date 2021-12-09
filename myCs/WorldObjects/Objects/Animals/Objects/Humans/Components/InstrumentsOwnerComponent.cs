@@ -3,7 +3,10 @@ using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.Instruments;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
 using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
@@ -67,7 +70,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private bool ResourceHere()
         {
             if (_target != null && !_target.CheckWereDestroyed())
-                return Direction.CheckEqual(WorldObject.Cell.Coords, _target.GetCoords());
+                return OnOneCellWith(_target.GetWorldObject());
             return false;
         }
 

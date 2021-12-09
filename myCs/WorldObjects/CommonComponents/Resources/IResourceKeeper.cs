@@ -1,7 +1,7 @@
 ﻿using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.Instruments;
 
-namespace LifeSimulation.myCs.WorldObjects.CommonComponents
+namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
 {
     public interface IResourceKeeper<out T> where T : Resource
     {

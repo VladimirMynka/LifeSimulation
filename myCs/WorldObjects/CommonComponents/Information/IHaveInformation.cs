@@ -1,4 +1,4 @@
-﻿namespace LifeSimulation.myCs.WorldObjects.CommonComponents
+﻿namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Information
 {
     public interface IHaveInformation
     { 

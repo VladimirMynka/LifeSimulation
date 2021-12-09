@@ -4,7 +4,9 @@ using LifeSimulation.myCs.Resources.Instruments;
 using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Age;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
 {

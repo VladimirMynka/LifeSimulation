@@ -1,5 +1,6 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.RotMeat.Components
 {

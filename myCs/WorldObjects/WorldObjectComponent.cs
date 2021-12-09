@@ -58,5 +58,45 @@ namespace LifeSimulation.myCs.WorldObjects
         {
             
         }
+
+        protected static int GetSqrLengthBetween(WorldObjectComponent component1, WorldObjectComponent component2)
+        {
+            return WorldObject.GetSqrLengthBetween(component1.WorldObject, component2.WorldObject);
+        }
+
+        protected static int GetSqrLengthBetween(WorldObjectComponent component, WorldObject worldObject)
+        {
+            return WorldObject.GetSqrLengthBetween(component.WorldObject, worldObject);
+        }
+
+        protected int GetSqrLengthWith(WorldObjectComponent other)
+        {
+            return GetSqrLengthBetween(this, other);
+        }
+
+        protected int GetSqrLengthWith(WorldObject other)
+        {
+            return GetSqrLengthBetween(this, other);
+        }
+
+        protected static bool CheckOnOneCell(WorldObjectComponent component1, WorldObjectComponent component2)
+        {
+            return WorldObject.CheckOnOneCell(component1.WorldObject, component2.WorldObject);
+        }
+
+        protected static bool CheckOnOneCell(WorldObjectComponent component, WorldObject worldObject)
+        {
+            return WorldObject.CheckOnOneCell(component.WorldObject, worldObject);
+        }
+
+        protected bool OnOneCellWith(WorldObjectComponent other)
+        {
+            return CheckOnOneCell(this, other);
+        }
+        
+        protected bool OnOneCellWith(WorldObject other)
+        {
+            return CheckOnOneCell(this, other);
+        }
     }
 }

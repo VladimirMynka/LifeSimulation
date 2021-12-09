@@ -2,6 +2,7 @@
 using System.Drawing;
 using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 
 namespace LifeSimulation.myCs.WorldStructure.Weather
 {

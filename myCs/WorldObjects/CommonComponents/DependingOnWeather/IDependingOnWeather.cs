@@ -1,6 +1,6 @@
 ﻿using LifeSimulation.myCs.WorldStructure.Weather;
 
-namespace LifeSimulation.myCs.WorldObjects.CommonComponents
+namespace LifeSimulation.myCs.WorldObjects.CommonComponents.DependingOnWeather
 {
     public interface IDependingOnWeather
     {

@@ -2,8 +2,9 @@
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.Instruments;
 using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 
-namespace LifeSimulation.myCs.WorldObjects.CommonComponents
+namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
 {
     public class ResourceKeeperComponent<T> : WorldObjectComponent, IHaveInformation, IResourceKeeper<T> where T: Resource
     {

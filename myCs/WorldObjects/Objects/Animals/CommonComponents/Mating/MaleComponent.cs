@@ -26,7 +26,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
         protected bool CheckPartnerHere()
         {
             return !CheckWereDestroyed(partner) &&
-                   Direction.CheckEqual(WorldObject.Cell.Coords, partner.WorldObject.Cell.Coords);
+                   OnOneCellWith(partner);
         }
 
         private void SearchPartner()

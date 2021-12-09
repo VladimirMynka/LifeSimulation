@@ -2,6 +2,7 @@
 using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Age;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits

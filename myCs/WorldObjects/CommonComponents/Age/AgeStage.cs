@@ -1,4 +1,4 @@
-﻿namespace LifeSimulation.myCs.WorldObjects.CommonComponents
+﻿namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Age
 {
     public enum AgeStage
     {

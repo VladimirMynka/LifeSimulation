@@ -3,6 +3,7 @@ using System.Drawing;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings

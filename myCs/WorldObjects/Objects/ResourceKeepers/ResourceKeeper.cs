@@ -4,6 +4,8 @@ using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.Instruments;
 using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.ResourceKeepers

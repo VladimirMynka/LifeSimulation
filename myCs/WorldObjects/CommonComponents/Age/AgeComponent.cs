@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 
-namespace LifeSimulation.myCs.WorldObjects.CommonComponents
+namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Age
 {
     public abstract class AgeComponent : WorldObjectComponent, IHaveInformation
     {
