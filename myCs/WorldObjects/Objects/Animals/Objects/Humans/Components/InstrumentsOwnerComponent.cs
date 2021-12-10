@@ -38,8 +38,6 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             base.Update();
             if (_target != null && _target.CheckWereDestroyed())
                 _target = null;
-            if (_target == null)
-                SearchSource();
             if (ResourceHere())
                 Extract();
             CheckAndRemoveInstruments();
@@ -56,7 +54,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             if (_target != null)
                 return;
             _target = _visibilityComponent.SearchOf<IResourceKeeper<Resource>>(
-                (keeper => keeper.KeepingType() == resource.GetType()));
+                (keeper => keeper.KeepingType() == resource.GetType() && CanExtractFrom(keeper)));
         }
 
         private bool CanExtractFrom(IResourceKeeper<Resource> component)
