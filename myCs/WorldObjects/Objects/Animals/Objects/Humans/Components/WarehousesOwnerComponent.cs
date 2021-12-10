@@ -4,7 +4,6 @@ using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
-using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 {
@@ -16,6 +15,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private IInventory<Resource> _targetWarehouse;
 
         private Resource _neededResource;
+        private bool _takeMod;
 
         public WarehousesOwnerComponent(WorldObject owner) : base(owner)
         {
@@ -31,29 +31,46 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void Update()
         {
             base.Update();
-            TryToTakeResource();
+            TryToTakeOrPutResource();
         }
 
-        private void TryToTakeResource()
+        private void TryToTakeOrPutResource()
         {
-            if (_neededResource != null && CheckWarehouseHere())
-            {
-                _neededResource.Set(_targetWarehouse.Remove(_neededResource));
-                _ownerInventory.Add(_neededResource);
-                _neededResource = null;
-            }
+            if (_neededResource == null || !CheckWarehouseHere())
+                return;
+
+            if (_takeMod)
+                TakeResource();
+            else
+                PutResource();
+
+            _neededResource = null;
+            _targetWarehouse = null;
         }
 
-        private IInventory<Resource> GetNearestWarehouseFor<T>(T resource) where T : Resource
+        private void TakeResource()
+        {
+            _neededResource.Set(_targetWarehouse.Remove(_neededResource));
+            _ownerInventory.Add(_neededResource);
+        }
+
+        private void PutResource()
+        {
+            _neededResource.Set(_ownerInventory.Remove(_neededResource));
+            _targetWarehouse.Add(_neededResource);
+        }
+
+        private IInventory<Resource> GetNearestWarehouseForTake<T>(T resource) where T : Resource
         {
             IInventory<Resource> goodVariant = null;
+
             var sqrDistance = -1;
             foreach (var warehouse in _warehouses)
             {
                 if (!warehouse.HasMoreThanNothing(resource))
                     continue;
                 var currentDistance = GetSqrLengthWith(warehouse.GetWorldObject());
-                if (sqrDistance != -1 && currentDistance >= sqrDistance) 
+                if (sqrDistance != -1 && currentDistance >= sqrDistance)
                     continue;
                 goodVariant = warehouse;
                 sqrDistance = currentDistance;
@@ -62,19 +79,44 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return goodVariant;
         }
         
-        public void SetTarget<T>(T needed) where T : Resource
+        private IInventory<Resource> GetNearestWarehouseForPut<T>(T resource) where T : Resource
         {
-            var warehouse = GetNearestWarehouseFor(needed);
+            IInventory<Resource> goodVariant = null;
+
+            var sqrDistance = -1;
+            foreach (var warehouse in _warehouses)
+            {
+                if (!warehouse.CanKeep(resource) || warehouse.IsFilled())
+                    continue;
+                var currentDistance = GetSqrLengthWith(warehouse.GetWorldObject());
+                if (sqrDistance != -1 && currentDistance >= sqrDistance)
+                    continue;
+                goodVariant = warehouse;
+                sqrDistance = currentDistance;
+            }
+
+            return goodVariant;
+        }
+
+        public bool SetTakingOrPuttingResource<T>(T resource, bool takeMod) where T : Resource
+        {
+            if (_targetWarehouse != null && _neededResource != null)
+                return true;
+            var warehouse = takeMod
+                ? GetNearestWarehouseForTake(resource)
+                : GetNearestWarehouseForPut(resource);
             if (warehouse == null)
-                return;
-            _neededResource = needed;
+                return false;
+            _neededResource = resource;
             _targetWarehouse = warehouse;
+            _takeMod = takeMod;
+            return true;
         }
 
         public void AddWarehouse(IInventory<Resource> warehouse)
         {
             _warehouses.Add(warehouse);
-        } 
+        }
 
         public int GetPriorityInBehaviour()
         {
@@ -90,7 +132,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private bool CheckWarehouseHere()
         {
-            return _targetWarehouse != null 
+            return _targetWarehouse != null
                    && OnOneCellWith(_targetWarehouse.GetWorldObject());
         }
 

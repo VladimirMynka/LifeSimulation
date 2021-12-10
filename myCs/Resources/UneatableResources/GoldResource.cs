@@ -7,5 +7,10 @@
         
         public GoldResource() : base(0)
         { }
+
+        public override Resource Clone()
+        {
+            return new GoldResource(GetCount());
+        }
     }
 }

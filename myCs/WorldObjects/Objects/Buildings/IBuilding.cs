@@ -6,9 +6,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
 {
     public interface IBuilding<out T> where T : Resource
     {
-        void TryBuildNextStage(InventoryComponent<Resource> builderInventory);
+        IInventory<Resource> TryBuildNextStage(InventoryComponent<Resource> builderInventory);
 
         WorldObject GetWorldObject();
-
+        
     }
 }

@@ -8,5 +8,9 @@
         public UntypedMealResource() : base()
         { }
 
+        public override Resource Clone()
+        {
+            return new UntypedMealResource(GetCount());
+        }
     }
 }

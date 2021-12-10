@@ -53,8 +53,20 @@ namespace LifeSimulation.myCs.Drawing
         public static Image Compost = Image.FromFile(Path + @"resources\compost.png");
         public static Image CompostEasy = Image.FromFile(Path + @"resources\compost-easy.png");
 
-
+        public static Image FirstBuildingStage1 = Image.FromFile(Path + @"buildings\warehouse-1-1.png");
+        public static Image FirstBuildingStage2 = Image.FromFile(Path + @"buildings\warehouse-1-2.png");
         
+        public static Image SecondBuildingStage1 = Image.FromFile(Path + @"buildings\warehouse-2-1.png");
+        public static Image SecondBuildingStage2 = Image.FromFile(Path + @"buildings\warehouse-2-2.png");
+        public static Image SecondBuildingStage3 = Image.FromFile(Path + @"buildings\warehouse-2-3.png");
+
+        public static readonly Image[] FirstBuilding = new Image[]{
+            FirstBuildingStage1, FirstBuildingStage2
+        };
+        public static readonly Image[] SecondBuilding = new Image[]{
+            SecondBuildingStage1, SecondBuildingStage2, SecondBuildingStage3
+        };
+
         private static readonly List<Image> AllImages = new List<Image>(){
             Herbivore, Herbivore2, Herbivore3,
             Omnivore, Omnivore2, Omnivore3,
@@ -65,7 +77,9 @@ namespace LifeSimulation.myCs.Drawing
             Plant, UneatablePlant, PoisonousPlant, DeadPlant,
             Fruit, UneatableFruit, PoisonousFruit, DeadFruit,
             Sleeper,
-            Gold, Iron, IronEasy, Compost, CompostEasy
+            Gold, Iron, IronEasy, Compost, CompostEasy,
+            FirstBuildingStage1, FirstBuildingStage2,
+            SecondBuildingStage1, SecondBuildingStage2, SecondBuildingStage3
         };
 
         private static readonly List<Brush> AllBrushes = GetBrushesList(AllImages);

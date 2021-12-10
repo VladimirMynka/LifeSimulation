@@ -14,6 +14,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
     public class InstrumentsOwnerComponent : WorldObjectComponent, IHaveInformation, IHaveTarget
     {
         private InventoryComponent<Resource> _inventoryComponent;
+        private WarehousesOwnerComponent _warehousesOwnerComponent;
         private readonly List<Instrument> _instruments;
         private VisibilityComponent _visibilityComponent;
 
@@ -28,6 +29,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             base.Start();
             _inventoryComponent = GetComponent<InventoryComponent<Resource>>();
+            _warehousesOwnerComponent = GetComponent<WarehousesOwnerComponent>();
             _visibilityComponent = GetComponent<VisibilityComponent>();
         }
 
@@ -47,6 +49,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private void SearchSource()
         {
             _target = _visibilityComponent.SearchOf<IResourceKeeper<Resource>>(CanExtractFrom);
+        }
+
+        private void SearchSource(Resource resource)
+        {
+            if (_target != null)
+                return;
+            _target = _visibilityComponent.SearchOf<IResourceKeeper<Resource>>(
+                (keeper => keeper.KeepingType() == resource.GetType()));
         }
 
         private bool CanExtractFrom(IResourceKeeper<Resource> component)
@@ -81,6 +91,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 _inventoryComponent.Add(_target.Extract(InstrumentType.None));
                 return;
             }
+
             foreach (var instrument in _instruments)
             {
                 if (_target.CanBeExtractUsing(instrument.GetInstrumentType()))
@@ -94,7 +105,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private void CreateNewInstrument()
         {
             int random = World.Random.Next(1, (int) InstrumentType.Shovel + 1);
-            var instrument = Instrument.Create((InstrumentType) random, _inventoryComponent);
+            var type = (InstrumentType) random;
+            var needed = Instrument.CheckCanCreate(type, _inventoryComponent);
+            if (needed != null && !_warehousesOwnerComponent.SetTakingOrPuttingResource(needed, true))
+            {
+                SearchSource(needed);
+                return;
+            }
+            var instrument = Instrument.Create(type, _inventoryComponent);
             if (instrument != null)
                 _instruments.Add(instrument);
         }
@@ -122,8 +140,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             var info = "Target resource: " + (_target == null
                 ? "none"
-                : InformationComponent.GetInfoAboutCoords(_target.GetWorldObject()));
-            
+                : _target.ToResourceString());
+
             info += "\nInstruments: ";
             foreach (var instrument in _instruments)
                 info += '\n' + instrument.GetInstrumentType().ToString() + ": " + instrument;

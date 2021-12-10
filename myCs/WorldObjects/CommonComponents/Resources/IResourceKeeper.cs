@@ -1,4 +1,5 @@
-﻿using LifeSimulation.myCs.Resources;
+﻿using System;
+using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.Instruments;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
@@ -14,5 +15,9 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         WorldObject GetWorldObject();
 
         bool CheckWereDestroyed();
+
+        Type KeepingType();
+
+        string ToResourceString();
     }
 }

@@ -7,5 +7,10 @@
         
         public CompostResource() : base(0)
         { }
+
+        public override Resource Clone()
+        {
+            return new CompostResource(GetCount());
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.Instruments;
 using LifeSimulation.myCs.Settings;
@@ -47,6 +48,11 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
             return CheckWereDestroyed(this);
         }
 
+        public Type KeepingType()
+        {
+            return _resource.GetType();
+        }
+
         public int GetInformationPriority()
         {
             return Defaults.InfoPriorityResource;
@@ -61,9 +67,9 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
             return info;
         }
 
-        public string GetResourceString()
+        public string ToResourceString()
         {
-            return _resource.ToString();
+            return _resource.ToString() + " on " + InformationComponent.GetInfoAboutCoords(this);
         }
     }
 }

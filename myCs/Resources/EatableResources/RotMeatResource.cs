@@ -9,5 +9,10 @@ namespace LifeSimulation.myCs.Resources.EatableResources
 
         public RotMeatResource() : base(0, MealType.Plant)
         { }
+
+        public override Resource Clone()
+        {
+            return new RotMeatResource(GetCount());
+        }
     }
 }

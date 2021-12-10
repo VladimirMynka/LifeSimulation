@@ -1,13 +1,12 @@
-﻿using LifeSimulation.myCs.Resources;
+﻿using System.Collections.Generic;
+using LifeSimulation.myCs.Resources;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
 {
     public interface IInventory<out T> where T : Resource
     {
         int Remove(Resource resource);
-
-        bool Remove(Resource[] resources);
-
+        
         int Add(Resource resource);
 
         bool IsFilled();
@@ -22,8 +21,18 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
 
         bool RemoveIfHave(Resource[] resources);
 
-        WorldObject GetWorldObject();
+        int GetCountOf(Resource resource);
 
-        int[] GetCoords();
+        int GetLackCount(Resource resource);
+
+        List<Resource> GetLackCounts(Resource[] resources);
+
+        Resource FirstOrDefaultLackCounts(Resource[] resources);
+        
+        Resource RemoveOrGetFirstLack(Resource[] resources);
+
+        bool CanKeep<T2>(T2 resource) where T2 : Resource;
+
+        WorldObject GetWorldObject();
     }
 }

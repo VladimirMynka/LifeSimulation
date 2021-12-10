@@ -44,21 +44,30 @@ namespace LifeSimulation.myCs.Resources.Instruments
             return resource;
         }
 
-        public static Instrument Create(InstrumentType type, InventoryComponent<Resource> inventory)
+        private static int GetListNumber(InstrumentType type)
         {
-            var listNumber = 0;
             switch (type)
             {
                 case InstrumentType.Axe:
-                    listNumber = 0;
-                    break;
+                    return 0;
                 case InstrumentType.Pickaxe:
-                    listNumber = 2;
-                    break;
+                    return 2;
                 case InstrumentType.Shovel:
-                    listNumber = 3;
-                    break;
+                    return 3;
             }
+
+            return -1;
+        }
+
+        public static Resource CheckCanCreate(InstrumentType type, InventoryComponent<Resource> inventory)
+        {
+            var array = CreatingLists[GetListNumber(type)];
+            return inventory.FirstOrDefaultLackCounts(array);
+        }
+        
+        public static Instrument Create(InstrumentType type, InventoryComponent<Resource> inventory)
+        {
+            var listNumber = GetListNumber(type);
 
             return CreateByList(listNumber, type, inventory);
         }

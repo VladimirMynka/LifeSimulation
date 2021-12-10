@@ -7,5 +7,10 @@
         
         public WoodResource() : base(0)
         { }
+
+        public override Resource Clone()
+        {
+            return new WoodResource(GetCount());
+        }
     }
 }

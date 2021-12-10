@@ -1,14 +1,11 @@
-﻿using System;
-using System.Drawing;
-
-namespace LifeSimulation.myCs.Resources
+﻿namespace LifeSimulation.myCs.Resources
 {
     public abstract class Resource
 
     {
         private int _count;
 
-        public Resource()
+        protected Resource()
         {
             _count = 0;
         }
@@ -100,5 +97,7 @@ namespace LifeSimulation.myCs.Resources
             clone.Set(_count);
             return clone;
         }
+
+        public abstract Resource Clone();
     }
 }

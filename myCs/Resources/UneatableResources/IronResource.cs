@@ -7,5 +7,10 @@
         
         public IronResource() : base(0)
         { }
+
+        public override Resource Clone()
+        {
+            return new IronResource(GetCount());
+        }
     }
 }

@@ -99,13 +99,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
 
         public bool Remove(Resource[] resources)
         {
-            if (!CheckHave(resources))
-                return false;
-            foreach (var resource in resources)
-            {
-                Remove(resource);
-            }
-            return true;
+            throw new NotImplementedException();
         }
 
         public int Add(Resource resource)
@@ -237,6 +231,50 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
             return true;
         }
 
+        public int GetCountOf(Resource resource)
+        {
+            var reserve = GetReserveWithType(resource.GetType());
+            return reserve == null 
+                ? 0 
+                : reserve.GetCount();
+        }
+
+        public int GetLackCount(Resource resource)
+        {
+            return resource.GetCount() - GetCountOf(resource);
+        }
+
+        public List<Resource> GetLackCounts(Resource[] resources)
+        {
+            var list = new List<Resource>();
+            foreach (var resource in resources)
+            {
+                var count = GetLackCount(resource);
+                if (count == 0)
+                    continue;
+                var clone = resource.Clone();
+                clone.Set(count);
+                    list.Add(clone);
+            }
+
+            return list;
+        }
+        
+        public Resource FirstOrDefaultLackCounts(Resource[] resources)
+        {
+            foreach (var resource in resources)
+            {
+                var count = GetLackCount(resource);
+                if (count == 0)
+                    continue;
+                var clone = resource.Clone();
+                clone.Set(count);
+                return clone;
+            }
+
+            return null;
+        }
+
         public override string ToString()
         {
             var info = "Inventory: ";
@@ -267,14 +305,22 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
             return true;
         }
 
+        public Resource RemoveOrGetFirstLack(Resource[] resources)
+        {
+            var lack = FirstOrDefaultLackCounts(resources);
+            if (lack != null)
+                RemoveIfHave(resources);
+            return lack;
+        }
+
+        public bool CanKeep<T2>(T2 resource) where T2 : Resource
+        {
+            return resource is T;
+        }
+
         public WorldObject GetWorldObject()
         {
             return WorldObject;
-        }
-
-        public int[] GetCoords()
-        {
-            return WorldObject.Cell.Coords;
         }
     }
 }

@@ -9,5 +9,10 @@ namespace LifeSimulation.myCs.Resources.EatableResources
 
         public MeatResource() : base(0, MealType.FreshMeat)
         { }
+
+        public override Resource Clone()
+        {
+            return new MeatResource(GetCount());
+        }
     }
 }

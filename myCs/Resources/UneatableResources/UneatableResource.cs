@@ -4,5 +4,6 @@
     {
         protected UneatableResource(int count = 0) : base(count)
         { }
+        
     }
 }
