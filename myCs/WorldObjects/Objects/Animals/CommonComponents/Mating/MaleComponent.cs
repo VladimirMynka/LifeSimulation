@@ -23,7 +23,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
                 Mate(partner);
         }
 
-        protected bool CheckPartnerHere()
+        protected virtual bool CheckPartnerHere()
         {
             return !CheckWereDestroyed(partner) &&
                    OnOneCellWith(partner);

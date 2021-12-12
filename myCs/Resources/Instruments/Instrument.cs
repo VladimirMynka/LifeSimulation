@@ -7,10 +7,10 @@ namespace LifeSimulation.myCs.Resources.Instruments
     public class Instrument
     {
         private static readonly Resource[][] CreatingLists = new Resource[][]{
-            new Resource[]{new WoodResource(50)},
-            new Resource[]{new WoodResource(20), new IronResource(10), new GoldResource(5)},
-            new Resource[]{new WoodResource(20), new CompostResource(10)},
-            new Resource[]{new IronResource(25)}
+            new Resource[]{new WoodResource(10)},
+            new Resource[]{new WoodResource(5), new IronResource(2), new GoldResource(2)},
+            new Resource[]{new WoodResource(7), new CompostResource(3)},
+            new Resource[]{new IronResource(10)}
         };
 
         private int _stability;

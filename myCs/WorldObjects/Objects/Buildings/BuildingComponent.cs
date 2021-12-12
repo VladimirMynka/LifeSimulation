@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.UneatableResources;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
 {
-    public class BuildingComponent<T> : WorldObjectComponent, IBuilding<T> where T : Resource
+    public class BuildingComponent<T> : WorldObjectComponent, IHaveInformation, IBuilding<T> where T : Resource
     {
         private readonly Image[] _images;
         private int _stage;
@@ -56,10 +59,20 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
                 ? ToLastStage() 
                 : null;
         }
+        
+        public Resource GetNeedSource(InventoryComponent<Resource> builderInventory)
+        {
+            return builderInventory.FirstOrDefaultLackCounts(Resources[_buildingTypeNumber][_stage]);
+        }
 
         public WorldObject GetWorldObject()
         {
             return WorldObject;
+        }
+
+        public Type KeepResourceOfType()
+        {
+            return typeof(T);
         }
 
         private IInventory<T> ToLastStage()
@@ -68,6 +81,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
             WorldObject.AddComponent(inventory);
             Destroy();
             return inventory;
+        }
+
+        public override string ToString()
+        {
+            return typeof(T).Name + "Warehouse " + _stage;
+        }
+
+        public int GetInformationPriority()
+        {
+            return Defaults.InfoPriorityAge;
         }
     }
 }

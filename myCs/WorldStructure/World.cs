@@ -14,7 +14,7 @@ namespace LifeSimulation.myCs.WorldStructure
         private const int AnimalsNormalCount = 30000;
         private const int HumanNormalCount = 5000;
         private const int PlantsNormalCount = 1000;
-        private const int ResourcesNormalCount = 60000;
+        private const int ResourcesNormalCount = 100000;
 
         private readonly Cell[][] _cells;
         private readonly Drawer _drawer;

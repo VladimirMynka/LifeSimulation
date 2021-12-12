@@ -25,14 +25,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 
         public delegate bool CheckObjectGood(WorldObject worldObject);
 
-        public delegate bool CheckComponentGood<T>(T worldObjectComponent) where T : WorldObjectComponent;
-        
-        public delegate bool CheckSomethingGood<in T>(T something) where T : class;
+        public delegate bool CheckComponentGood<in T>(T worldObjectComponent) where T : class;
 
-        private static T GetComponentFor<T>(Cell cell, CheckComponentGood<T> checker = null) where T : WorldObjectComponent
+        private static T GetComponentFor<T>(Cell cell, CheckComponentGood<T> checker = null) where T : class
         {
             if (cell == null)
                 return null;
+            
             foreach (var worldObject in cell.CurrentObjects)
             {
                 var component = worldObject.GetComponent<T>();
@@ -41,22 +40,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             }
             return null;
         }
-        
-        private static T GetComponentOf<T>(Cell cell, CheckSomethingGood<T> checker = null) where T : class
-        {
-            if (cell == null)
-                return null;
             
-            foreach (var worldObject in cell.CurrentObjects)
-            {
-                var component = worldObject.GetComponentOf<T>();
-                if (component != null && (checker == null || checker(component))) 
-                    return component;
-            }
-            return null;
-        }
-            
-        public T Search<T>(CheckComponentGood<T> checker) where T : WorldObjectComponent          
+        public T Search<T>(CheckComponentGood<T> checker) where T : class          
         {
             var x = WorldObject.Cell.Coords[0];
             var y = WorldObject.Cell.Coords[1];
@@ -97,47 +82,6 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
             return null;
         }
         
-        public T SearchOf<T>(CheckSomethingGood<T> checker) where T : class
-        {
-            var x = WorldObject.Cell.Coords[0];
-            var y = WorldObject.Cell.Coords[1];
-            for (var radius = 0; radius < _visibility; radius++)
-            {
-                for (var j = 0; j <= radius; j++)
-                {
-                    var i = radius - j;
-                    var currentCell = world.GetCell(x + i, y + j);
-                    var component = GetComponentOf(currentCell, checker);
-                    if (component != null)
-                        return component;
-                    
-                    if (j != 0)
-                    {
-                        currentCell = world.GetCell(x + i, y - j);
-                        component = GetComponentOf(currentCell, checker);
-                        if (component != null)
-                            return component;
-                    }
-                    
-                    if (i == 0) 
-                        continue;
-                    currentCell = world.GetCell(x - i, y + j);
-                    component = GetComponentOf(currentCell, checker);
-                    if (component != null)
-                        return component;
-                    
-                    if (j == 0) 
-                        continue;
-                    currentCell = world.GetCell(x + i, y + j);
-                    component = GetComponentOf(currentCell, checker);
-                    if (component != null)
-                        return component;
-                }
-            }
-
-            return null;
-        }
-
         public void ConfigureByWeather(Weather weather)
         {
             switch (weather.GetPrecipitation())

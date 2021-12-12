@@ -94,7 +94,7 @@ namespace LifeSimulation.myCs.WorldObjects
             _removingComponents.Add(component);
         }
         
-        public T GetComponent<T>() where T : WorldObjectComponent
+        public T GetComponent<T>() where T : class
         {
             foreach (var component in components)
             {
@@ -114,24 +114,18 @@ namespace LifeSimulation.myCs.WorldObjects
             }
             return componentsOfType;
         }
-        
-        public T GetComponentOf<T>() where T : class
-        {
-            foreach (var component in components)
-            {
-                if (component is T) 
-                    return component as T;
-            }
-            return null;
-        }
-        
+
         public static int GetSqrLengthBetween(WorldObject object1, WorldObject object2)
         {
+            if (CheckWereDestroyed(object1) || CheckWereDestroyed(object2))
+                return -1;
             return Direction.SqrLength(object1.Cell.Coords, object2.Cell.Coords);
         }
         
         public static bool CheckOnOneCell(WorldObject object1, WorldObject object2)
         {
+            if (CheckWereDestroyed(object1) || CheckWereDestroyed(object2))
+                return false;
             return Direction.CheckEqual(object1.Cell.Coords, object2.Cell.Coords);
         }
     }

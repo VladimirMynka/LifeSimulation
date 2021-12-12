@@ -49,6 +49,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans
 
             components.Add(new InstrumentsOwnerComponent(this));
             components.Add(new WarehousesOwnerComponent(this));
+            components.Add(new BuilderComponent(this));
 
             Start();
         }

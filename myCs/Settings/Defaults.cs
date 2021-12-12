@@ -45,24 +45,30 @@
         public const int InfoPriorityPet = 70;
         public const int InfoPriorityBehaviourChanger = 80;
         public const int InfoPriorityInstrumentsOwner = 110;
-        public const int InfoPriorityResource = 120;
+        public const int InfoPriorityResourceKeeper = 120;
+        public const int InfoPriorityWarehouseOwner = 120;
+        public const int InfoPriorityBuilder = 130;
 
-        
         public const int BehaviourHaveNotPriority = 0;
-        public const int BehaviourSearching = 1;
-        public const int BehaviourUneatableSearching = 2;
-        public const int BehaviourInstrumentsTriggered = 2;
-        public const int BehaviourPetHasPresent = 2;
-        public const int BehaviourPetOwnerThereArePresents = 2;
-        public const int BehaviourItIsTimeToMating = 3;
-        public const int BehaviourPetOwnerPetHungry = 4;
-        public const int BehaviourAnimalMating = 5;
-        public const int BehaviourPartnerIsHungry = 5;
-        public const int BehaviourPetOwnerPetVeryHungry = 6;
-        public const int BehaviourPartnerIsVeryHungry = 7;
-        public const int BehaviourHungry = 10;
-        public const int BehaviourPetHungry = 11;
-        public const int BehaviourVeryHungry = 20;
-        public const int BehaviourPetVeryHungry = 21;
+        public const int BehaviourSearching = 10;
+        public const int BehaviourUneatableSearching = 20;
+        public const int BehaviourPetHasPresent = 21;
+        public const int BehaviourPetOwnerThereArePresents = 22;
+        public const int BehaviourItIsTimeToMating = 30;
+        public const int BehaviourResourcesSearchingTriggered = 33;
+        public const int BehaviourWarehouseTakeOrPut = 35;
+        public const int BehaviourPetOwnerPetHungry = 40;
+        public const int BehaviourAnimalMating = 50;
+        public const int BehaviourPartnerIsHungry = 51;
+        public const int BehaviourPetOwnerPetVeryHungry = 60;
+        public const int BehaviourPartnerIsVeryHungry = 70;
+        public const int BehaviourHungry = 100;
+        public const int BehaviourPetHungry = 110;
+        public const int BehaviourVeryHungry = 200;
+        public const int BehaviourVeryHungryAndPet = 210;
+        public const int BehaviourWarehouseTakeMeal = 211;
+        public const int BehaviourBuilder = 250;
+
+        public const int InstrumentsMax = 2;
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.Resources.EatableResources;
+using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
@@ -18,17 +20,18 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
             Start();
         }
 
-        public Warehouse<TSpecific> Create<TSpecific>(Cell cell, int type) where TSpecific : T
+        public static Building Create<TSpecific>(Cell cell) where TSpecific : Resource
         {
-            switch (type)
-            {
-                case 0:
-                    return new Warehouse<TSpecific>(cell, Pictures.FirstBuilding, 1, type);
-                case 1:
-                    return new Warehouse<TSpecific>(cell, Pictures.SecondBuilding, 1, type);
-            }
+            return new Warehouse<TSpecific>(cell, Pictures.SecondBuilding, 1, 1);
+        }
 
-            return null;
+        public static Building Create(Cell cell, Resource resource)
+        {
+            return resource is EatableResource ? Create<EatableResource>(cell) :
+                resource is GoldResource ? Create<GoldResource>(cell) :
+                resource is WoodResource ? Create<WoodResource>(cell) :
+                resource is IronResource ? Create<IronResource>(cell) :
+                resource is CompostResource ? Create<CompostResource>(cell) : null;
         }
     }
 }

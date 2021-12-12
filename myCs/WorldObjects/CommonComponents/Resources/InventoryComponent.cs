@@ -169,6 +169,23 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
             return _currentCount == _maxCount;
         }
 
+        public bool IsHalfFull()
+        {
+            return _currentCount >= _maxCount / 2;
+        }
+
+        public Resource GetTheLargestResource()
+        {
+            Resource returningResource = null;
+            foreach (var resource in _reserves)
+            {
+                if (returningResource == null || resource.GetCount() > returningResource.GetCount())
+                    returningResource = resource;
+            }
+
+            return returningResource;
+        }
+
         public void AverageReserveWith<TCommon, TOther>(InventoryComponent<TOther> other) 
             where TCommon : T, TOther
             where TOther : Resource
@@ -241,7 +258,8 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
 
         public int GetLackCount(Resource resource)
         {
-            return resource.GetCount() - GetCountOf(resource);
+            int forReturn = resource.GetCount() - GetCountOf(resource);
+            return forReturn < 0 ? 0 : forReturn;
         }
 
         public List<Resource> GetLackCounts(Resource[] resources)
@@ -250,7 +268,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
             foreach (var resource in resources)
             {
                 var count = GetLackCount(resource);
-                if (count == 0)
+                if (count <= 0)
                     continue;
                 var clone = resource.Clone();
                 clone.Set(count);
@@ -265,7 +283,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
             foreach (var resource in resources)
             {
                 var count = GetLackCount(resource);
-                if (count == 0)
+                if (count <= 0)
                     continue;
                 var clone = resource.Clone();
                 clone.Set(count);
@@ -321,6 +339,11 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         public WorldObject GetWorldObject()
         {
             return WorldObject;
+        }
+
+        public Type GetResourceType()
+        {
+            return typeof(T);
         }
     }
 }

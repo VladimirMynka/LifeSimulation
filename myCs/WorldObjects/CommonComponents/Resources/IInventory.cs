@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LifeSimulation.myCs.Resources;
 
 namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
@@ -10,6 +11,8 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         int Add(Resource resource);
 
         bool IsFilled();
+
+        bool IsHalfFull();
 
         bool CheckHave(Resource resource);
         
@@ -34,5 +37,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         bool CanKeep<T2>(T2 resource) where T2 : Resource;
 
         WorldObject GetWorldObject();
+
+        Type GetResourceType();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.WorldObjects;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
@@ -133,7 +134,11 @@ namespace LifeSimulation.myCs.WorldStructure
             }
             return 0;
         }
-        
+
+        public bool Contains<T>() where T : class
+        {
+            return CurrentObjects.OfType<T>().Any();
+        }
         
     }
 }

@@ -44,17 +44,17 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             CreateNewInstrument();
         }
 
-        private void SearchSource()
+        private void SearchResource()
         {
-            _target = _visibilityComponent.SearchOf<IResourceKeeper<Resource>>(CanExtractFrom);
+            _target = _visibilityComponent.Search<IResourceKeeper<Resource>>(CanExtractFrom);
         }
 
-        private void SearchSource(Resource resource)
+        public void SearchResource(Resource resource)
         {
             if (_target != null)
                 return;
-            _target = _visibilityComponent.SearchOf<IResourceKeeper<Resource>>(
-                (keeper => keeper.KeepingType() == resource.GetType() && CanExtractFrom(keeper)));
+            _target = _visibilityComponent.Search<IResourceKeeper<Resource>>(
+                keeper => keeper.KeepingType() == resource.GetType() && CanExtractFrom(keeper));
         }
 
         private bool CanExtractFrom(IResourceKeeper<Resource> component)
@@ -102,14 +102,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private void CreateNewInstrument()
         {
+            if (_instruments.Count >= Defaults.InstrumentsMax) return;
             int random = World.Random.Next(1, (int) InstrumentType.Shovel + 1);
             var type = (InstrumentType) random;
             var needed = Instrument.CheckCanCreate(type, _inventoryComponent);
             if (needed != null && !_warehousesOwnerComponent.SetTakingOrPuttingResource(needed, true))
             {
-                SearchSource(needed);
+                SearchResource(needed);
                 return;
             }
+
             var instrument = Instrument.Create(type, _inventoryComponent);
             if (instrument != null)
                 _instruments.Add(instrument);
@@ -123,10 +125,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public int GetPriorityInBehaviour()
         {
             return _target != null
-                ? _inventoryComponent.IsFilled()
-                    ? Defaults.BehaviourInstrumentsTriggered
-                    : Defaults.BehaviourUneatableSearching
+                ? _inventoryComponent.IsHalfFull()
+                    ? Defaults.BehaviourResourcesSearchingTriggered
+                    : !_inventoryComponent.IsFilled()
+                        ? Defaults.BehaviourUneatableSearching
+                        : Defaults.BehaviourHaveNotPriority
                 : Defaults.BehaviourHaveNotPriority;
+
         }
 
         public WorldObject GetTarget()

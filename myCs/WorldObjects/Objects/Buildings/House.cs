@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.WorldStructure;
 
@@ -14,6 +15,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
         {
             components.Add(new BuildingComponent<Resource>(this, 0, images));
             Start();
+        }
+
+        public static House Create(Cell cell)
+        {
+            return new House(cell, Pictures.FirstBuilding, 1);
         }
     }
 }

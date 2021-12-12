@@ -1,15 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.EatableResources;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
+using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 {
     public class WarehousesOwnerComponent : WorldObjectComponent, IHaveTarget, IHaveInformation
     {
         private readonly List<IInventory<Resource>> _warehouses;
+        public House House;
         private InventoryComponent<Resource> _ownerInventory;
 
         private IInventory<Resource> _targetWarehouse;
@@ -78,7 +82,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
             return goodVariant;
         }
-        
+
         private IInventory<Resource> GetNearestWarehouseForPut<T>(T resource) where T : Resource
         {
             IInventory<Resource> goodVariant = null;
@@ -100,8 +104,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public bool SetTakingOrPuttingResource<T>(T resource, bool takeMod) where T : Resource
         {
-            if (_targetWarehouse != null && _neededResource != null)
+            if (_neededResource == resource && _takeMod == takeMod)
                 return true;
+            if (_targetWarehouse != null && _neededResource != null)
+                return false;
             var warehouse = takeMod
                 ? GetNearestWarehouseForTake(resource)
                 : GetNearestWarehouseForPut(resource);
@@ -118,11 +124,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _warehouses.Add(warehouse);
         }
 
+        public int TakeEatPriority = Defaults.BehaviourWarehouseTakeMeal;
+        public int PutOrTakeResourcePriority = Defaults.BehaviourWarehouseTakeOrPut;
+
         public int GetPriorityInBehaviour()
         {
-            return _neededResource == null ? -1
-                : _neededResource is EatableResource ? -2
-                : -3;
+            return _neededResource == null ? Defaults.BehaviourHaveNotPriority
+                : _neededResource is EatableResource && _takeMod ? TakeEatPriority
+                : PutOrTakeResourcePriority;
         }
 
         public WorldObject GetTarget()
@@ -138,7 +147,27 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public int GetInformationPriority()
         {
-            return 10000;
+            return Defaults.InfoPriorityWarehouseOwner;
+        }
+
+        public override string ToString()
+        {
+            var info = _warehouses
+                .Aggregate("Warehouses:",
+                    (current, warehouse) =>
+                        current + ('\n' + warehouse.GetResourceType().Name
+                                        + " on " + InformationComponent
+                                            .GetInfoAboutCoords(warehouse.GetWorldObject())));
+            info += "\n\nHouse: " + (House == null ? "none" : "on " + InformationComponent.GetInfoAboutCoords(House));
+
+            if (_targetWarehouse != null && _neededResource != null)
+            {
+                info += "\n\nWant " + (_takeMod ? "take " : "put ") +
+                        _neededResource.ToString() + (_takeMod ? "from " : "to ") +
+                        InformationComponent.GetInfoAboutCoords(_targetWarehouse.GetWorldObject());
+            }
+
+            return info;
         }
     }
 }

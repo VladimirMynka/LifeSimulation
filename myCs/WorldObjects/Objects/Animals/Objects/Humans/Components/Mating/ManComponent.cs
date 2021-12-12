@@ -1,8 +1,6 @@
 ﻿using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
-using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating
@@ -10,6 +8,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
     public class ManComponent : MaleComponent
     {
         private InventoryComponent<Resource> _inventory;
+        private WarehousesOwnerComponent _warehousesOwnerComponent;
+        private BuilderComponent _builderComponent;
         private WomanComponent _woman;
         
         public ManComponent(WorldObject owner) : base(owner)
@@ -20,20 +20,38 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             base.Start();
             _inventory = GetComponent<InventoryComponent<Resource>>();
+            _warehousesOwnerComponent = GetComponent<WarehousesOwnerComponent>();
+            _builderComponent = GetComponent<BuilderComponent>();
         }
 
         public override void Update()
         {
             base.Update();
             
-            if (partner != null && _woman == null)
-                _woman = (WomanComponent) partner;
+            if (CheckWereDestroyed(partner))
+                return;
             
-            if (!CheckWereDestroyed(_woman) && CheckPartnerHere() 
-                                            && (_woman.IsHungry() || IsHungry()))
+            if (_woman == null)
+                _woman = (WomanComponent) partner;
+
+            if (_warehousesOwnerComponent.House == null)
+                _builderComponent.StartBuildHouse();
+            else
+                _woman.SetHouse(_warehousesOwnerComponent.House);
+
+            if (base.CheckPartnerHere() && (_woman.IsHungry() || IsHungry()))
                 _woman.AverageEatWith(_inventory);
         }
 
+        protected override bool CheckPartnerHere()
+        {
+            return base.CheckPartnerHere() && CheckHouseHere();
+        }
+
+        private bool CheckHouseHere()
+        {
+            return OnOneCellWith(_warehousesOwnerComponent.House);
+        }
         
         /// <summary></summary>
         /// <returns>
@@ -49,6 +67,15 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 : _woman.IsHungry() ? Defaults.BehaviourPartnerIsHungry 
                 : _woman.IsReady() && IsReady() ? Defaults.BehaviourItIsTimeToMating 
                 : Defaults.BehaviourHaveNotPriority;
+        }
+
+        public override WorldObject GetTarget()
+        {
+            return CheckWereDestroyed(_woman) 
+                ? null 
+                : IsReady() && _woman.IsReady() 
+                    ? _warehousesOwnerComponent.House 
+                    : _woman.WorldObject;
         }
 
         public bool IsHungry()

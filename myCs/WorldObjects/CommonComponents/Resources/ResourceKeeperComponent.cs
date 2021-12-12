@@ -55,7 +55,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
 
         public int GetInformationPriority()
         {
-            return Defaults.InfoPriorityResource;
+            return Defaults.InfoPriorityResourceKeeper;
         }
 
         public override string ToString()

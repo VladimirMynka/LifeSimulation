@@ -61,42 +61,54 @@ namespace LifeSimulation.myCs.WorldObjects
 
         protected static int GetSqrLengthBetween(WorldObjectComponent component1, WorldObjectComponent component2)
         {
+            if (CheckWereDestroyed(component1) || CheckWereDestroyed(component2))
+                return -1;
             return WorldObject.GetSqrLengthBetween(component1.WorldObject, component2.WorldObject);
         }
 
         protected static int GetSqrLengthBetween(WorldObjectComponent component, WorldObject worldObject)
         {
+            if (CheckWereDestroyed(component) || CheckWereDestroyed(worldObject))
+                return -1;
             return WorldObject.GetSqrLengthBetween(component.WorldObject, worldObject);
         }
 
         protected int GetSqrLengthWith(WorldObjectComponent other)
         {
+            if (CheckWereDestroyed(other))
+                return -1;
             return GetSqrLengthBetween(this, other);
         }
 
         protected int GetSqrLengthWith(WorldObject other)
         {
+            if (CheckWereDestroyed(other))
+                return -1;
             return GetSqrLengthBetween(this, other);
         }
 
         protected static bool CheckOnOneCell(WorldObjectComponent component1, WorldObjectComponent component2)
         {
+            if (CheckWereDestroyed(component1) || CheckWereDestroyed(component2))
+                return false;
             return WorldObject.CheckOnOneCell(component1.WorldObject, component2.WorldObject);
         }
 
         protected static bool CheckOnOneCell(WorldObjectComponent component, WorldObject worldObject)
         {
+            if (CheckWereDestroyed(component) || CheckWereDestroyed(worldObject))
+                return false;
             return WorldObject.CheckOnOneCell(component.WorldObject, worldObject);
         }
 
         protected bool OnOneCellWith(WorldObjectComponent other)
         {
-            return CheckOnOneCell(this, other);
+            return !CheckWereDestroyed(other) && CheckOnOneCell(this, other);
         }
         
         protected bool OnOneCellWith(WorldObject other)
         {
-            return CheckOnOneCell(this, other);
+            return !CheckWereDestroyed(other) && CheckOnOneCell(this, other);
         }
     }
 }
