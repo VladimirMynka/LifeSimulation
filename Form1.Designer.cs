@@ -47,6 +47,12 @@
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.InfoTextBox = new System.Windows.Forms.RichTextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.ZoomInTextBox = new System.Windows.Forms.TextBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.ZoomOutTextBox = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,7 +77,7 @@
             // 
             // offsetLeftInput
             // 
-            this.offsetLeftInput.Location = new System.Drawing.Point(12, 125);
+            this.offsetLeftInput.Location = new System.Drawing.Point(12, 221);
             this.offsetLeftInput.Name = "offsetLeftInput";
             this.offsetLeftInput.Size = new System.Drawing.Size(42, 20);
             this.offsetLeftInput.TabIndex = 2;
@@ -80,7 +86,7 @@
             // 
             // offsetTopInput
             // 
-            this.offsetTopInput.Location = new System.Drawing.Point(12, 177);
+            this.offsetTopInput.Location = new System.Drawing.Point(12, 273);
             this.offsetTopInput.Name = "offsetTopInput";
             this.offsetTopInput.Size = new System.Drawing.Size(42, 20);
             this.offsetTopInput.TabIndex = 3;
@@ -89,7 +95,7 @@
             // 
             // timeoutInput
             // 
-            this.timeoutInput.Location = new System.Drawing.Point(12, 230);
+            this.timeoutInput.Location = new System.Drawing.Point(13, 318);
             this.timeoutInput.Name = "timeoutInput";
             this.timeoutInput.Size = new System.Drawing.Size(42, 20);
             this.timeoutInput.TabIndex = 4;
@@ -100,7 +106,7 @@
             // 
             this.button1.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button1.Location = new System.Drawing.Point(11, 266);
+            this.button1.Location = new System.Drawing.Point(12, 354);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(70, 23);
             this.button1.TabIndex = 5;
@@ -139,7 +145,7 @@
             this.textBox4.BackColor = System.Drawing.SystemColors.MenuText;
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox4.ForeColor = System.Drawing.SystemColors.Info;
-            this.textBox4.Location = new System.Drawing.Point(12, 106);
+            this.textBox4.Location = new System.Drawing.Point(12, 202);
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(70, 13);
@@ -152,7 +158,7 @@
             this.textBox5.BackColor = System.Drawing.SystemColors.MenuText;
             this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox5.ForeColor = System.Drawing.SystemColors.Info;
-            this.textBox5.Location = new System.Drawing.Point(60, 128);
+            this.textBox5.Location = new System.Drawing.Point(60, 224);
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(21, 13);
@@ -165,7 +171,7 @@
             this.textBox6.BackColor = System.Drawing.SystemColors.MenuText;
             this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox6.ForeColor = System.Drawing.SystemColors.Info;
-            this.textBox6.Location = new System.Drawing.Point(60, 180);
+            this.textBox6.Location = new System.Drawing.Point(60, 276);
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(21, 13);
@@ -178,7 +184,7 @@
             this.textBox7.BackColor = System.Drawing.SystemColors.MenuText;
             this.textBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox7.ForeColor = System.Drawing.SystemColors.Info;
-            this.textBox7.Location = new System.Drawing.Point(11, 158);
+            this.textBox7.Location = new System.Drawing.Point(11, 254);
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
             this.textBox7.Size = new System.Drawing.Size(70, 13);
@@ -191,7 +197,7 @@
             this.textBox8.BackColor = System.Drawing.SystemColors.MenuText;
             this.textBox8.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox8.ForeColor = System.Drawing.SystemColors.Info;
-            this.textBox8.Location = new System.Drawing.Point(12, 211);
+            this.textBox8.Location = new System.Drawing.Point(13, 299);
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(70, 13);
@@ -204,7 +210,7 @@
             this.textBox9.BackColor = System.Drawing.SystemColors.MenuText;
             this.textBox9.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox9.ForeColor = System.Drawing.SystemColors.Info;
-            this.textBox9.Location = new System.Drawing.Point(60, 233);
+            this.textBox9.Location = new System.Drawing.Point(61, 321);
             this.textBox9.Name = "textBox9";
             this.textBox9.ReadOnly = true;
             this.textBox9.Size = new System.Drawing.Size(21, 13);
@@ -236,12 +242,88 @@
             this.InfoTextBox.TabIndex = 16;
             this.InfoTextBox.Text = "";
             // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.MenuText;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.ForeColor = System.Drawing.SystemColors.Info;
+            this.textBox1.Location = new System.Drawing.Point(60, 118);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(21, 13);
+            this.textBox1.TabIndex = 19;
+            this.textBox1.Text = "px";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox11
+            // 
+            this.textBox11.BackColor = System.Drawing.SystemColors.MenuText;
+            this.textBox11.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox11.ForeColor = System.Drawing.SystemColors.Info;
+            this.textBox11.Location = new System.Drawing.Point(12, 96);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.ReadOnly = true;
+            this.textBox11.Size = new System.Drawing.Size(70, 13);
+            this.textBox11.TabIndex = 18;
+            this.textBox11.Text = "In zoom";
+            this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // ZoomInTextBox
+            // 
+            this.ZoomInTextBox.Location = new System.Drawing.Point(12, 115);
+            this.ZoomInTextBox.Name = "ZoomInTextBox";
+            this.ZoomInTextBox.Size = new System.Drawing.Size(42, 20);
+            this.ZoomInTextBox.TabIndex = 17;
+            this.ZoomInTextBox.Text = "50";
+            this.ZoomInTextBox.TextChanged += new System.EventHandler(this.ZoomInTextBox_TextChanged);
+            // 
+            // textBox13
+            // 
+            this.textBox13.BackColor = System.Drawing.SystemColors.MenuText;
+            this.textBox13.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox13.ForeColor = System.Drawing.SystemColors.Info;
+            this.textBox13.Location = new System.Drawing.Point(59, 168);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.ReadOnly = true;
+            this.textBox13.Size = new System.Drawing.Size(21, 13);
+            this.textBox13.TabIndex = 22;
+            this.textBox13.Text = "px";
+            this.textBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // ZoomOutTextBox
+            // 
+            this.ZoomOutTextBox.Location = new System.Drawing.Point(11, 165);
+            this.ZoomOutTextBox.Name = "ZoomOutTextBox";
+            this.ZoomOutTextBox.Size = new System.Drawing.Size(42, 20);
+            this.ZoomOutTextBox.TabIndex = 20;
+            this.ZoomOutTextBox.Text = "10";
+            this.ZoomOutTextBox.TextChanged += new System.EventHandler(this.ZoomOutTextBox_TextChanged);
+            // 
+            // textBox12
+            // 
+            this.textBox12.BackColor = System.Drawing.SystemColors.MenuText;
+            this.textBox12.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox12.ForeColor = System.Drawing.SystemColors.Info;
+            this.textBox12.Location = new System.Drawing.Point(11, 146);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.ReadOnly = true;
+            this.textBox12.Size = new System.Drawing.Size(70, 13);
+            this.textBox12.TabIndex = 23;
+            this.textBox12.Text = "Out of zoom";
+            this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // MyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.ClientSize = new System.Drawing.Size(1343, 742);
+            this.Controls.Add(this.textBox12);
+            this.Controls.Add(this.textBox13);
+            this.Controls.Add(this.ZoomOutTextBox);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBox11);
+            this.Controls.Add(this.ZoomInTextBox);
             this.Controls.Add(this.InfoTextBox);
             this.Controls.Add(this.textBox10);
             this.Controls.Add(this.textBox9);
@@ -266,6 +348,17 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.TextBox textBox12;
+
+        private System.Windows.Forms.TextBox ZoomInTextBox;
+
+        private System.Windows.Forms.TextBox ZoomOutTextBox;
+
+        private System.Windows.Forms.TextBox textBox13;
+
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox11;
 
         private System.Windows.Forms.RichTextBox InfoTextBox;
 

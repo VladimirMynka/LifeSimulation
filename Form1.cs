@@ -27,10 +27,10 @@ namespace LifeSimulation
             timer1.Tick += new EventHandler(Update);
             timer1.Enabled = true;
 
-            _bitmap = new Bitmap(1000, 1000);
+            _bitmap = new Bitmap(1024, 1024);
             _graphics = Graphics.FromImage(_bitmap);
-            _drawer = new Drawer(_graphics);
-            _world = new World(1000, 1000, _drawer);
+            _drawer = new Drawer(_graphics, 1024, 1024, 16);
+            _world = new World(1024, 1024, _drawer);
             _informant = new Informant(_drawer, _world, InfoTextBox);
             _drawer.Update();
         }
@@ -129,6 +129,34 @@ namespace LifeSimulation
             pixelSizeInput.Text = _drawer.GetCellSize().ToString();
             offsetLeftInput.Text = _drawer.OffsetLeft.ToString();
             offsetTopInput.Text = _drawer.OffsetTop.ToString();
+        }
+
+        private void ZoomInTextBox_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var newSize = int.Parse(ZoomInTextBox.Text);
+                if (newSize <= 0) return;
+                _drawer.ZoomInPixelSize = newSize;
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        private void ZoomOutTextBox_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var newSize = int.Parse(ZoomOutTextBox.Text);
+                if (newSize <= 0) return;
+                _drawer.ZoomOutPixelSize = newSize;
+            }
+            catch
+            {
+                // ignored
+            }
         }
     }
 }

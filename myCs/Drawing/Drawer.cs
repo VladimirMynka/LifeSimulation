@@ -11,8 +11,10 @@ namespace LifeSimulation.myCs.Drawing
         private readonly List<Cell> _updatingCells;
         private readonly List<DrawableComponent> _currentDrawables;
         private Graphics _graphics;
-        private readonly int _size = 1000;
-        private readonly int _bitmapSize = 1000;
+        private readonly int _size;
+        private readonly int _bitmapSize;
+        public int ZoomInPixelSize = 50;
+        public int ZoomOutPixelSize = 10;
         private int _pixelSize;
         public int OffsetLeft;
         public int OffsetTop;
@@ -22,10 +24,13 @@ namespace LifeSimulation.myCs.Drawing
         public bool UpdateAll;
 
         public Drawer(
-            Graphics graphics, 
+            Graphics graphics,
+            int size = 1000,
+            int bitmapSize = 1000,
             int pixelSize = 10, 
             int offsetLeft = 0, 
-            int offsetTop = 0)
+            int offsetTop = 0
+            )
         {
             _updatingCells = new List<Cell>();
             _currentDrawables = new List<DrawableComponent>();
@@ -33,6 +38,8 @@ namespace LifeSimulation.myCs.Drawing
             SetCellSize(pixelSize);
             OffsetLeft = offsetLeft;
             OffsetTop = offsetTop;
+            _size = size;
+            _bitmapSize = bitmapSize;
         }
 
         public void Update()
@@ -216,10 +223,10 @@ namespace LifeSimulation.myCs.Drawing
 
         public void ZoomOnCell(Point coords)
         {
-            if (_pixelSize >= 30)
-                _pixelSize = 10;
+            if (_pixelSize > ZoomOutPixelSize)
+                _pixelSize = ZoomOutPixelSize;
             else
-                _pixelSize = 50;
+                _pixelSize = ZoomInPixelSize;
             SetOffsetsWithCenterIn(coords);
         }
 
