@@ -112,6 +112,8 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Eggs\Components\EggComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Eggs\Egg.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\BuilderComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\CitizenComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\CitizenRole.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\HumanAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\HumanEaterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\InstrumentsOwnerComponent.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\PetsOwnerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\ProtectionComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\WarmClothesComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PresidentComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\WarehousesOwnerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Human.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\Components\RotMeatComponent.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="myCs\WorldObjects\Objects\Buildings\BuildingComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Buildings\House.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Buildings\IBuilding.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Buildings\Village.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Buildings\Warehouse.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\Fruit.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Fruits\FruitAgeComponent.cs" />

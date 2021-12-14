@@ -65,7 +65,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return CheckWereDestroyed(_woman) ? Defaults.BehaviourHaveNotPriority 
                 : _woman.IsVeryHungry() ? Defaults.BehaviourPartnerIsVeryHungry 
                 : _woman.IsHungry() ? Defaults.BehaviourPartnerIsHungry 
-                : _woman.IsReady() && IsReady() ? Defaults.BehaviourItIsTimeToMating 
+                : _woman.IsReady() && IsReady() 
+                    ? CheckPartnerHere() ? Defaults.BehaviourWait
+                    : Defaults.BehaviourItIsTimeToMating
                 : Defaults.BehaviourHaveNotPriority;
         }
 

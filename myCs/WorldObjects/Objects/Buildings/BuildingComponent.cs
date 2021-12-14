@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.UneatableResources;
@@ -12,6 +11,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
 {
     public class BuildingComponent<T> : WorldObjectComponent, IHaveInformation, IBuilding<T> where T : Resource
     {
+        public Village Village;
         private readonly Image[] _images;
         private int _stage;
         private readonly int _buildingTypeNumber;
@@ -19,11 +19,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
 
         private static readonly Resource[][][] Resources;
         
-        public BuildingComponent(WorldObject owner, int buildingTypeNumber, Image[] images) : base(owner)
+        public BuildingComponent(WorldObject worldObject, 
+            int buildingTypeNumber, 
+            Image[] images,
+            Village village = null) 
+            : base(worldObject)
         {
             _stage = 0;
             _buildingTypeNumber = buildingTypeNumber;
             _images = images;
+            Village = village;
         }
 
         static BuildingComponent()
@@ -36,7 +41,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
                 new Resource[][]{
                     new Resource[]{new CompostResource(20)},
                     new Resource[]{new CompostResource(10), new WoodResource(10)},
-                    new Resource[]{new IronResource(15), new GoldResource(5)}
+                    new Resource[]{new IronResource(15), new WoodResource(5)}
                 }
             };
         }
@@ -79,13 +84,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
         {
             var inventory = new InventoryComponent<T>(WorldObject, 250);
             WorldObject.AddComponent(inventory);
-            Destroy();
             return inventory;
         }
-
+        
         public override string ToString()
         {
-            return typeof(T).Name + "Warehouse " + _stage;
+            return typeof(T).Name + "Warehouse " + _stage +
+                   "Village: " + (Village == null ? "none" : Village.Name);
         }
 
         public int GetInformationPriority()

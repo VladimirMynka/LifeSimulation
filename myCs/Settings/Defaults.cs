@@ -49,6 +49,7 @@
         public const int InfoPriorityWarehouseOwner = 120;
         public const int InfoPriorityBuilder = 130;
 
+        public const int BehaviourWait = -1;
         public const int BehaviourHaveNotPriority = 0;
         public const int BehaviourSearching = 10;
         public const int BehaviourUneatableSearching = 20;
@@ -70,5 +71,6 @@
         public const int BehaviourBuilder = 250;
 
         public const int InstrumentsMax = 2;
+        public const int VillageStartHousesCount = 3;
     }
 }

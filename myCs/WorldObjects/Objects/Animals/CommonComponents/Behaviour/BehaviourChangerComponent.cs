@@ -51,6 +51,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Beha
                     _lastPriority = priority;
                     component = competitor;
                 }
+                else if (priority == -1)
+                {
+                    _movingComponent.WaitFor(1);
+                    return null;
+                }
             }
 
             return component;

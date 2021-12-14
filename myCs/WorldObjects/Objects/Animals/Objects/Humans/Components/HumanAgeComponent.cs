@@ -25,5 +25,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return new WomanComponent(WorldObject, pregnantPeriod);
         }
+
+        public int GetAge()
+        {
+            return age;
+        }
     }
 }
