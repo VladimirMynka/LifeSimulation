@@ -105,6 +105,29 @@ namespace LifeSimulation.myCs.WorldStructure
             return neighCell;
         }
 
+        public delegate bool Check(Cell cell);
+        
+        public Cell GetNearestWithCheck(Check checker)
+        {
+            var localCoords = Direction.GetRandomDirectionVector();
+            if (localCoords[0] == 0 && localCoords[1] == 0)
+                localCoords[0] = 1;
+            
+            var neighCell = World.GetCell(Coords[0] + localCoords[0], Coords[1] + localCoords[1]);
+            if (neighCell != null && (checker == null || checker(neighCell)))
+                return neighCell;
+            neighCell = World.GetCell(Coords[0] - localCoords[0], Coords[1] - localCoords[1]);
+            if (neighCell != null && (checker == null || checker(neighCell)))
+                return neighCell;
+            neighCell = World.GetCell(Coords[0] + localCoords[0], Coords[1] - localCoords[1]);
+            if (neighCell != null && (checker == null || checker(neighCell)))
+                return neighCell;
+            neighCell = World.GetCell(Coords[0] - localCoords[0], Coords[1] + localCoords[1]);
+            if (neighCell != null && (checker == null || checker(neighCell)))
+                return neighCell;
+            return null;
+        }
+
         public List<InformationComponent> GetAllInformation()
         {
             var list = new List<InformationComponent>();

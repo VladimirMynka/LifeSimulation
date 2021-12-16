@@ -23,12 +23,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
         public readonly string Name;
         private int _amountOfHouses = 0;
 
-        public Village(IBuilding<Resource> firstBuilding, CitizenComponent firstCitizen)
+        public Village(CitizenComponent firstCitizen)
         {
             _buildings = new List<IBuilding<Resource>>();
             _citizens = new List<CitizenComponent>();
+            firstCitizen.SetVillage(this);
             _president = firstCitizen.BecomePresident(_citizens);
-            _buildings.Add(firstBuilding);
             _citizens.Add(firstCitizen);
             Name = Names[World.Random.Next(Names.Length)];
         }

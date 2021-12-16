@@ -7,15 +7,20 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 {
     public class CitizenComponent : WorldObjectComponent
     {
-        private readonly Village _village;
+        private Village _village;
         private CitizenRole _role;
         private HumanAgeComponent _ageComponent;
         private MatingComponent _matingComponent;
         private WarehousesOwnerComponent _warehousesOwnerComponent;
         private int _startDay;
 
-        public CitizenComponent(WorldObject owner, Village village) 
+        public CitizenComponent(WorldObject owner, Village village = null) 
             : base(owner)
+        {
+            _village = village;
+        }
+
+        public void SetVillage(Village village)
         {
             _village = village;
         }

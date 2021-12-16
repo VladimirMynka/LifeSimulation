@@ -1,10 +1,11 @@
 ﻿using LifeSimulation.myCs.Resources;
-using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
+using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 {
@@ -14,7 +15,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private InventoryComponent<Resource> _inventory;
         private WarehousesOwnerComponent _warehousesOwnerComponent;
         private InstrumentsOwnerComponent _instrumentsOwnerComponent;
-        
+        private VisibilityComponent _visibilityComponent;
+
         public BuilderComponent(WorldObject owner) : base(owner)
         {
         }
@@ -25,6 +27,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _inventory = GetComponent<InventoryComponent<Resource>>();
             _warehousesOwnerComponent = GetComponent<WarehousesOwnerComponent>();
             _instrumentsOwnerComponent = GetComponent<InstrumentsOwnerComponent>();
+            _visibilityComponent = GetComponent<VisibilityComponent>();
         }
 
         public override void Update()
@@ -32,10 +35,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             base.Update();
             if (_targetBuilding != null && CheckWereDestroyed(_targetBuilding.GetWorldObject()))
                 _targetBuilding = null;
-            
+
             if (_targetBuilding != null)
                 TryToBuild();
-            
+
             else if (_inventory.IsHalfFull())
             {
                 var largestResource = _inventory.GetTheLargestResource();
@@ -59,10 +62,28 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             if (_targetBuilding != null)
                 return;
-            if (WorldObject.Cell.Contains<Building>())
-                return;
-            var building = House.Create(WorldObject.Cell);
-            _targetBuilding = building.GetComponent<BuildingComponent<Resource>>();
+
+            var citizenComponent = new CitizenComponent(WorldObject);
+            WorldObject.AddComponent(citizenComponent);
+
+            var parentHouseComponent = _visibilityComponent.Search<IBuilding<Resource>>(building1 =>
+                building1.GetWorldObject() is House);
+            var parentHouse = parentHouseComponent == null
+                ? null
+                : parentHouseComponent.GetWorldObject() as House;
+            
+            var cell = parentHouse == null ? WorldObject.Cell : parentHouse.Cell;
+            cell = cell.GetNearestWithCheck(cell1 => !cell1.Contains<Building>());
+
+            var village = parentHouse == null
+                ? new Village(citizenComponent)
+                : parentHouse.GetComponent<BuildingComponent<Resource>>().Village;
+            
+            citizenComponent.SetVillage(village);
+
+            var building = House.Create(cell).GetComponent<BuildingComponent<Resource>>();
+            building.Village = village;
+            _targetBuilding = building;
             TryToBuild();
         }
 
@@ -70,24 +91,24 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             if (_targetBuilding == null || !OnOneCellWith(_targetBuilding.GetWorldObject()))
                 return;
-            
+
             var resource = _targetBuilding.GetNeedSource(_inventory);
-            if (resource != null 
+            if (resource != null
                 && !_warehousesOwnerComponent.SetTakingOrPuttingResource(resource, true))
             {
                 _instrumentsOwnerComponent.SearchResource(resource);
                 return;
             }
-            
+
             var resultInventory = _targetBuilding.TryBuildNextStage(_inventory);
-            
+
             if (resultInventory == null)
                 return;
             _warehousesOwnerComponent.AddWarehouse(resultInventory);
             if (resultInventory.GetWorldObject() is House)
                 _warehousesOwnerComponent.House = resultInventory.GetWorldObject() as House;
         }
-        
+
         public int GetInformationPriority()
         {
             return Defaults.InfoPriorityBuilder;
@@ -97,11 +118,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return "Build: " + (_targetBuilding == null
                 ? "none"
-                : _targetBuilding.KeepResourceOfType().Name + " on " + 
+                : _targetBuilding.KeepResourceOfType().Name + " on " +
                   InformationComponent.GetInfoAboutCoords(_targetBuilding.GetWorldObject()));
         }
 
         public int BuildingProcessPriority = Defaults.BehaviourBuilder;
+
         public int GetPriorityInBehaviour()
         {
             return _targetBuilding == null || _targetBuilding.GetNeedSource(_inventory) != null
