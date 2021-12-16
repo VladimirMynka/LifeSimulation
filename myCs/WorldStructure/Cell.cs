@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using LifeSimulation.myCs.Drawing;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects;
-using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 
 namespace LifeSimulation.myCs.WorldStructure
@@ -109,23 +109,61 @@ namespace LifeSimulation.myCs.WorldStructure
         
         public Cell GetNearestWithCheck(Check checker)
         {
-            var localCoords = Direction.GetRandomDirectionVector();
-            if (localCoords[0] == 0 && localCoords[1] == 0)
-                localCoords[0] = 1;
-            
-            var neighCell = World.GetCell(Coords[0] + localCoords[0], Coords[1] + localCoords[1]);
-            if (neighCell != null && (checker == null || checker(neighCell)))
-                return neighCell;
-            neighCell = World.GetCell(Coords[0] - localCoords[0], Coords[1] - localCoords[1]);
-            if (neighCell != null && (checker == null || checker(neighCell)))
-                return neighCell;
-            neighCell = World.GetCell(Coords[0] + localCoords[0], Coords[1] - localCoords[1]);
-            if (neighCell != null && (checker == null || checker(neighCell)))
-                return neighCell;
-            neighCell = World.GetCell(Coords[0] - localCoords[0], Coords[1] + localCoords[1]);
-            if (neighCell != null && (checker == null || checker(neighCell)))
-                return neighCell;
+            for (var radius = 0; radius < Defaults.CellSearchRadius; radius++)
+            {
+                for (var j = 0; j <= radius; j++)
+                {
+                    var i = radius - j;
+                    while (SqrSum(i, j) <= Sqr(radius - 1))
+                        i++;
+                    while (SqrSum(i, j) <= Sqr(radius))
+                    {
+                        var component = GetFromFourCells(i, j, checker);
+                        if (component != null)
+                            return component;
+                        i++;
+                    }
+                }
+            }
+
             return null;
+        }
+        
+        private static int Sqr(int x)
+        {
+            return x * x;
+        }
+
+        private static int SqrSum(int x, int y)
+        {
+            return x * x + y * y;
+        }
+
+        public Cell GetFromFourCells(int localX, int localY, Check checker)
+        {
+            var currentCell = World.GetCell(Coords[0] + localX, Coords[1] + localY);
+            if (currentCell != null && (checker == null || checker(currentCell)))
+                return currentCell;
+                    
+            if (localY != 0)
+            {
+                currentCell = World.GetCell(Coords[0] + localX, Coords[1] - localY);
+                if (currentCell != null && (checker == null || checker(currentCell)))
+                    return currentCell;
+            }
+                    
+            if (localX == 0) 
+                return null;
+            currentCell = World.GetCell(Coords[0] - localX, Coords[1] + localY);
+            if (currentCell != null && (checker == null || checker(currentCell)))
+                return currentCell;
+                    
+            if (localY == 0) 
+                return null;
+            currentCell = World.GetCell(Coords[0] + localX, Coords[1] + localY);
+            return currentCell != null && (checker == null || checker(currentCell))
+                ? currentCell
+                : null;
         }
 
         public List<InformationComponent> GetAllInformation()

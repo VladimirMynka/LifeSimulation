@@ -7,12 +7,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
     public class AnimalFemaleComponent : FemaleComponent
     {
         private MovingComponent _moving;
+        private readonly bool _byEggs;
         public AnimalFemaleComponent(WorldObject owner, 
             bool byEggs = true, 
             int pregnantPeriod = Defaults.PregnantPeriod, 
             int ticksToMating = Defaults.AnimalNormalTicksToMating) 
-            : base(owner, byEggs, pregnantPeriod, ticksToMating)
+            : base(owner, pregnantPeriod, ticksToMating)
         {
+            _byEggs = byEggs;
         }
 
         public override void Start()
@@ -26,6 +28,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
             base.Update();
             if (eaterComponent.IsHungry())
                 DeletePartner();
+        }
+
+        protected override PregnantComponent CreatePregnantComponent(int pregnantPeriod)
+        {
+            return new AnimalPregnantComponent(WorldObject, pregnantPeriod, _byEggs);
         }
 
         public override int GetPriorityInBehaviour()

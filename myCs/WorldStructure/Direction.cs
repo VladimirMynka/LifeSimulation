@@ -75,7 +75,7 @@ namespace LifeSimulation.myCs.WorldStructure
             if (x >= 2 * absY) return Right;
             if (x <= -2 * absY) return Left;
             if (y > 0) return x > 0 ? BottomRight : BottomLeft; 
-            if (y < 0) return x < 0 ? TopRight : TopLeft;
+            if (y < 0) return x > 0 ? TopRight : TopLeft;
             return None;
         }
 

@@ -1,5 +1,4 @@
-﻿using LifeSimulation.myCs.WorldObjects.CommonComponents;
-using LifeSimulation.myCs.WorldObjects.CommonComponents.Age;
+﻿using LifeSimulation.myCs.WorldObjects.CommonComponents.Age;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.DependingOnWeather;
 using LifeSimulation.myCs.WorldStructure.Weather;
 

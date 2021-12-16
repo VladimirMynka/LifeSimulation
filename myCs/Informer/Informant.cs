@@ -2,7 +2,6 @@
 using System.Drawing;
 using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.WorldObjects;
-using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldStructure;
 

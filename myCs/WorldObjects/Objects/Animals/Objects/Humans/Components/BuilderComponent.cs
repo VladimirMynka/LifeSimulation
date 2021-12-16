@@ -5,7 +5,6 @@ using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
-using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 {
@@ -64,9 +63,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 return;
 
             var citizenComponent = new CitizenComponent(WorldObject);
-            WorldObject.AddComponent(citizenComponent);
 
-            var parentHouseComponent = _visibilityComponent.Search<IBuilding<Resource>>(building1 =>
+            var parentHouseComponent = _visibilityComponent.Search<BuildingComponent<Resource>>(building1 =>
                 building1.GetWorldObject() is House);
             var parentHouse = parentHouseComponent == null
                 ? null
@@ -74,12 +72,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             
             var cell = parentHouse == null ? WorldObject.Cell : parentHouse.Cell;
             cell = cell.GetNearestWithCheck(cell1 => !cell1.Contains<Building>());
+            if (cell == null)
+                return;
+
+            WorldObject.AddComponent(citizenComponent);
 
             var village = parentHouse == null
                 ? new Village(citizenComponent)
-                : parentHouse.GetComponent<BuildingComponent<Resource>>().Village;
+                : parentHouseComponent.Village;
             
-            citizenComponent.SetVillage(village);
+            citizenComponent.Village = village;
 
             var building = House.Create(cell).GetComponent<BuildingComponent<Resource>>();
             building.Village = village;
@@ -104,6 +106,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
             if (resultInventory == null)
                 return;
+            _targetBuilding = null;
             _warehousesOwnerComponent.AddWarehouse(resultInventory);
             if (resultInventory.GetWorldObject() is House)
                 _warehousesOwnerComponent.House = resultInventory.GetWorldObject() as House;

@@ -1,25 +1,21 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
-using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating
 {
-    public class FemaleComponent : MatingComponent
+    public abstract class FemaleComponent : MatingComponent
     {
         public MaleComponent Partner;
         private PregnantComponent _pregnantComponent;
-        private readonly bool _byEggs;
         private readonly int _pregnantPeriod;
-        
-        public FemaleComponent(
+
+        protected FemaleComponent(
             WorldObject owner, 
-            bool byEggs = true,
             int pregnantPeriod = Defaults.PregnantPeriod,
             int ticksToMating = Defaults.AnimalNormalTicksToMating
             )
                 : base(owner, ticksToMating)
         {
-            _byEggs = byEggs;
             _pregnantPeriod = pregnantPeriod;
         }
         
@@ -55,7 +51,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
 
         public override bool IsReady()
         {
-            return (base.IsReady() && Partner == null && _pregnantComponent == null);
+            return base.IsReady() && _pregnantComponent == null;
         }
 
         public void Mate(MaleComponent partner)
@@ -66,9 +62,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
 
         private void BecomePregnant()
         {
-            _pregnantComponent = new PregnantComponent(WorldObject, _pregnantPeriod, _byEggs);
+            _pregnantComponent = CreatePregnantComponent(_pregnantPeriod);
             WorldObject.AddComponent(_pregnantComponent);
         }
+
+        protected abstract PregnantComponent CreatePregnantComponent(int pregnantPeriod);
         
         public override string ToString()
         {

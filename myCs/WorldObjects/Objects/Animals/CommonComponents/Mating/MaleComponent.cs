@@ -1,5 +1,4 @@
 ﻿using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating
 {
@@ -31,7 +30,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
 
         private void SearchPartner()
         {
-            SetPartner(visibilityComponent.Search<FemaleComponent>(CanMateWith));
+            SetPartner(visibilityComponent.Search<FemaleComponent>(FemaleCheckInSearch));
+        }
+
+        protected virtual bool FemaleCheckInSearch(FemaleComponent component)
+        {
+            return CanMateWith(component) && component.Partner == null;
         }
 
         private void SetPartner(FemaleComponent female)

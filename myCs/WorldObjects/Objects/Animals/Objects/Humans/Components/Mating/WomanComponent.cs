@@ -11,10 +11,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
     {
         private InventoryComponent<Resource> _inventory;
         private WarehousesOwnerComponent _warehousesOwnerComponent;
+        private CitizenComponent _citizenComponent;
         private ManComponent _man;
         
         public WomanComponent(WorldObject owner, int pregnantPeriod) 
-            : base(owner, false, pregnantPeriod)
+            : base(owner, pregnantPeriod)
         {
         }
 
@@ -47,6 +48,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 : Defaults.BehaviourHaveNotPriority;
         }
 
+        protected override PregnantComponent CreatePregnantComponent(int pregnantPeriod)
+        {
+            return new WomanPregnantComponent(WorldObject, pregnantPeriod);
+        }
+
         public override WorldObject GetTarget()
         {
             return CheckWereDestroyed(_man) 
@@ -68,7 +74,18 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public void SetHouse(House house)
         {
+            if (house == _warehousesOwnerComponent.House)
+                return;
             _warehousesOwnerComponent.House = house;
+            WorldObject.RemoveComponent(_citizenComponent);
+            _citizenComponent = new CitizenComponent(WorldObject,
+                house.GetComponent<BuildingComponent<Resource>>().Village);
+            WorldObject.AddComponent(_citizenComponent);
+        }
+
+        public House GetHouse()
+        {
+            return _warehousesOwnerComponent.House;
         }
     }
 }

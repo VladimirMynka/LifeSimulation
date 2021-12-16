@@ -64,9 +64,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans
         {
             if (isMale)
                 return new Human(cell, Pictures.Human, Pictures.Meat3,
-                4, true, 500, 2, 1, 100, 300, 10);
+                4, true, 500, 2, 1, 100, 300, 15);
             return new Human(cell, Pictures.Human2, Pictures.Meat3,
-                4, false, 500, 2, 1, 100, 200, 10);
+                4, false, 500, 2, 1, 100, 200, 15);
         }
     }
 }

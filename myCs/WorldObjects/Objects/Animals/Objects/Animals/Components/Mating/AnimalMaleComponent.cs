@@ -29,7 +29,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals.Compo
         {
             return female.IsReady() && female.IsOfType(creatureType);
         }
-
+        
         protected override void Mate(FemaleComponent female)
         {
             base.Mate(female);

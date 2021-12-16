@@ -106,6 +106,7 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\AnimalEaterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\Mating\AnimalFemaleComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\Mating\AnimalMaleComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\Mating\AnimalPregnantComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\PetComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\PlanterComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Animals\Components\SleeperComponent.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\InstrumentsOwnerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Mating\ManComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Mating\WomanComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Mating\WomanPregnantComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\GoodEffectComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\PetEffect.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\PetsOwner\PetsOwnerComponent.cs" />

@@ -11,7 +11,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private WarehousesOwnerComponent _warehousesOwnerComponent;
         private BuilderComponent _builderComponent;
         private WomanComponent _woman;
-        
+
         public ManComponent(WorldObject owner) : base(owner)
         {
         }
@@ -27,10 +27,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void Update()
         {
             base.Update();
-            
+
             if (CheckWereDestroyed(partner))
                 return;
-            
+
             if (_woman == null)
                 _woman = (WomanComponent) partner;
 
@@ -52,7 +52,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return OnOneCellWith(_warehousesOwnerComponent.House);
         }
-        
+
         /// <summary></summary>
         /// <returns>
         /// 7 if partner is very hungry,
@@ -62,21 +62,24 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         /// </returns>
         public override int GetPriorityInBehaviour()
         {
-            return CheckWereDestroyed(_woman) ? Defaults.BehaviourHaveNotPriority 
-                : _woman.IsVeryHungry() ? Defaults.BehaviourPartnerIsVeryHungry 
-                : _woman.IsHungry() ? Defaults.BehaviourPartnerIsHungry 
-                : _woman.IsReady() && IsReady() 
-                    ? CheckPartnerHere() ? Defaults.BehaviourWait
-                    : Defaults.BehaviourItIsTimeToMating
-                : Defaults.BehaviourHaveNotPriority;
+            return CheckWereDestroyed(_woman)
+                ? Defaults.BehaviourHaveNotPriority
+                : _woman.IsVeryHungry()
+                    ? Defaults.BehaviourPartnerIsVeryHungry
+                    : _woman.IsHungry()
+                        ? Defaults.BehaviourPartnerIsHungry
+                        : _woman.IsReady() && IsReady()
+                            ? CheckPartnerHere() ? Defaults.BehaviourWait
+                            : Defaults.BehaviourItIsTimeToMating
+                            : Defaults.BehaviourHaveNotPriority;
         }
 
         public override WorldObject GetTarget()
         {
-            return CheckWereDestroyed(_woman) 
-                ? null 
-                : IsReady() && _woman.IsReady() 
-                    ? _warehousesOwnerComponent.House 
+            return CheckWereDestroyed(_woman)
+                ? null
+                : IsReady() && _woman.IsReady()
+                    ? _warehousesOwnerComponent.House
                     : _woman.WorldObject;
         }
 
@@ -90,9 +93,23 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return eaterComponent.IsVeryHungry();
         }
 
+        public override bool IsReady()
+        {
+            return base.IsReady() && _warehousesOwnerComponent.House != null;
+        }
+
+        protected override bool FemaleCheckInSearch(FemaleComponent component)
+        {
+            var woman = component as WomanComponent;
+            return base.FemaleCheckInSearch(component) && woman != null &&
+                   (_warehousesOwnerComponent.House != woman.GetHouse()
+                    || _warehousesOwnerComponent.House == null
+                    || woman.GetHouse() == null);
+        }
+
         protected override bool CanMateWith(FemaleComponent female)
         {
-            return female != null && female.IsReady() && female is WomanComponent;
+            return female != null && female.IsReady();
         }
     }
 }

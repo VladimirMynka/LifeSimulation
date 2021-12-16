@@ -186,7 +186,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
             return returningResource;
         }
 
-        public void AverageReserveWith<TCommon, TOther>(InventoryComponent<TOther> other) 
+        public void AverageReserveWith<TCommon, TOther>(InventoryComponent<TOther> other, bool secondTime = false) 
             where TCommon : T, TOther
             where TOther : Resource
         {
@@ -214,6 +214,11 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
                 }
 
                 other.SetTo(otherReserve, excess1 + otherReserve.GetCount());
+            }
+
+            if (!secondTime)
+            {
+                other.AverageReserveWith<TCommon, T>(this, true);
             }
         }
 

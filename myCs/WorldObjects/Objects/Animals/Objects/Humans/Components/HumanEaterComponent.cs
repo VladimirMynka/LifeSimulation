@@ -1,7 +1,6 @@
 ﻿using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;

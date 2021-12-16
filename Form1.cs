@@ -97,7 +97,7 @@ namespace LifeSimulation
                 var newInterval = Convert.ToInt32(timeoutInput.Text);
                 timer1.Interval = (newInterval <= 0) ? timer1.Interval : newInterval;
             }
-            catch (Exception exception)
+            catch
             {
                 //ignored
             }

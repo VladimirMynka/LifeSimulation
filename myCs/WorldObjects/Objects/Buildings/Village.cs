@@ -27,7 +27,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
         {
             _buildings = new List<IBuilding<Resource>>();
             _citizens = new List<CitizenComponent>();
-            firstCitizen.SetVillage(this);
+            firstCitizen.Village = this;
             _president = firstCitizen.BecomePresident(_citizens);
             _citizens.Add(firstCitizen);
             Name = Names[World.Random.Next(Names.Length)];
@@ -65,9 +65,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
 
         public void StartElection(int probate)
         {
-            if (_citizens.Count == 0)
-                return;
             var candidates = _citizens.Where(citizen => citizen.CanParticipate()).ToArray();
+            if (candidates.Length == 0)
+                return;
+            
             var objectiveScores = GetObjectiveScores(candidates);
             var votes = new int[candidates.Length];
 

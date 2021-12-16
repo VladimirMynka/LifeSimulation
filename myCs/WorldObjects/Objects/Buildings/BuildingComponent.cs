@@ -6,7 +6,6 @@ using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
-using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
 {
@@ -91,7 +90,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
         public override string ToString()
         {
             return typeof(T).Name + "Warehouse " + _stage +
-                   "Village: " + (Village == null ? "none" : Village.Name);
+                   "\nVillage: " + (Village == null ? "none" : Village.Name);
         }
 
         public int GetInformationPriority()

@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
-using LifeSimulation.myCs.WorldObjects.CommonComponents.Age;
+using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 {
-    public class CitizenComponent : WorldObjectComponent
+    public class CitizenComponent : WorldObjectComponent, IHaveInformation
     {
-        private Village _village;
+        public Village Village;
         private CitizenRole _role;
         private HumanAgeComponent _ageComponent;
         private MatingComponent _matingComponent;
@@ -17,12 +18,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public CitizenComponent(WorldObject owner, Village village = null) 
             : base(owner)
         {
-            _village = village;
-        }
-
-        public void SetVillage(Village village)
-        {
-            _village = village;
+            Village = village;
         }
 
         public override void Start()
@@ -104,7 +100,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public PresidentComponent BecomePresident(List<CitizenComponent> citizens)
         {
-            var presidentComponent = new PresidentComponent(WorldObject, _village, citizens);
+            var presidentComponent = new PresidentComponent(WorldObject, Village, citizens);
             WorldObject.AddComponent(presidentComponent);
             return presidentComponent;
         }
@@ -112,7 +108,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void OnDestroy()
         {
             base.OnDestroy();
-            _village.RemoveCitizen(this);
+            Village.RemoveCitizen(this);
         }
 
         public int GetRiches()
@@ -128,6 +124,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public bool IsVeryOld()
         {
             return GetAge() < 600;
+        }
+
+        public int GetInformationPriority()
+        {
+            return Defaults.InfoPriorityCitizen;
+        }
+
+        public override string ToString()
+        {
+            return "Village: " + Village.Name;
         }
     }
 }

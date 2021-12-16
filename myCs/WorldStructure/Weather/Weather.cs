@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using LifeSimulation.myCs.Drawing;
-using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 
 namespace LifeSimulation.myCs.WorldStructure.Weather
@@ -17,13 +16,13 @@ namespace LifeSimulation.myCs.WorldStructure.Weather
 
         public Weather(Drawer drawer)
         {
-            _dayOfYear = 250;
+            _dayOfYear = 180;
             _year = 0;
             _temperature = 20;
-            _season = Season.Autumn;
+            _season = Season.Summer;
             _precipitation = Precipitation.Sun;
             _drawer = drawer;
-            drawer.SetBackground(Brushes.Gold);
+            drawer.SetBackground(Brushes.Chartreuse);
         }
 
         public void Update()

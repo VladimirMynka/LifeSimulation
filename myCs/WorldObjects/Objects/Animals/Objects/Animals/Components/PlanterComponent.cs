@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.DependingOnWeather;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits;

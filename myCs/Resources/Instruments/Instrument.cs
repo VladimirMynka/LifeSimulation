@@ -1,5 +1,4 @@
 ﻿using LifeSimulation.myCs.Resources.UneatableResources;
-using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 
 namespace LifeSimulation.myCs.Resources.Instruments

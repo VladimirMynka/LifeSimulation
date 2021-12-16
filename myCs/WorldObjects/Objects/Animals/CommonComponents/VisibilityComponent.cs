@@ -1,5 +1,4 @@
 ﻿using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.DependingOnWeather;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldStructure;
@@ -50,36 +49,59 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
                 for (var j = 0; j <= radius; j++)
                 {
                     var i = radius - j;
-                    var currentCell = world.GetCell(x + i, y + j);
-                    var component = GetComponentFor(currentCell, checker);
-                    if (component != null)
-                        return component;
-                    
-                    if (j != 0)
+                    while (SqrSum(i, j) <= Sqr(radius - 1))
+                        i++;
+                    while (SqrSum(i, j) <= Sqr(radius))
                     {
-                        currentCell = world.GetCell(x + i, y - j);
-                        component = GetComponentFor(currentCell, checker);
+                        var component = SearchWithCoords(x, y, i, j, checker);
                         if (component != null)
                             return component;
+                        i++;
                     }
-                    
-                    if (i == 0) 
-                        continue;
-                    currentCell = world.GetCell(x - i, y + j);
-                    component = GetComponentFor(currentCell, checker);
-                    if (component != null)
-                        return component;
-                    
-                    if (j == 0) 
-                        continue;
-                    currentCell = world.GetCell(x + i, y + j);
-                    component = GetComponentFor(currentCell, checker);
-                    if (component != null)
-                        return component;
                 }
             }
 
             return null;
+        }
+
+        private static int Sqr(int x)
+        {
+            return x * x;
+        }
+
+        private static int SqrSum(int x, int y)
+        {
+            return x * x + y * y;
+        }
+
+        private T SearchWithCoords<T>(int x, int y, int localX, int localY, 
+            CheckComponentGood<T> checker) where T : class
+        {
+            var currentCell = world.GetCell(x + localX, y + localY);
+            var component = GetComponentFor(currentCell, checker);
+            if (component != null)
+                return component;
+                    
+            if (localY != 0)
+            {
+                currentCell = world.GetCell(x + localX, y - localY);
+                component = GetComponentFor(currentCell, checker);
+                if (component != null)
+                    return component;
+            }
+                    
+            if (localX == 0) 
+                return null;
+            currentCell = world.GetCell(x - localX, y + localY);
+            component = GetComponentFor(currentCell, checker);
+            if (component != null)
+                return component;
+                    
+            if (localY == 0) 
+                return null;
+            currentCell = world.GetCell(x + localX, y + localY);
+            component = GetComponentFor(currentCell, checker);
+            return component;
         }
         
         public void ConfigureByWeather(Weather weather)
@@ -90,10 +112,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
                     _visibility = _normalVisibility;
                     return;
                 case Precipitation.Rain:
-                    _visibility = _normalVisibility / 2;
+                    _visibility = _normalVisibility * 3 / 4;
                     return;
                 case Precipitation.Fog:
-                    _visibility = _normalVisibility / 4;
+                    _visibility = _normalVisibility / 2;
                     return;
             }
         }

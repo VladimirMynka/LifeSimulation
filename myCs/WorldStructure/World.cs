@@ -1,6 +1,5 @@
 ﻿using System;
 using LifeSimulation.myCs.Drawing;
-using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.UneatableResources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Animals;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans;
@@ -11,8 +10,8 @@ namespace LifeSimulation.myCs.WorldStructure
 {
     public class World
     {
-        private const int AnimalsNormalCount = 30000;
-        private const int HumanNormalCount = 5000;
+        private const int AnimalsNormalCount = 10000;
+        private const int HumanNormalCount = 10000;
         private const int PlantsNormalCount = 1000;
         private const int ResourcesNormalCount = 100000;
 
