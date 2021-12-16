@@ -2,7 +2,7 @@
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
 using LifeSimulation.myCs.WorldStructure;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles
 {
     public class PresidentComponent : WorldObjectComponent
     {

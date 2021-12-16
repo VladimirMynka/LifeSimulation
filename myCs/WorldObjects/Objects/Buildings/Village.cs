@@ -3,6 +3,9 @@ using System.Linq;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles;
+using LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components;
 using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
@@ -37,6 +40,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
         {
             if (!_citizens.Contains(citizen))
                 _citizens.Add(citizen);
+            if (_citizens.Count == 1)
+                _president = citizen.BecomePresident(_citizens);
         }
 
         public void RemoveCitizen(CitizenComponent citizen)

@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using LifeSimulation.myCs.Drawing;
 using LifeSimulation.myCs.Resources;
+using LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components;
 using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings

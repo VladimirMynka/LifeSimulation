@@ -2,9 +2,10 @@
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages
 {
     public class CitizenComponent : WorldObjectComponent, IHaveInformation
     {

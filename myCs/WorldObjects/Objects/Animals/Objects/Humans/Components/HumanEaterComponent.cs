@@ -60,23 +60,18 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 return true;
             return petComponent.GetOwner() == null;
         }
+
+        public int PriorityWhenVeryHungry = Defaults.BehaviourVeryHungry;
+        public int PriorityWhenHungry = Defaults.BehaviourHungry;
+        public int PrioritySearching = Defaults.BehaviourSearching;
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>
-        /// 20 if it's very hungry,
-        /// 10 if it's hungry,
-        /// 1 if inventory isn't filled,
-        /// 0 in others
-        /// </returns>
         public override int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(mealTarget) ? Defaults.BehaviourHaveNotPriority 
-                : IsVeryHungry() ? Defaults.BehaviourVeryHungry
-                : IsHungry() ? Defaults.BehaviourHungry 
-                : !_inventory.IsFilled() ? Defaults.BehaviourSearching
-                : 0;
+                : IsVeryHungry() ? PriorityWhenVeryHungry
+                : IsHungry() ? PriorityWhenHungry
+                : !_inventory.IsFilled() ? PrioritySearching
+                : Defaults.BehaviourHaveNotPriority;
         }
     }
 }

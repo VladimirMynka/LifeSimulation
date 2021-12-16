@@ -7,7 +7,7 @@ using LifeSimulation.myCs.WorldObjects.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
+namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components
 {
     public class BuildingComponent<T> : WorldObjectComponent, IHaveInformation, IBuilding<T> where T : Resource
     {

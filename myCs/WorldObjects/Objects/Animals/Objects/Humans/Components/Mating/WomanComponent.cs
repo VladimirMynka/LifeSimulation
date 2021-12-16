@@ -3,7 +3,9 @@ using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
+using LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating
 {
@@ -38,13 +40,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _inventory.AverageReserveWith<EatableResource, Resource>(otherInventory);
         }
 
+        public int PriorityWhenPartnerIsVeryHungry = Defaults.BehaviourPartnerIsVeryHungry;
+        public int PriorityWhenPartnerIsHungry = Defaults.BehaviourPartnerIsHungry;
+        public int PriorityWhenItIsTimeToMating = Defaults.BehaviourItIsTimeToMating;
         public override int GetPriorityInBehaviour()
         {
             var man = (ManComponent) Partner;
             return CheckWereDestroyed(man) ? Defaults.BehaviourHaveNotPriority 
-                : man.IsVeryHungry() ? Defaults.BehaviourPartnerIsVeryHungry 
-                : man.IsHungry() ? Defaults.BehaviourPartnerIsHungry 
-                : man.IsReady() && IsReady() ? Defaults.BehaviourItIsTimeToMating 
+                : man.IsVeryHungry() ? PriorityWhenPartnerIsVeryHungry
+                : man.IsHungry() ? PriorityWhenPartnerIsHungry
+                : man.IsReady() && IsReady() ? PriorityWhenItIsTimeToMating
                 : Defaults.BehaviourHaveNotPriority;
         }
 

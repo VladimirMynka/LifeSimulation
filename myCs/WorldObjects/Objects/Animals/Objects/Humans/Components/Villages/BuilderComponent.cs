@@ -5,8 +5,9 @@ using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
+using LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages
 {
     public class BuilderComponent : WorldObjectComponent, IHaveInformation, IHaveTarget
     {

@@ -1,6 +1,7 @@
 ﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating
 {

@@ -2,6 +2,7 @@
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating
 {
@@ -53,24 +54,21 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return OnOneCellWith(_warehousesOwnerComponent.House);
         }
 
-        /// <summary></summary>
-        /// <returns>
-        /// 7 if partner is very hungry,
-        /// 5 if partner is hungry,
-        /// 3 if it's time to mating,
-        /// 0 in others
-        /// </returns>
+        public int PriorityWhenPartnerIsVeryHungry = Defaults.BehaviourPartnerIsVeryHungry;
+        public int PriorityWhenPartnerIsHungry = Defaults.BehaviourPartnerIsHungry;
+        public int PriorityWhenItIsTimeToMating = Defaults.BehaviourItIsTimeToMating;
+        public int PriorityWaitInHouse = Defaults.BehaviourWait;
         public override int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(_woman)
                 ? Defaults.BehaviourHaveNotPriority
                 : _woman.IsVeryHungry()
-                    ? Defaults.BehaviourPartnerIsVeryHungry
+                    ? PriorityWhenPartnerIsVeryHungry
                     : _woman.IsHungry()
-                        ? Defaults.BehaviourPartnerIsHungry
+                        ? PriorityWhenPartnerIsHungry
                         : _woman.IsReady() && IsReady()
-                            ? CheckPartnerHere() ? Defaults.BehaviourWait
-                            : Defaults.BehaviourItIsTimeToMating
+                            ? CheckPartnerHere() ? PriorityWaitInHouse
+                            : PriorityWhenItIsTimeToMating
                             : Defaults.BehaviourHaveNotPriority;
         }
 

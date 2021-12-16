@@ -12,6 +12,7 @@ using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviou
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Moving;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages;
 using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans

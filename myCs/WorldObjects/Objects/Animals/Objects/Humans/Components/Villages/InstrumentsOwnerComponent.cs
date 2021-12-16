@@ -8,7 +8,7 @@ using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
 using LifeSimulation.myCs.WorldStructure;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages
 {
     public class InstrumentsOwnerComponent : WorldObjectComponent, IHaveInformation, IHaveTarget
     {
@@ -121,13 +121,15 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return Defaults.InfoPriorityInstrumentsOwner;
         }
 
+        public int ResourcesSearchingTriggered = Defaults.BehaviourResourcesSearchingTriggered;
+        public int UneatableSearching = Defaults.BehaviourUneatableSearching;
         public int GetPriorityInBehaviour()
         {
             return _target != null
                 ? _inventoryComponent.IsHalfFull()
-                    ? Defaults.BehaviourResourcesSearchingTriggered
+                    ? ResourcesSearchingTriggered
                     : !_inventoryComponent.IsFilled()
-                        ? Defaults.BehaviourUneatableSearching
+                        ? UneatableSearching
                         : Defaults.BehaviourHaveNotPriority
                 : Defaults.BehaviourHaveNotPriority;
 

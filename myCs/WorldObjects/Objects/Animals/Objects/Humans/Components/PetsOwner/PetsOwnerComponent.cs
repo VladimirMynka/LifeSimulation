@@ -147,20 +147,21 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>
-        /// 6 if pet is very hungry, 4 if pet is hungry, 2 if pet has present, 0 in others
-        /// </returns>
+        public int PriorityWhenPetIsVeryHungry = Defaults.BehaviourPetOwnerPetVeryHungry;
+        public int PriorityWhenPetIsHungry = Defaults.BehaviourPetOwnerPetHungry;
+        public int PriorityGetPresent = Defaults.BehaviourPetOwnerThereArePresents;
+        
         public int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(_targetPet) ? Defaults.BehaviourHaveNotPriority
                 : _targetPet.IsVeryHungry() 
-                  && _inventory.CheckHave(_targetPet.GetMealType(50)) ? Defaults.BehaviourPetOwnerPetVeryHungry
+                  && _inventory.CheckHave(_targetPet.GetMealType(50)) 
+                        ? PriorityWhenPetIsVeryHungry
                 : _targetPet.IsHungry() 
-                  && _inventory.CheckHave(_targetPet.GetMealType(20)) ? Defaults.BehaviourPetOwnerPetHungry
-                : _targetPet.HasPresent() ? Defaults.BehaviourPetOwnerThereArePresents
+                  && _inventory.CheckHave(_targetPet.GetMealType(20)) 
+                        ? PriorityWhenPetIsHungry
+                : _targetPet.HasPresent() 
+                        ? PriorityGetPresent
                 : Defaults.BehaviourHaveNotPriority;
         }
         

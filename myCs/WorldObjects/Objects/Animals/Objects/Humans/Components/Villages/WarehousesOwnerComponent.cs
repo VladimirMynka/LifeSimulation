@@ -8,7 +8,7 @@ using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Behaviour;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages
 {
     public class WarehousesOwnerComponent : WorldObjectComponent, IHaveTarget, IHaveInformation
     {
