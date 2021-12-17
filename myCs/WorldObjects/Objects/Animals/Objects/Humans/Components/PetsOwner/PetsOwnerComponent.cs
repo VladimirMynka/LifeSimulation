@@ -150,10 +150,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public int PriorityWhenPetIsVeryHungry = Defaults.BehaviourPetOwnerPetVeryHungry;
         public int PriorityWhenPetIsHungry = Defaults.BehaviourPetOwnerPetHungry;
         public int PriorityGetPresent = Defaults.BehaviourPetOwnerThereArePresents;
+        public int PriorityTame = Defaults.BehaviourTame;
         
         public int GetPriorityInBehaviour()
         {
             return CheckWereDestroyed(_targetPet) ? Defaults.BehaviourHaveNotPriority
+                : !_pets.Contains(_targetPet) ? PriorityTame
                 : _targetPet.IsVeryHungry() 
                   && _inventory.CheckHave(_targetPet.GetMealType(50)) 
                         ? PriorityWhenPetIsVeryHungry

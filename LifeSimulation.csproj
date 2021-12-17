@@ -125,9 +125,16 @@
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\BuilderComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\CitizenComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\InstrumentsOwnerComponent.cs" />
-    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\CitizenRole.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\DoctorComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\GardenerComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\HunterComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\MainerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\PresidentComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\ProfessionalBuilderComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\ProfessionalCollectorComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\ProfessionalComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\RestingComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\Roles\ShepherdComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Components\Villages\WarehousesOwnerComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\Humans\Human.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Animals\Objects\RotMeat\Components\RotMeatComponent.cs" />

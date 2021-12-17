@@ -1,23 +1,28 @@
 ﻿using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles
 {
-    public abstract class ProfessionalComponent : WorldObjectComponent
+    public abstract class ProfessionalComponent : WorldObjectComponent, IHaveInformation
     {
+        protected const int InfinityPeriod = -1;
         protected HumanEaterComponent humanEaterComponent;
         protected MatingComponent matingComponent;
         protected PetsOwnerComponent petsOwnerComponent;
         protected WarehousesOwnerComponent warehousesOwnerComponent;
         protected BuilderComponent builderComponent;
         protected InstrumentsOwnerComponent instrumentsOwnerComponent;
+        protected CitizenComponent citizenComponent;
+        private int _timer;
 
-        protected ProfessionalComponent(WorldObject owner) : base(owner)
+        protected ProfessionalComponent(WorldObject owner, int period) : base(owner)
         {
+            _timer = period;
         }
-
+        
         public override void Start()
         {
             base.Start();
@@ -27,6 +32,28 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             warehousesOwnerComponent = GetComponent<WarehousesOwnerComponent>();
             builderComponent = GetComponent<BuilderComponent>();
             instrumentsOwnerComponent = GetComponent<InstrumentsOwnerComponent>();
+            citizenComponent = GetComponent<CitizenComponent>();
+            ConfigureBehaviour();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (_timer < 0) 
+                return;
+            if (_timer == 0)
+            {
+                Destroy();
+                return;
+            }
+            _timer--;
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            ConfigureWithDefaults();
+            citizenComponent.DeclareEndOfWork();
         }
 
         protected abstract void ConfigureBehaviour();
@@ -47,9 +74,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             int forSearching = Defaults.BehaviourSearching
         )
         {
-            humanEaterComponent.PriorityWhenVeryHungry = Defaults.BehaviourVeryHungry;
-            humanEaterComponent.PriorityWhenHungry = Defaults.BehaviourHungry;
-            humanEaterComponent.PrioritySearching = Defaults.BehaviourSearching;
+            humanEaterComponent.PriorityWhenVeryHungry = forVeryHungry;
+            humanEaterComponent.PriorityWhenHungry = forHungry;
+            humanEaterComponent.PrioritySearching = forSearching;
         }
 
         protected void ConfigureMatingBehaviour(
@@ -59,6 +86,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             int forWaitInHouse = Defaults.BehaviourWait
         )
         {
+            if (matingComponent == null)
+                return;
             var womanComponent = matingComponent as WomanComponent;
             if (womanComponent != null)
             {
@@ -79,12 +108,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         protected void ConfigurePetsOwnerBehaviour(
             int forPetIsVeryHungry = Defaults.BehaviourPetOwnerPetVeryHungry,
             int forPetIsHungry = Defaults.BehaviourPetOwnerPetHungry,
-            int forGetPresent = Defaults.BehaviourPetOwnerThereArePresents
+            int forGetPresent = Defaults.BehaviourPetOwnerThereArePresents,
+            int forTame = Defaults.BehaviourTame
         )
         {
+            if (petsOwnerComponent == null)
+                return;
             petsOwnerComponent.PriorityWhenPetIsVeryHungry = forPetIsVeryHungry;
             petsOwnerComponent.PriorityWhenPetIsHungry = forPetIsHungry;
             petsOwnerComponent.PriorityGetPresent = forGetPresent;
+            petsOwnerComponent.PriorityTame = forTame;
         }
 
         protected void ConfigureWarehousesOwnerBehaviour(
@@ -101,6 +134,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             int forUsualSearching = Defaults.BehaviourUneatableSearching
         )
         {
+            if (instrumentsOwnerComponent == null)
+                return;
             instrumentsOwnerComponent.ResourcesSearchingTriggered = forTriggered;
             instrumentsOwnerComponent.UneatableSearching = forUsualSearching;
         }
@@ -109,7 +144,19 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             int forBuildingProcess = Defaults.BehaviourBuilder
         )
         {
+            if (builderComponent == null)
+                return;
             builderComponent.BuildingProcessPriority = forBuildingProcess;
+        }
+
+        public int GetInformationPriority()
+        {
+            return Defaults.InfoPriorityProfessional;
+        }
+
+        public override string ToString()
+        {
+            return GetType().Name;
         }
     }
 }

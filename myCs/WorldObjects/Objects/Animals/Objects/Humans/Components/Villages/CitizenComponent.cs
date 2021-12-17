@@ -10,11 +10,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
     public class CitizenComponent : WorldObjectComponent, IHaveInformation
     {
         public Village Village;
-        private CitizenRole _role;
+        private ProfessionalComponent _professionalComponent;
         private HumanAgeComponent _ageComponent;
         private MatingComponent _matingComponent;
         private WarehousesOwnerComponent _warehousesOwnerComponent;
         private int _startDay;
+        private int _riches;
 
         public CitizenComponent(WorldObject owner, Village village = null) 
             : base(owner)
@@ -46,6 +47,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return GetAge() > 50;
         }
 
+        private PresidentComponent GetPresident()
+        {
+            return Village.GetPresident();
+        }
+
         public int Vote(CitizenComponent[] candidates, int[] objectiveScore)
         {
             var maxScore = 0;
@@ -66,7 +72,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             if (candidate == this)
                 return 0;
             var score = 0;
-            if (candidate._role == _role)
+            if (candidate._professionalComponent.GetType() == _professionalComponent.GetType())
                 score += 2;
             if (candidate.AgeAbout(GetAge()))
                 score += 2;
@@ -114,7 +120,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public int GetRiches()
         {
-            throw new System.NotImplementedException();
+            return _riches;
         }
 
         public int GetTimeOfResidence()
@@ -126,6 +132,18 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return GetAge() < 600;
         }
+        
+        public void DeclareEndOfWork()
+        {
+            _professionalComponent = null;
+            GetPresident().AskNewJob(this, _professionalComponent.GetType());
+        }
+
+        public void SetJob(ProfessionalComponent professionalComponent)
+        {
+            _professionalComponent = professionalComponent;
+            WorldObject.AddComponent(professionalComponent);
+        }
 
         public int GetInformationPriority()
         {
@@ -136,5 +154,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return "Village: " + Village.Name;
         }
+
+       
     }
 }

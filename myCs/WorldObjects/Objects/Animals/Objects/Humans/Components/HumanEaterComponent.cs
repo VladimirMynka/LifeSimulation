@@ -1,4 +1,5 @@
-﻿using LifeSimulation.myCs.Resources;
+﻿using System.Collections.Generic;
+using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
@@ -11,9 +12,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
     public class HumanEaterComponent : EaterComponent
     {
         private InventoryComponent<Resource> _inventory;
+        public readonly List<MealType> CollectingTypes;
         public HumanEaterComponent(WorldObject owner, MealType mealType, int satiety, int destruction) 
             : base(owner, mealType, satiety, destruction)
         {
+            CollectingTypes = new List<MealType>(){MealType.Plant, MealType.DeadMeat, MealType.FreshMeat};
         }
 
         public override void Start()
@@ -48,7 +51,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         protected override bool CheckIEatIt(EatableComponent meal)
         {
-            return base.CheckIEatIt(meal) && !meal.IsPoisonous() && HasNotOwner(meal);
+            return base.CheckIEatIt(meal) 
+                   && !meal.IsPoisonous() 
+                   && CollectingTypes.Contains(meal.MealType) 
+                   && HasNotOwner(meal);
         }
 
         private static bool HasNotOwner(WorldObjectComponent meal)

@@ -2,7 +2,6 @@
 using System.Linq;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Settings;
-using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components;
@@ -65,7 +64,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
             foreach (var citizenComponent in _citizens)
                 citizenComponent.ToActiveMod();
             _president.ToActiveMod();
+        }
 
+        public PresidentComponent GetPresident()
+        {
+            return _president;
         }
 
         public void StartElection(int probate)
@@ -137,6 +140,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
 
             return index;
         }
-        
+
+        public bool IsActive()
+        {
+            return _amountOfHouses >= HousesCountForCreateVillage;
+        }
     }
 }
