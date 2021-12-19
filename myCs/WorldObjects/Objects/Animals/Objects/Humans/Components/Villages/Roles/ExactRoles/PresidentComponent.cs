@@ -30,19 +30,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             ConfigureEaterBehaviour(20, 10, 0);
             ConfigureMatingBehaviour(5, 3, 15);
-            ConfigureInstrumentsOwnerBehaviour(0, 0);
-            ConfigurePetsOwnerBehaviour(0, 0, 0, 0);
+            ConfigurePetsOwnerBehaviour(8, 2, 6, 0);
             ConfigureWarehousesOwnerBehaviour(50, 4);
-            ConfigureBuilderBehaviour(0);
         }
 
         public ProfessionalComponent AskNewJob(CitizenComponent requester, Type lastJobType)
         {
             var resting = TryCreateResting(requester, lastJobType);
-            if (resting != null)
-                return resting;
-
-            return CreateNotResting(requester, lastJobType);
+            return resting != null 
+                ? resting 
+                : CreateNotResting(requester, lastJobType);
         }
 
         private static ProfessionalComponent TryCreateResting(CitizenComponent requester, Type lastJobType)
@@ -143,6 +140,18 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             }
 
             return index;
+        }
+
+        public List<ProfessionalComponent> GetRolesOfType(Type roleType)
+        {
+            var list = new List<ProfessionalComponent>();
+            foreach (var citizen in _citizens)
+            {
+                if (citizen.GetRole().GetType() == roleType)
+                    list.Add(citizen.GetRole());
+            }
+
+            return list;
         }
     }
 }

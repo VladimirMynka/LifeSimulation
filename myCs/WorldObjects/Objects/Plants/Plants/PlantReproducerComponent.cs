@@ -1,4 +1,6 @@
-﻿using LifeSimulation.myCs.Settings;
+﻿using System;
+using LifeSimulation.myCs.Resources.UneatableResources;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits;
 using LifeSimulation.myCs.WorldStructure;
 
@@ -7,7 +9,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
     public class PlantReproducerComponent : WorldObjectComponent
     {
         private PlantAgeComponent _plantAgeComponent;
-        
+        private SeedKeeperComponent _seedKeeperComponent;
+
         public PlantReproducerComponent(WorldObject owner) : base(owner)
         {
             
@@ -17,6 +20,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
         {
             base.Start();
             _plantAgeComponent = WorldObject.GetComponent<PlantAgeComponent>();
+            _seedKeeperComponent = WorldObject.GetComponent<SeedKeeperComponent>();
         }
 
         public override void Update()
@@ -26,16 +30,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
 
         private void Reproduce()
         {
-            if (World.Random.Next(100) > Defaults.ReproduceChance) return;
+            if (World.Random.Next(100) > Defaults.ReproduceChance 
+                * _seedKeeperComponent.GetCount() / SeedKeeperComponent.MaxSeedCount) 
+                return;
 
             var neighCell = WorldObject.Cell.GetRandomNeighbour();
-            foreach (var neighObject in neighCell.CurrentObjects)
-            {
-                if (neighObject is Plant || neighObject is Fruit)
-                {
-                    return;
-                }
-            }
+            
+            if (neighCell.Contains<Plant>())
+                return;
+            if (neighCell.Contains<Fruit>())
+                return;
 
             if (World.Random.Next(2) == 0)
                 SpawnPlant(neighCell);

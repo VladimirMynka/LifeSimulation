@@ -67,6 +67,7 @@
     <Compile Include="myCs\Resources\UneatableResources\CompostResource.cs" />
     <Compile Include="myCs\Resources\UneatableResources\GoldResource.cs" />
     <Compile Include="myCs\Resources\UneatableResources\IronResource.cs" />
+    <Compile Include="myCs\Resources\UneatableResources\SeedResource.cs" />
     <Compile Include="myCs\Resources\UneatableResources\UneatableResource.cs" />
     <Compile Include="myCs\Resources\UneatableResources\WoodResource.cs" />
     <Compile Include="myCs\Settings\Colors.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantAgeComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantOnWeatherComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Plants\Plants\PlantReproducerComponent.cs" />
+    <Compile Include="myCs\WorldObjects\Objects\Plants\SeedKeeperComponent.cs" />
     <Compile Include="myCs\WorldObjects\Objects\ResourceKeepers\ResourceKeeper.cs" />
     <Compile Include="myCs\WorldObjects\Objects\ResourceKeepers\ResourceKeeperType.cs" />
     <Compile Include="myCs\WorldObjects\Objects\Smells\Smell.cs" />

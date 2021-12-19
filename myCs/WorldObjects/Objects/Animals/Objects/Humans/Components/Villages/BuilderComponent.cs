@@ -16,6 +16,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private WarehousesOwnerComponent _warehousesOwnerComponent;
         private InstrumentsOwnerComponent _instrumentsOwnerComponent;
         private VisibilityComponent _visibilityComponent;
+        private CitizenComponent _citizenComponent;
 
         public BuilderComponent(WorldObject owner) : base(owner)
         {
@@ -80,6 +81,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             
             var citizenComponent = new CitizenComponent(WorldObject, village);
             WorldObject.AddComponent(citizenComponent);
+            _citizenComponent = citizenComponent;
             
             var building = House.Create(cell).GetComponent<BuildingComponent<Resource>>();
             building.Village = village;

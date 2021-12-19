@@ -3,6 +3,7 @@ using System.Linq;
 using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Resources.EatableResources;
 using LifeSimulation.myCs.Settings;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
@@ -18,6 +19,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private VisibilityComponent _visibility;
         private InventoryComponent<Resource> _inventory;
         private EaterComponent _eaterComponent;
+        public MealType TameOnlyType = MealType.AllTypes;
 
         public PetsOwnerComponent(WorldObject owner) : base(owner)
         {
@@ -60,7 +62,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             if (_pets.Contains(_targetPet))
                 return;
-            var result = _inventory.RemoveIfHave(_targetPet.GetMealType(20));
+            var result = _inventory.RemoveIfHave(_targetPet.GetMealTypeResource(20));
             
             if (!result)
                 return;
@@ -79,7 +81,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return !CheckWereDestroyed(pet) 
                    && pet.GetOwner() == null 
-                   && _inventory.CheckHave(pet.GetMealType());
+                   && _inventory.CheckHave(pet.GetMealTypeResource())
+                   && (pet.GetMealType() == TameOnlyType || TameOnlyType == MealType.AllTypes);
         }
 
         private bool CheckPetHere()
@@ -157,10 +160,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return CheckWereDestroyed(_targetPet) ? Defaults.BehaviourHaveNotPriority
                 : !_pets.Contains(_targetPet) ? PriorityTame
                 : _targetPet.IsVeryHungry() 
-                  && _inventory.CheckHave(_targetPet.GetMealType(50)) 
+                  && _inventory.CheckHave(_targetPet.GetMealTypeResource(50)) 
                         ? PriorityWhenPetIsVeryHungry
                 : _targetPet.IsHungry() 
-                  && _inventory.CheckHave(_targetPet.GetMealType(20)) 
+                  && _inventory.CheckHave(_targetPet.GetMealTypeResource(20)) 
                         ? PriorityWhenPetIsHungry
                 : _targetPet.HasPresent() 
                         ? PriorityGetPresent

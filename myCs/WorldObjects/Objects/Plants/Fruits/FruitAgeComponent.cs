@@ -76,6 +76,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits
         private void GrowToDyingStage()
         {
             _drawableComponent.Image = Pictures.DeadFruit;
+            WorldObject.AddComponent(new SeedKeeperComponent(WorldObject, _creatureType));
             if (WorldObject != null && WorldObject.Cell != null)
                 WorldObject.Cell.ReportAboutUpdating();
         }

@@ -216,6 +216,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return name.Substring(0, name.Length - 9);
         }
 
+        public ProfessionalComponent GetRole()
+        {
+            return _professionalComponent;
+        }
+
         public int GetInformationPriority()
         {
             return Defaults.InfoPriorityCitizen;

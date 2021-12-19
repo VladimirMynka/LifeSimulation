@@ -15,6 +15,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
         private DrawableComponent _drawableComponent;
         private EatableComponent _eatableComponent;
         private ResourceKeeperComponent<WoodResource> _woodComponent;
+        private SeedKeeperComponent _seedKeeperComponent;
         public readonly CreatureType CreatureType;
         public PlantAgeComponent(
             WorldObject owner, 
@@ -111,12 +112,15 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Plants.Plants
         
         private void GrowToMother()
         {
+            _seedKeeperComponent = new SeedKeeperComponent(WorldObject, CreatureType);
+            WorldObject.AddComponent(_seedKeeperComponent);
             WorldObject.AddComponent(new PlantReproducerComponent(WorldObject));
         }
         
         private void GrowToDyingStage()
         {
             _drawableComponent.Image = Pictures.DeadPlant;
+            WorldObject.RemoveComponent(_seedKeeperComponent);
             if (effect != Effect.Uneatable)
             {
                 WorldObject.RemoveComponent(_eatableComponent);

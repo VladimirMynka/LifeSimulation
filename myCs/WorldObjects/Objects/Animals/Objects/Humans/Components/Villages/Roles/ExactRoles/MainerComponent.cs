@@ -49,11 +49,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         }
 
-        public override void OnDestroy()
+        protected override void ConfigureWithDefaults()
         {
-            base.OnDestroy();
+            base.ConfigureWithDefaults();
             instrumentsOwnerComponent.AlwaysSearch = false;
             instrumentsOwnerComponent.MaxInstrumentsCount = Defaults.InstrumentsMax;
+
         }
     }
 }

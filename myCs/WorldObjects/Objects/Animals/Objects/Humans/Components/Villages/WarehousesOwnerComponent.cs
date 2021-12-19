@@ -97,17 +97,23 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return House;
         }
 
-        private IInventory<Resource> GetNearestWarehouseForTake<T>(T resource) where T : Resource
+        public IInventory<Resource> GetNearestWarehouseForTake<T>(T resource) where T : Resource
         {
             return GetNearestWarehouse(resource,
                 (warehouse, res) => warehouse.HasMoreThanNothing(res));
         }
 
-        private IInventory<Resource> GetNearestWarehouseForPut<T>(T resource) where T : Resource
+        public IInventory<Resource> GetNearestWarehouseForPut<T>(T resource) where T : Resource
         {
             return GetNearestWarehouse(resource,
                 (warehouse, res) => 
                     warehouse.CanKeep(res) && !warehouse.IsFilled());
+        }
+        
+        public IInventory<Resource> GetNearestWarehouseOfType<T>(T resource) where T : Resource
+        {
+            return GetNearestWarehouse(resource,
+                (warehouse, res) => warehouse.CanKeep(res));
         }
 
         public bool SetTakingOrPuttingResource<T>(T resource, bool takeMod) where T : Resource

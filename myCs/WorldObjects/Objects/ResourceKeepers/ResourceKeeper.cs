@@ -18,8 +18,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.ResourceKeepers
             int layer,
             int count,
             InstrumentType[] instrumentTypes
-        )            
-            : base(keeper)
+        ) : base(keeper)
         {
             components.Add(new DrawableComponent(this, image, layer));
             components.Add(new ResourceKeeperComponent<T>(this, new T(), count, instrumentTypes));

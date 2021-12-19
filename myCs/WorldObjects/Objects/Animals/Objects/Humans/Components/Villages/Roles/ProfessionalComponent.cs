@@ -64,7 +64,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         protected abstract void ConfigureBehaviour();
 
-        protected void ConfigureWithDefaults()
+        protected virtual void ConfigureWithDefaults()
         {
             ConfigureEaterBehaviour();
             ConfigureMatingBehaviour();
