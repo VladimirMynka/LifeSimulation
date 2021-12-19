@@ -62,8 +62,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return CheckWereDestroyed(_man) 
                 ? null 
-                : IsReady() && _man.IsReady() 
-                    ? _warehousesOwnerComponent.House 
+                : IsReady() && _man.IsReady() && _warehousesOwnerComponent.House != null
+                    ? _warehousesOwnerComponent.House.GetWorldObject() 
                     : _man.WorldObject;
         }
 
@@ -77,18 +77,18 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return eaterComponent.IsVeryHungry();
         }
 
-        public void SetHouse(House house)
+        public void SetHouse(IInventory<Resource> house)
         {
             if (house == _warehousesOwnerComponent.House)
                 return;
             _warehousesOwnerComponent.House = house;
             WorldObject.RemoveComponent(_citizenComponent);
             _citizenComponent = new CitizenComponent(WorldObject,
-                house.GetComponent<BuildingComponent<Resource>>().Village);
+                house.GetWorldObject().GetComponent<BuildingComponent<Resource>>().Village);
             WorldObject.AddComponent(_citizenComponent);
         }
 
-        public House GetHouse()
+        public IInventory<Resource> GetHouse()
         {
             return _warehousesOwnerComponent.House;
         }

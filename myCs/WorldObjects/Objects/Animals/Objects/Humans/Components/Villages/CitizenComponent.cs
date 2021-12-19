@@ -1,8 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using LifeSimulation.myCs.Resources;
 using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
+using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles.ExactRoles;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages
@@ -14,13 +20,19 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private HumanAgeComponent _ageComponent;
         private MatingComponent _matingComponent;
         private WarehousesOwnerComponent _warehousesOwnerComponent;
+        private InventoryComponent<Resource> _inventoryComponent;
+        private PetsOwnerComponent _petsOwnerComponent;
+        private InstrumentsOwnerComponent _instrumentsOwnerComponent;
         private int _startDay;
-        private int _riches;
+        private bool _started;
+        private bool _active; 
 
         public CitizenComponent(WorldObject owner, Village village = null) 
             : base(owner)
         {
             Village = village;
+            if (village != null)
+                village.AddNewCitizen(this);
         }
 
         public override void Start()
@@ -29,22 +41,46 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _ageComponent = GetComponent<HumanAgeComponent>();
             _matingComponent = GetComponent<MatingComponent>();
             _warehousesOwnerComponent = GetComponent<WarehousesOwnerComponent>();
+            _instrumentsOwnerComponent = GetComponent<InstrumentsOwnerComponent>();
+            _petsOwnerComponent = GetComponent<PetsOwnerComponent>();
+            _inventoryComponent = GetComponent<InventoryComponent<Resource>>();
             _startDay = _ageComponent.GetAge();
+            _started = true;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (Village.IsActive() && !_active)
+                ToActiveMod();
         }
 
         public void ToActiveMod()
         {
-            throw new System.NotImplementedException();
+            if (!_started)
+                return;
+            if (_professionalComponent == null)
+                SetJob(GetPresident().AskNewJob(this, null));
+            Expropriate();
+            _active = false;
+        }
+
+        private void Expropriate()
+        {
+            var oldList = _warehousesOwnerComponent.GetWarehouses();
+            _warehousesOwnerComponent.SetWarehouses(Village.GetWarehouses());
+            foreach (var warehouse in oldList)
+                _warehousesOwnerComponent.AddWarehouse(warehouse);
         }
 
         public bool CanParticipate()
         {
-            return GetAge() > 100;
+            return _started && GetAge() > 100;
         }
 
         public bool CanVote()
         {
-            return GetAge() > 50;
+            return _started && GetAge() > 50;
         }
 
         private PresidentComponent GetPresident()
@@ -72,7 +108,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             if (candidate == this)
                 return 0;
             var score = 0;
-            if (candidate._professionalComponent.GetType() == _professionalComponent.GetType())
+            if (candidate.GetRoleType() == GetRoleType())
                 score += 2;
             if (candidate.AgeAbout(GetAge()))
                 score += 2;
@@ -84,12 +120,21 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return score;
         }
 
-        public int GetAge()
+        public Type GetRoleType()
         {
-            return _ageComponent.GetAge();
+            return _professionalComponent == null 
+                ? null 
+                : _professionalComponent.GetType();
         }
 
-        private bool LiveIn(House house)
+        public int GetAge()
+        {
+            return _ageComponent == null 
+                ? 0 
+                : _ageComponent.GetAge();
+        }
+
+        private bool LiveIn(IInventory<Resource> house)
         {
             return _warehousesOwnerComponent.House == house;
         }
@@ -108,7 +153,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public PresidentComponent BecomePresident(List<CitizenComponent> citizens)
         {
             var presidentComponent = new PresidentComponent(WorldObject, Village, citizens);
-            WorldObject.AddComponent(presidentComponent);
+            SetJob(presidentComponent);
             return presidentComponent;
         }
 
@@ -120,7 +165,15 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public int GetRiches()
         {
-            return _riches;
+            var count = _warehousesOwnerComponent.House.GetAllCount();
+            count += _inventoryComponent.GetAllCount();
+            count += _instrumentsOwnerComponent == null 
+                ? 0 
+                : _instrumentsOwnerComponent.GetInstrumentsCount() * 20;
+            count += _petsOwnerComponent == null
+                ? 0
+                : _petsOwnerComponent.GetPetsCount() * 30;
+            return count;
         }
 
         public int GetTimeOfResidence()
@@ -135,14 +188,31 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         
         public void DeclareEndOfWork()
         {
-            _professionalComponent = null;
-            GetPresident().AskNewJob(this, _professionalComponent.GetType());
+            SetJob(GetPresident().AskNewJob(this, _professionalComponent.GetType()));
         }
 
         public void SetJob(ProfessionalComponent professionalComponent)
         {
             _professionalComponent = professionalComponent;
             WorldObject.AddComponent(professionalComponent);
+        }
+
+        public string GetGenderString()
+        {
+            return _matingComponent is ManComponent ? "Man" : "Woman";
+        }
+
+        public bool IsMale()
+        {
+            return _matingComponent is ManComponent;
+        }
+
+        public string GetRoleString()
+        {
+            if (_professionalComponent == null) 
+                return "none";
+            var name = _professionalComponent.GetType().Name;
+            return name.Substring(0, name.Length - 9);
         }
 
         public int GetInformationPriority()
@@ -155,6 +225,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return "Village: " + Village.Name;
         }
 
-       
+        public CitizenComponent GetPartner()
+        {
+            return _matingComponent.GetPartner() == null
+                ? null
+                : _matingComponent.GetPartner().GetComponent<CitizenComponent>();
+        }
     }
 }

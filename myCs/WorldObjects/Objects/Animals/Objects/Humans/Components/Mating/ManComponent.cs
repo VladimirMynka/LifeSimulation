@@ -51,7 +51,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private bool CheckHouseHere()
         {
-            return OnOneCellWith(_warehousesOwnerComponent.House);
+            return OnOneCellWith(_warehousesOwnerComponent.House != null 
+                ? _warehousesOwnerComponent.House.GetWorldObject() : null);
         }
 
         public int PriorityWhenPartnerIsVeryHungry = Defaults.BehaviourPartnerIsVeryHungry;
@@ -76,8 +77,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             return CheckWereDestroyed(_woman)
                 ? null
-                : IsReady() && _woman.IsReady()
-                    ? _warehousesOwnerComponent.House
+                : IsReady() && _woman.IsReady() && _warehousesOwnerComponent.House != null
+                    ? _warehousesOwnerComponent.House.GetWorldObject()
                     : _woman.WorldObject;
         }
 

@@ -12,8 +12,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 {
     public class WarehousesOwnerComponent : WorldObjectComponent, IHaveTarget, IHaveInformation
     {
-        private readonly List<IInventory<Resource>> _warehouses;
-        public House House;
+        private List<IInventory<Resource>> _warehouses;
+        public IInventory<Resource> House;
         private InventoryComponent<Resource> _ownerInventory;
 
         private IInventory<Resource> _targetWarehouse;
@@ -64,42 +64,50 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             _targetWarehouse.Add(_neededResource);
         }
 
-        private IInventory<Resource> GetNearestWarehouseForTake<T>(T resource) where T : Resource
+        public delegate bool CheckWarehouse<in T>(IInventory<Resource> warehouse, T resource);
+        
+        private IInventory<Resource> GetNearestWarehouse<T>(
+            T resource, 
+            CheckWarehouse<T> checker
+        ) where T : Resource
         {
             IInventory<Resource> goodVariant = null;
 
             var sqrDistance = -1;
+            int currentDistance;
             foreach (var warehouse in _warehouses)
             {
-                if (!warehouse.HasMoreThanNothing(resource))
+                if (!checker(warehouse, resource))
                     continue;
-                var currentDistance = GetSqrLengthWith(warehouse.GetWorldObject());
+                currentDistance = GetSqrLengthWith(warehouse.GetWorldObject());
                 if (sqrDistance != -1 && currentDistance >= sqrDistance)
                     continue;
                 goodVariant = warehouse;
                 sqrDistance = currentDistance;
             }
 
-            return goodVariant;
+            if (House == null)
+                return goodVariant;
+            if (!checker(House, resource))
+                return goodVariant;
+            currentDistance = GetSqrLengthWith(House.GetWorldObject());
+            if (sqrDistance != -1 && currentDistance >= sqrDistance)
+                return goodVariant;
+
+            return House;
+        }
+
+        private IInventory<Resource> GetNearestWarehouseForTake<T>(T resource) where T : Resource
+        {
+            return GetNearestWarehouse(resource,
+                (warehouse, res) => warehouse.HasMoreThanNothing(res));
         }
 
         private IInventory<Resource> GetNearestWarehouseForPut<T>(T resource) where T : Resource
         {
-            IInventory<Resource> goodVariant = null;
-
-            var sqrDistance = -1;
-            foreach (var warehouse in _warehouses)
-            {
-                if (!warehouse.CanKeep(resource) || warehouse.IsFilled())
-                    continue;
-                var currentDistance = GetSqrLengthWith(warehouse.GetWorldObject());
-                if (sqrDistance != -1 && currentDistance >= sqrDistance)
-                    continue;
-                goodVariant = warehouse;
-                sqrDistance = currentDistance;
-            }
-
-            return goodVariant;
+            return GetNearestWarehouse(resource,
+                (warehouse, res) => 
+                    warehouse.CanKeep(res) && !warehouse.IsFilled());
         }
 
         public bool SetTakingOrPuttingResource<T>(T resource, bool takeMod) where T : Resource
@@ -121,7 +129,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public void AddWarehouse(IInventory<Resource> warehouse)
         {
-            _warehouses.Add(warehouse);
+            if (warehouse.GetWorldObject() is House)
+                House = warehouse;
+            else
+                _warehouses.Add(warehouse);
         }
 
         public int TakeEatPriority = Defaults.BehaviourWarehouseTakeMeal;
@@ -158,7 +169,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                         current + ('\n' + warehouse.GetResourceType().Name
                                         + " on " + InformationComponent
                                             .GetInfoAboutCoords(warehouse.GetWorldObject())));
-            info += "\n\nHouse: " + (House == null ? "none" : "on " + InformationComponent.GetInfoAboutCoords(House));
+            info += "\n\nHouse: " + (House == null ? "none" : "on " + InformationComponent.GetInfoAboutCoords(House.GetWorldObject()));
 
             if (_targetWarehouse != null && _neededResource != null)
             {
@@ -168,6 +179,16 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             }
 
             return info;
+        }
+
+        public void SetWarehouses(List<IInventory<Resource>> warehouses)
+        {
+            _warehouses = warehouses;
+        }
+
+        public List<IInventory<Resource>> GetWarehouses()
+        {
+            return _warehouses;
         }
     }
 }

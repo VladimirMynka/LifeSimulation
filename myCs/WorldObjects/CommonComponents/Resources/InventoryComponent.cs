@@ -350,5 +350,10 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         {
             return typeof(T);
         }
+
+        public int GetAllCount()
+        {
+            return _currentCount;
+        }
     }
 }

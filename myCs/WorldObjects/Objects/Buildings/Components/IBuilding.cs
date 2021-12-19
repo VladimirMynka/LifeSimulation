@@ -14,5 +14,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components
 
         Type KeepResourceOfType();
 
+        string GetTypeAsString();
+
     }
 }

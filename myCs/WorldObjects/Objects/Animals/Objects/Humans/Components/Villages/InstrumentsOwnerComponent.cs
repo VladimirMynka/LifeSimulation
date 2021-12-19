@@ -140,6 +140,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return _target.GetWorldObject();
         }
 
+        public int GetInstrumentsCount()
+        {
+            return _instruments.Count;
+        }
+
         public override string ToString()
         {
             var info = "Target resource: " + (_target == null

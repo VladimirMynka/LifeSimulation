@@ -39,5 +39,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         WorldObject GetWorldObject();
 
         Type GetResourceType();
+        
+        int GetAllCount();
     }
 }

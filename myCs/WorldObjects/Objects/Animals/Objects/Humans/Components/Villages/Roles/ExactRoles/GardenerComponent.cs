@@ -1,10 +1,10 @@
 ﻿using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles.ExactRoles
 {
-    public class HunterComponent : ProfessionalComponent
+    public class GardenerComponent : ProfessionalComponent // not ended
     {
-        public HunterComponent(WorldObject owner, int period) 
+        public GardenerComponent(WorldObject owner, int period) 
             : base(owner, period)
         {
         }
@@ -13,8 +13,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             base.Start();
             humanEaterComponent.CollectingTypes.Clear();
-            humanEaterComponent.CollectingTypes.Add(MealType.FreshMeat);
-            humanEaterComponent.CollectingTypes.Add(MealType.DeadMeat);
+            humanEaterComponent.CollectingTypes.Add(MealType.Plant);
         }
 
         protected override void ConfigureBehaviour()

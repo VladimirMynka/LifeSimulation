@@ -62,9 +62,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             if (_targetBuilding != null)
                 return;
-
-            var citizenComponent = new CitizenComponent(WorldObject);
-
+            
             var parentHouseComponent = _visibilityComponent.Search<BuildingComponent<Resource>>(building1 =>
                 building1.GetWorldObject() is House);
             var parentHouse = parentHouseComponent == null
@@ -75,18 +73,19 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             cell = cell.GetNearestWithCheck(cell1 => !cell1.Contains<Building>());
             if (cell == null)
                 return;
-
-            WorldObject.AddComponent(citizenComponent);
-
+            
             var village = parentHouse == null
-                ? new Village(citizenComponent)
+                ? new Village()
                 : parentHouseComponent.Village;
             
-            citizenComponent.Village = village;
-
+            var citizenComponent = new CitizenComponent(WorldObject, village);
+            WorldObject.AddComponent(citizenComponent);
+            
             var building = House.Create(cell).GetComponent<BuildingComponent<Resource>>();
             building.Village = village;
             _targetBuilding = building;
+            village.AddNewBuilding(building);
+            
             TryToBuild();
         }
 
@@ -109,8 +108,6 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 return;
             _targetBuilding = null;
             _warehousesOwnerComponent.AddWarehouse(resultInventory);
-            if (resultInventory.GetWorldObject() is House)
-                _warehousesOwnerComponent.House = resultInventory.GetWorldObject() as House;
         }
 
         public int GetInformationPriority()

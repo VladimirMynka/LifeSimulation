@@ -80,6 +80,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components
             return typeof(T);
         }
 
+        public string GetTypeAsString()
+        {
+            var name = typeof(T).Name;
+            return name.Substring(0, name.Length - 8);
+        }
+
         private IInventory<T> ToLastStage()
         {
             var inventory = new InventoryComponent<T>(WorldObject, 250);
@@ -90,7 +96,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components
         public override string ToString()
         {
             return typeof(T).Name + "Warehouse " + _stage +
-                   "\nVillage: " + (Village == null ? "none" : Village.Name);
+                   "\nVillage: " + (Village == null ? "none" : '\n' + Village.ToString());
         }
 
         public int GetInformationPriority()

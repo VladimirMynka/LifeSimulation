@@ -1,8 +1,11 @@
-﻿using LifeSimulation.myCs.Settings;
+﻿using System;
+using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mating;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Mating;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner;
+using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles.ExactRoles;
+using LifeSimulation.myCs.WorldStructure;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles
 {
@@ -22,7 +25,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             _timer = period;
         }
-        
+
         public override void Start()
         {
             base.Start();
@@ -39,19 +42,22 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void Update()
         {
             base.Update();
-            if (_timer < 0) 
+            if (_timer < 0)
                 return;
             if (_timer == 0)
             {
                 Destroy();
                 return;
             }
+
             _timer--;
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
+            if (WorldObject.IsDestroyed)
+                return;
             ConfigureWithDefaults();
             citizenComponent.DeclareEndOfWork();
         }
@@ -157,6 +163,82 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override string ToString()
         {
             return GetType().Name;
+        }
+
+        protected static ProfessionalComponent CreateComponentForRole(
+            ProfessionalRole role,
+            WorldObject owner,
+            int period
+        )
+        {
+            switch (role)
+            {
+                case ProfessionalRole.Doctor:
+                    return new DoctorComponent(owner, period);
+                case ProfessionalRole.Gardener:
+                    return new GardenerComponent(owner, period);
+                case ProfessionalRole.Hunter:
+                    return new HunterComponent(owner, period);
+                case ProfessionalRole.Mainer:
+                    return new MainerComponent(owner, period);
+                case ProfessionalRole.Builder:
+                    return new ProfessionalBuilderComponent(owner, period);
+                case ProfessionalRole.Collector:
+                    return new ProfessionalCollectorComponent(owner, period);
+                case ProfessionalRole.Resting:
+                    return new RestingComponent(owner, period);
+                case ProfessionalRole.Shepherd:
+                    return new ShepherdComponent(owner, period);
+                default:
+                    return null;
+            }
+        }
+
+        public static ProfessionalRole GetEnumByType(Type roleAsType)
+        {
+            return roleAsType == typeof(DoctorComponent) ? ProfessionalRole.Doctor
+                : roleAsType == typeof(GardenerComponent) ? ProfessionalRole.Gardener
+                : roleAsType == typeof(HunterComponent) ? ProfessionalRole.Hunter
+                : roleAsType == typeof(MainerComponent) ? ProfessionalRole.Mainer
+                : roleAsType == typeof(PresidentComponent) ? ProfessionalRole.President
+                : roleAsType == typeof(ProfessionalBuilderComponent) ? ProfessionalRole.Builder
+                : roleAsType == typeof(ProfessionalCollectorComponent) ? ProfessionalRole.Collector
+                : roleAsType == typeof(ShepherdComponent) ? ProfessionalRole.Shepherd
+                : ProfessionalRole.Resting;
+        }
+
+        public static ProfessionalRole[] MenRoles = new ProfessionalRole[]{
+            ProfessionalRole.Hunter,
+            ProfessionalRole.Mainer,
+            ProfessionalRole.Builder,
+            ProfessionalRole.Shepherd,
+            ProfessionalRole.Doctor
+        };
+
+        public static ProfessionalRole[] WomenRoles = new ProfessionalRole[]{
+            ProfessionalRole.Doctor,
+            ProfessionalRole.Gardener,
+            ProfessionalRole.Collector,
+            ProfessionalRole.Shepherd
+        };
+
+        public static ProfessionalRole[] OnlyWinterRoles = new ProfessionalRole[]{
+            ProfessionalRole.Doctor
+        };
+        
+        public static ProfessionalRole[] OnlySummerRoles = new ProfessionalRole[]{
+            ProfessionalRole.Gardener
+        }
+
+        public static ProfessionalComponent CreateRandomWithGender(
+            bool isMale,
+            WorldObject owner,
+            int period
+        )
+        {
+            if (isMale)
+                return CreateComponentForRole(MenRoles[World.Random.Next(MenRoles.Length)], owner, period);
+            return CreateComponentForRole(WomenRoles[World.Random.Next(WomenRoles.Length)], owner, period);
         }
     }
 }

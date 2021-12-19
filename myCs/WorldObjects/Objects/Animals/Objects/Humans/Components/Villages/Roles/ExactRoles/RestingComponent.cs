@@ -1,4 +1,4 @@
-﻿namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles
+﻿namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles.ExactRoles
 {
     public class RestingComponent : ProfessionalComponent
     {

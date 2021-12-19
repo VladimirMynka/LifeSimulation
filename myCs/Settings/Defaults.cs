@@ -26,7 +26,7 @@
         public const int AnimalVisibleArea = 10;
         public const int AnimalPlantProbability = 30;
 
-        public const int AnimalNormalTicksToMating = 20;
+        public const int AnimalNormalTicksToMating = 10;
         public const int TicksToStep = 4;
         public const int PregnantPeriod = 0;
 

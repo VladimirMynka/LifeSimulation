@@ -87,5 +87,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
             return CheckWereDestroyed(Partner) ? null 
                 : Partner.WorldObject;
         }
+
+        public override MatingComponent GetPartner()
+        {
+            return Partner;
+        }
     }
 }

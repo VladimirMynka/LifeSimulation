@@ -12,7 +12,7 @@ namespace LifeSimulation.myCs.WorldObjects
         private readonly List<WorldObjectComponent> _addingComponents;
 
         public bool evenCycle;
-        private bool _isDestroyed = false;
+        public bool IsDestroyed = false;
 
         protected WorldObject(Cell keeper)
         {
@@ -39,7 +39,7 @@ namespace LifeSimulation.myCs.WorldObjects
             evenCycle = !evenCycle;
             foreach (var component in components)
             {
-                if (_isDestroyed) return;
+                if (IsDestroyed) return;
                 component.Update();
             }
 
@@ -60,7 +60,7 @@ namespace LifeSimulation.myCs.WorldObjects
 
         public void Destroy()
         {
-            _isDestroyed = true;
+            IsDestroyed = true;
             foreach (var component in components)
             {
                 component.OnDestroy();

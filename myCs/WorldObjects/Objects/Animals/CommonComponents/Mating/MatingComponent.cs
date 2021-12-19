@@ -75,5 +75,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents.Mati
         {
             return null;
         }
+
+        public abstract MatingComponent GetPartner();
     }
 }

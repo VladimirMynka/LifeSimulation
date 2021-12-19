@@ -174,6 +174,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 : _targetPet.WorldObject;
         }
 
+        public int GetPetsCount()
+        {
+            return _pets.Count;
+        }
+
         public override string ToString()
         {
             var info = _pets.Where(

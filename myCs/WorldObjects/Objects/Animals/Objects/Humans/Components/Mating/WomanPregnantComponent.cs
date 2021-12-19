@@ -24,7 +24,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         protected override bool IsReadyToGiveBirth()
         {
-            return base.IsReadyToGiveBirth() && OnOneCellWith(_warehousesOwnerComponent.House);
+            return base.IsReadyToGiveBirth() && OnOneCellWith(_warehousesOwnerComponent.House.GetWorldObject());
         }
 
         public override void OnDestroy()
@@ -35,7 +35,6 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             var childCitizen = new CitizenComponent(child, _citizenComponent.Village);
             child.AddComponent(childCitizen);
             child.GetComponent<WarehousesOwnerComponent>().House = _warehousesOwnerComponent.House;
-            _citizenComponent.Village.AddNewCitizen(childCitizen);
         }
 
         public int GetPriorityInBehaviour()
@@ -45,7 +44,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public WorldObject GetTarget()
         {
-            return _warehousesOwnerComponent.House;
+            return _warehousesOwnerComponent.House.GetWorldObject();
         }
     }
 }

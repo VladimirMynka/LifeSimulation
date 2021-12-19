@@ -1,10 +1,10 @@
 ﻿using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles.ExactRoles
 {
-    public class GardenerComponent : ProfessionalComponent // not ended
+    public class DoctorComponent : ProfessionalComponent // not ended
     {
-        public GardenerComponent(WorldObject owner, int period) 
+        public DoctorComponent(WorldObject owner, int period) 
             : base(owner, period)
         {
         }
