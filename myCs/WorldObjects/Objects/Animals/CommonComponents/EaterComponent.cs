@@ -13,7 +13,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
     public abstract class EaterComponent : WorldObjectComponent, IHaveInformation, IDependingOnWeather, IHaveTarget
     {
         protected int satiety;
-        protected readonly int maxSatiety;
+        public int MaxSatiety;
         private int _destruction;
         private readonly int _normalDestruction;
         public MealType MealType;
@@ -37,7 +37,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         {
             MealType = mealType;
             this.satiety = satiety;
-            maxSatiety = satiety;
+            MaxSatiety = satiety;
             _destruction = destruction;
             _normalDestruction = destruction;
             _excluded = new List<WorldObject>();
@@ -69,8 +69,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         public void AddSatiety(int delta)
         {
             satiety += delta;
-            if (satiety > maxSatiety) 
-                satiety = maxSatiety;
+            if (satiety > MaxSatiety) 
+                satiety = MaxSatiety;
             if (satiety < 0) 
                 satiety = 0;
         }
@@ -84,7 +84,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         
         public bool IsHungry()
         {
-            return (satiety <= 2 * maxSatiety / 3);
+            return (satiety <= 2 * MaxSatiety / 3);
         }
 
         public bool IsVeryHungry()
@@ -146,7 +146,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         {
             var info = "Type: " + _creatureType + '\n';
             info += "Meal type: " + MealType + '\n';
-            info += "Satiety: " + satiety + '/' + maxSatiety + '\n';
+            info += "Satiety: " + satiety + '/' + MaxSatiety + '\n';
             info += "Wants eat: ";
             if (CheckWereDestroyed(mealTarget))
                 info += "none";
@@ -179,7 +179,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 
         public int GetMaxSatiety()
         {
-            return maxSatiety;
+            return MaxSatiety;
         }
 
         /// <summary></summary>

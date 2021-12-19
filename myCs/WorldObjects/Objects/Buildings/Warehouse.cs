@@ -14,10 +14,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
             Cell keeper,
             Image[] images,
             int layer = 0,
-            int buildingTypeNumber = 0
+            int buildingTypeNumber = 0,
+            int size = 250
         ) : base(keeper, images[0], layer)
         {
-            components.Add(new BuildingComponent<T>(this, buildingTypeNumber, images));
+            components.Add(new BuildingComponent<T>(this, buildingTypeNumber, images, size));
             Start();
         }
 

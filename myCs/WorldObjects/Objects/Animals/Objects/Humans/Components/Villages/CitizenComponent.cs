@@ -10,6 +10,7 @@ using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles.ExactRoles;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings;
+using LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components;
 
 namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages
 {
@@ -62,7 +63,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             if (_professionalComponent == null)
                 SetJob(GetPresident().AskNewJob(this, null));
             Expropriate();
-            _active = false;
+            _active = true;
         }
 
         private void Expropriate()
@@ -70,7 +71,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             var oldList = _warehousesOwnerComponent.GetWarehouses();
             _warehousesOwnerComponent.SetWarehouses(Village.GetWarehouses());
             foreach (var warehouse in oldList)
+            {
                 _warehousesOwnerComponent.AddWarehouse(warehouse);
+                warehouse.GetWorldObject().GetComponent<IBuilding<Resource>>().SetVillage(Village);
+            }
         }
 
         public bool CanParticipate()
@@ -83,7 +87,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return _started && GetAge() > 50;
         }
 
-        private PresidentComponent GetPresident()
+        public PresidentComponent GetPresident()
         {
             return Village.GetPresident();
         }
@@ -152,7 +156,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public PresidentComponent BecomePresident(List<CitizenComponent> citizens)
         {
-            var presidentComponent = new PresidentComponent(WorldObject, Village, citizens);
+            var presidentComponent = new PresidentComponent(WorldObject, this, Village, citizens);
+            if (_professionalComponent != null)
+                _professionalComponent.Destroy();
             SetJob(presidentComponent);
             return presidentComponent;
         }
@@ -236,6 +242,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return _matingComponent.GetPartner() == null
                 ? null
                 : _matingComponent.GetPartner().GetComponent<CitizenComponent>();
+        }
+
+        public bool IsActive()
+        {
+            return _active;
         }
     }
 }

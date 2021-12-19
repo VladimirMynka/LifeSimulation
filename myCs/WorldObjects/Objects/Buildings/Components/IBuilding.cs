@@ -16,5 +16,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components
 
         string GetTypeAsString();
 
+        void SetVillage(Village citizenComponentVillage);
+
+        bool IsEnded();
+        
+        Village GetVillage();
     }
 }

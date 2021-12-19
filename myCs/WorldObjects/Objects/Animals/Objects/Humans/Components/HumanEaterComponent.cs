@@ -39,7 +39,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         protected override void EatSomething()
         {
-            AddSatiety(_inventory.Remove<EatableResource>(maxSatiety - satiety));
+            AddSatiety(_inventory.Remove<EatableResource>(MaxSatiety - satiety));
         }
 
         private void CollectFrom(EatableComponent meal)

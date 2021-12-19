@@ -12,16 +12,26 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private readonly List<CitizenComponent> _citizens;
         
         
-        public PresidentComponent(WorldObject owner, Village village, List<CitizenComponent> citizens) 
-            : base(owner, InfinityPeriod)
+        public PresidentComponent(WorldObject owner, CitizenComponent citizenComponent, Village village, List<CitizenComponent> citizens) 
+            : base(owner, citizenComponent, InfinityPeriod)
         {
             _village = village;
             _citizens = citizens;
         }
+        
+        public override void Start()
+        {
+            if (_village.IsActive())
+                base.Start();
+        }
+
+        public void ToActive()
+        {
+            base.Start();
+        }
 
         public override void OnDestroy()
         {
-            base.OnDestroy();
             _village.RemoveCitizen(citizenComponent);
             _village.StartElection(World.Random.Next(_citizens.Count));
         }
@@ -31,7 +41,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             ConfigureEaterBehaviour(20, 10, 0);
             ConfigureMatingBehaviour(5, 3, 15);
             ConfigurePetsOwnerBehaviour(8, 2, 6, 0);
+            ConfigureInstrumentsOwnerBehaviour(0, 0);
             ConfigureWarehousesOwnerBehaviour(50, 4);
+            ConfigureBuilderBehaviour(0); 
         }
 
         public ProfessionalComponent AskNewJob(CitizenComponent requester, Type lastJobType)
@@ -52,7 +64,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 ) * (lastJobType == typeof(RestingComponent) ? 0 : 1);
             
             return restingChance != 0 
-                ? CreateComponentForRole(ProfessionalRole.Resting, requester.WorldObject, 50) 
+                ? CreateComponentForRole(ProfessionalRole.Resting, requester.WorldObject, requester, 50) 
                 : null;
         }
 
@@ -70,6 +82,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return CreateComponentForRole(
                 accessArray[GetIndexOfMin(currentDistribution)],
                 requester.WorldObject,
+                citizenComponent,
                 100);
         }
 
@@ -147,7 +160,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             var list = new List<ProfessionalComponent>();
             foreach (var citizen in _citizens)
             {
-                if (citizen.GetRole().GetType() == roleType)
+                if (citizen.GetRoleType() == roleType)
                     list.Add(citizen.GetRole());
             }
 

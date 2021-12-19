@@ -1,8 +1,8 @@
 ﻿using LifeSimulation.myCs.WorldObjects.CommonComponents.Eatable;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Effects
 {
-    public class ProtectionComponent : GoodEffectComponent
+    public class ProtectionComponent : EffectComponent
     {
         private EatableComponent _eatableComponent;
         public ProtectionComponent(WorldObject owner, int period) : base(owner, period)

@@ -8,14 +8,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
     public class HealthComponent : WorldObjectComponent, IHaveInformation, IDependingOnWeather
     {
         private int _health;
-        private readonly int _maxHealth;
+        public int MaxHealth;
         private int _regeneration;
         private readonly int _normalRegeneration;
 
         public HealthComponent(WorldObject owner, int health, int regeneration) : base(owner)
         {
             _health = health;
-            _maxHealth = health;
+            MaxHealth = health;
             _regeneration = regeneration;
             _normalRegeneration = regeneration;
         }
@@ -30,7 +30,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         
         private bool IsFull()
         {
-            return _health == _maxHealth;
+            return _health == MaxHealth;
         }
         
         private bool CantLive()
@@ -41,15 +41,15 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
         private void Regenerate()
         {
             _health += _regeneration;
-            if (_health > _maxHealth)
-                _health = _maxHealth;
+            if (_health > MaxHealth)
+                _health = MaxHealth;
         }
 
         public void AddHealth(int delta)
         {
             _health += delta;
-            if (_health > _maxHealth) 
-                _health = _maxHealth;
+            if (_health > MaxHealth) 
+                _health = MaxHealth;
         }
         
         public void ConfigureByWeather(Weather weather)
@@ -67,7 +67,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents
 
         public override string ToString()
         {
-            var info = "Health: " + _health + '/' + _maxHealth;
+            var info = "Health: " + _health + '/' + MaxHealth;
             return info;
         }
 

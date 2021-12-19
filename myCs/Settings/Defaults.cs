@@ -49,8 +49,9 @@
         public const int InfoPriorityWarehouseOwner = 120;
         public const int InfoPriorityBuilder = 130;
         public const int InfoPriorityCitizen = 140;
-        public const int InfoPriorityProfessional = 15;
-        
+        public const int InfoPriorityProfessional = 150;
+        public const int InfoPrioritySickness = 160;
+
         public const int BehaviourWait = -1;
         public const int BehaviourHaveNotPriority = 0;
         public const int BehaviourSearching = 10;

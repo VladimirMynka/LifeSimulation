@@ -2,8 +2,8 @@
 {
     public class ShepherdComponent : ProfessionalComponent
     {
-        public ShepherdComponent(WorldObject owner, int period) 
-            : base(owner, period)
+        public ShepherdComponent(WorldObject owner, CitizenComponent citizenComponent, int period) 
+            : base(owner, citizenComponent, period)
         {
         }
 

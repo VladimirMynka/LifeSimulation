@@ -5,7 +5,6 @@ using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Information;
 using LifeSimulation.myCs.WorldObjects.CommonComponents.Resources;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages;
-using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles;
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Villages.Roles.ExactRoles;
 using LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components;
 using LifeSimulation.myCs.WorldStructure;
@@ -65,6 +64,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings
         {
             foreach (var citizenComponent in _citizens)
                 citizenComponent.ToActiveMod();
+            _president.ToActive();
         }
 
         public PresidentComponent GetPresident()

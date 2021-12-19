@@ -11,12 +11,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 {
     public class BuilderComponent : WorldObjectComponent, IHaveInformation, IHaveTarget
     {
-        private IBuilding<Resource> _targetBuilding;
+        public IBuilding<Resource> TargetBuilding;
         private InventoryComponent<Resource> _inventory;
         private WarehousesOwnerComponent _warehousesOwnerComponent;
         private InstrumentsOwnerComponent _instrumentsOwnerComponent;
         private VisibilityComponent _visibilityComponent;
         private CitizenComponent _citizenComponent;
+
+        public Resource NeededResource;
 
         public BuilderComponent(WorldObject owner) : base(owner)
         {
@@ -34,13 +36,14 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void Update()
         {
             base.Update();
-            if (_targetBuilding != null && CheckWereDestroyed(_targetBuilding.GetWorldObject()))
-                _targetBuilding = null;
+            if (TargetBuilding != null && CheckWereDestroyed(TargetBuilding.GetWorldObject()))
+                TargetBuilding = null;
 
-            if (_targetBuilding != null)
+            if (TargetBuilding != null)
                 TryToBuild();
 
-            else if (_inventory.IsHalfFull())
+            else if (_inventory.IsHalfFull() 
+                     && (_citizenComponent == null || !_citizenComponent.IsActive()))
             {
                 var largestResource = _inventory.GetTheLargestResource();
                 if (!_warehousesOwnerComponent.SetTakingOrPuttingResource(largestResource, false))
@@ -50,18 +53,33 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public void StartBuildFor(Resource resource)
         {
-            if (_targetBuilding != null)
+            if (TargetBuilding != null)
                 return;
             if (WorldObject.Cell.Contains<Building>())
                 return;
             var building = Warehouse<Resource>.Create(WorldObject.Cell, resource);
-            _targetBuilding = building.GetComponent<IBuilding<Resource>>();
+            TargetBuilding = building.GetComponent<IBuilding<Resource>>();
+            if (_citizenComponent != null)
+                TargetBuilding.SetVillage(_citizenComponent.Village);
+            TryToBuild();
+        }
+        
+        public void StartBuildBarn()
+        {
+            if (TargetBuilding != null && TargetBuilding.GetWorldObject() is Barn)
+                return;
+            var cell = WorldObject.Cell.GetNearestWithCheck(cell1 => !cell1.Contains<Building>());
+            if (WorldObject.Cell.Contains<Building>())
+                return;
+            var building = Barn.Create(cell);
+            TargetBuilding = building.GetComponent<IBuilding<Resource>>();
+            TargetBuilding.SetVillage(_citizenComponent.Village);
             TryToBuild();
         }
 
         public void StartBuildHouse()
         {
-            if (_targetBuilding != null)
+            if (TargetBuilding != null)
                 return;
             
             var parentHouseComponent = _visibilityComponent.Search<BuildingComponent<Resource>>(building1 =>
@@ -85,7 +103,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             
             var building = House.Create(cell).GetComponent<BuildingComponent<Resource>>();
             building.Village = village;
-            _targetBuilding = building;
+            TargetBuilding = building;
             village.AddNewBuilding(building);
             
             TryToBuild();
@@ -93,22 +111,27 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private void TryToBuild()
         {
-            if (_targetBuilding == null || !OnOneCellWith(_targetBuilding.GetWorldObject()))
+            if (TargetBuilding == null || !OnOneCellWith(TargetBuilding.GetWorldObject()))
                 return;
 
-            var resource = _targetBuilding.GetNeedSource(_inventory);
+            var resource = TargetBuilding.GetNeedSource(_inventory);
             if (resource != null
                 && !_warehousesOwnerComponent.SetTakingOrPuttingResource(resource, true))
             {
-                _instrumentsOwnerComponent.SearchResource(resource);
+                if (_citizenComponent == null)
+                    _instrumentsOwnerComponent.SearchResource(resource);
+                else
+                    NeededResource = resource;
                 return;
             }
 
-            var resultInventory = _targetBuilding.TryBuildNextStage(_inventory);
+            NeededResource = null;
+
+            var resultInventory = TargetBuilding.TryBuildNextStage(_inventory);
 
             if (resultInventory == null)
                 return;
-            _targetBuilding = null;
+            TargetBuilding = null;
             _warehousesOwnerComponent.AddWarehouse(resultInventory);
         }
 
@@ -119,26 +142,26 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public override string ToString()
         {
-            return "Build: " + (_targetBuilding == null
+            return "Build: " + (TargetBuilding == null
                 ? "none"
-                : _targetBuilding.KeepResourceOfType().Name + " on " +
-                  InformationComponent.GetInfoAboutCoords(_targetBuilding.GetWorldObject()));
+                : TargetBuilding.KeepResourceOfType().Name + " on " +
+                  InformationComponent.GetInfoAboutCoords(TargetBuilding.GetWorldObject()));
         }
 
         public int BuildingProcessPriority = Defaults.BehaviourBuilder;
 
         public int GetPriorityInBehaviour()
         {
-            return _targetBuilding == null || _targetBuilding.GetNeedSource(_inventory) != null
+            return TargetBuilding == null || TargetBuilding.GetNeedSource(_inventory) != null
                 ? 0
                 : BuildingProcessPriority;
         }
 
         public WorldObject GetTarget()
         {
-            if (_targetBuilding == null || CheckWereDestroyed(_targetBuilding.GetWorldObject()))
+            if (TargetBuilding == null || CheckWereDestroyed(TargetBuilding.GetWorldObject()))
                 return null;
-            return _targetBuilding.GetWorldObject();
+            return TargetBuilding.GetWorldObject();
         }
     }
 }

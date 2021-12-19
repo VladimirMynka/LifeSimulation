@@ -2,9 +2,9 @@
 using LifeSimulation.myCs.WorldObjects.Objects.Animals.CommonComponents;
 using LifeSimulation.myCs.WorldStructure.Weather;
 
-namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.PetsOwner
+namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Components.Effects
 {
-    public class WarmClothesComponent : GoodEffectComponent, IDependingOnWeather
+    public class WarmClothesComponent : EffectComponent, IDependingOnWeather
     {
         private HealthComponent _healthComponent;
         private EaterComponent _eaterComponent;

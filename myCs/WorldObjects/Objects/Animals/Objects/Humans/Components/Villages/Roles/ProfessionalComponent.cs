@@ -21,9 +21,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         protected CitizenComponent citizenComponent;
         private int _timer;
 
-        protected ProfessionalComponent(WorldObject owner, int period) : base(owner)
+        protected ProfessionalComponent(WorldObject owner, CitizenComponent myCitizenComponent, int period) : base(owner)
         {
             _timer = period;
+            citizenComponent = myCitizenComponent;
         }
 
         public override void Start()
@@ -35,7 +36,6 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             warehousesOwnerComponent = GetComponent<WarehousesOwnerComponent>();
             builderComponent = GetComponent<BuilderComponent>();
             instrumentsOwnerComponent = GetComponent<InstrumentsOwnerComponent>();
-            citizenComponent = GetComponent<CitizenComponent>();
             ConfigureBehaviour();
         }
 
@@ -168,27 +168,28 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         protected static ProfessionalComponent CreateComponentForRole(
             ProfessionalRole role,
             WorldObject owner,
+            CitizenComponent citizenComponent,
             int period
         )
         {
             switch (role)
             {
                 case ProfessionalRole.Doctor:
-                    return new DoctorComponent(owner, period);
+                    return new DoctorComponent(owner, citizenComponent, period);
                 case ProfessionalRole.Gardener:
-                    return new GardenerComponent(owner, period);
+                    return new GardenerComponent(owner, citizenComponent, period);
                 case ProfessionalRole.Hunter:
-                    return new HunterComponent(owner, period);
+                    return new HunterComponent(owner, citizenComponent, period);
                 case ProfessionalRole.Mainer:
-                    return new MainerComponent(owner, period);
+                    return new MainerComponent(owner, citizenComponent, period);
                 case ProfessionalRole.Builder:
-                    return new ProfessionalBuilderComponent(owner, period);
+                    return new ProfessionalBuilderComponent(owner, citizenComponent, period);
                 case ProfessionalRole.Collector:
-                    return new ProfessionalCollectorComponent(owner, period);
+                    return new ProfessionalCollectorComponent(owner, citizenComponent, period);
                 case ProfessionalRole.Resting:
-                    return new RestingComponent(owner, period);
+                    return new RestingComponent(owner, citizenComponent, period);
                 case ProfessionalRole.Shepherd:
-                    return new ShepherdComponent(owner, period);
+                    return new ShepherdComponent(owner, citizenComponent, period);
                 default:
                     return null;
             }
@@ -233,12 +234,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public static ProfessionalComponent CreateRandomWithGender(
             bool isMale,
             WorldObject owner,
+            CitizenComponent citizenComponent,
             int period
         )
         {
             if (isMale)
-                return CreateComponentForRole(MenRoles[World.Random.Next(MenRoles.Length)], owner, period);
-            return CreateComponentForRole(WomenRoles[World.Random.Next(WomenRoles.Length)], owner, period);
+                return CreateComponentForRole(MenRoles[World.Random.Next(MenRoles.Length)], owner, citizenComponent, period);
+            return CreateComponentForRole(WomenRoles[World.Random.Next(WomenRoles.Length)], owner, citizenComponent, period);
         }
     }
 }

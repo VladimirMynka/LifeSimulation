@@ -2,8 +2,8 @@
 {
     public class RestingComponent : ProfessionalComponent
     {
-        public RestingComponent(WorldObject owner, int period) 
-            : base(owner, period)
+        public RestingComponent(WorldObject owner, CitizenComponent citizenComponent, int period) 
+            : base(owner, citizenComponent, period)
         {
         }
 

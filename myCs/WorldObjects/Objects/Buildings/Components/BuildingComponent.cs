@@ -16,18 +16,21 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components
         private int _stage;
         private readonly int _buildingTypeNumber;
         private DrawableComponent _drawableComponent;
+        private int _size;
 
         private static readonly Resource[][][] Resources;
         
         public BuildingComponent(WorldObject worldObject, 
             int buildingTypeNumber, 
             Image[] images,
+            int size = 250,
             Village village = null) 
             : base(worldObject)
         {
             _stage = 0;
             _buildingTypeNumber = buildingTypeNumber;
             _images = images;
+            _size = size;
             Village = village;
         }
 
@@ -42,6 +45,11 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components
                     new Resource[]{new CompostResource(20)},
                     new Resource[]{new CompostResource(10), new WoodResource(10)},
                     new Resource[]{new IronResource(15), new WoodResource(5)}
+                },
+                new Resource[][]{
+                    new Resource[]{new CompostResource(10)},
+                    new Resource[]{new CompostResource(10), new WoodResource(5)},
+                    new Resource[]{new IronResource(2)}
                 }
             };
         }
@@ -86,9 +94,24 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components
             return name.Substring(0, name.Length - 8);
         }
 
+        public void SetVillage(Village citizenComponentVillage)
+        {
+            Village = citizenComponentVillage;
+        }
+
+        public Village GetVillage()
+        {
+            return Village;
+        }
+
+        public bool IsEnded()
+        {
+            return _stage == Resources[_buildingTypeNumber].Length - 1;
+        }
+
         private IInventory<T> ToLastStage()
         {
-            var inventory = new InventoryComponent<T>(WorldObject, 250);
+            var inventory = new InventoryComponent<T>(WorldObject, _size);
             WorldObject.AddComponent(inventory);
             return inventory;
         }

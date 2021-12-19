@@ -8,8 +8,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
     {
         private InventoryComponent<Resource> _inventoryComponent;
 
-        public MainerComponent(WorldObject owner, int period) 
-            : base(owner, period)
+        public MainerComponent(WorldObject owner, CitizenComponent citizenComponent, int period) 
+            : base(owner, citizenComponent, period)
         {
         }
 
@@ -31,6 +31,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             instrumentsOwnerComponent.MaxInstrumentsCount = 3 * Defaults.InstrumentsMax;
         }
 
+        public override void Update()
+        {
+            base.Update();
+            if (_inventoryComponent.IsHalfFull())
+                AskBuildersWarehouse(_inventoryComponent.GetTheLargestResource());
+        }
+
         public bool SetMission(Resource resource, ProfessionalBuilderComponent requester)
         {
             if (!_inventoryComponent.CheckHave(resource)) 
@@ -46,7 +53,17 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
                 
             return warehousesOwnerComponent
                 .SetPuttingResourceAndWarehouse(resource, otherInventory);
+        }
 
+        private void AskBuildersWarehouse(Resource resource)
+        {
+            var builders = citizenComponent.GetPresident()
+                .GetRolesOfType(typeof(ProfessionalBuilderComponent));
+            foreach (var builder in builders)
+            {
+                if (((ProfessionalBuilderComponent) builder).SetMission(resource))
+                    return;
+            }
         }
 
         protected override void ConfigureWithDefaults()

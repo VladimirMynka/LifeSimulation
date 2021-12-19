@@ -4,8 +4,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 {
     public class DoctorComponent : ProfessionalComponent // not ended
     {
-        public DoctorComponent(WorldObject owner, int period) 
-            : base(owner, period)
+        public DoctorComponent(WorldObject owner, CitizenComponent citizenComponent, int period) 
+            : base(owner, citizenComponent, period)
         {
         }
 

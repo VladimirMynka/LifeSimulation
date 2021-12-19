@@ -59,12 +59,20 @@ namespace LifeSimulation.myCs.Drawing
         public static Image SecondBuildingStage1 = Image.FromFile(Path + @"buildings\warehouse-2-1.png");
         public static Image SecondBuildingStage2 = Image.FromFile(Path + @"buildings\warehouse-2-2.png");
         public static Image SecondBuildingStage3 = Image.FromFile(Path + @"buildings\warehouse-2-3.png");
+        
+        public static Image ThirdBuildingStage1 = Image.FromFile(Path + @"buildings\warehouse-3-1.png");
+        public static Image ThirdBuildingStage2 = Image.FromFile(Path + @"buildings\warehouse-3-2.png");
+        public static Image ThirdBuildingStage3 = Image.FromFile(Path + @"buildings\warehouse-3-3.png");
+
 
         public static readonly Image[] FirstBuilding = new Image[]{
             FirstBuildingStage1, FirstBuildingStage2
         };
         public static readonly Image[] SecondBuilding = new Image[]{
             SecondBuildingStage1, SecondBuildingStage2, SecondBuildingStage3
+        };
+        public static readonly Image[] ThirdBuilding = new Image[]{
+            ThirdBuildingStage1, ThirdBuildingStage2, ThirdBuildingStage3
         };
 
         private static readonly List<Image> AllImages = new List<Image>(){
@@ -79,7 +87,8 @@ namespace LifeSimulation.myCs.Drawing
             Sleeper,
             Gold, Iron, IronEasy, Compost, CompostEasy,
             FirstBuildingStage1, FirstBuildingStage2,
-            SecondBuildingStage1, SecondBuildingStage2, SecondBuildingStage3
+            SecondBuildingStage1, SecondBuildingStage2, SecondBuildingStage3,
+            ThirdBuildingStage1, ThirdBuildingStage2, ThirdBuildingStage3
         };
 
         private static readonly List<Brush> AllBrushes = GetBrushesList(AllImages);

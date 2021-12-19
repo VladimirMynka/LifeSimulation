@@ -4,8 +4,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 {
     public class HunterComponent : ProfessionalComponent
     {
-        public HunterComponent(WorldObject owner, int period) 
-            : base(owner, period)
+        public HunterComponent(WorldObject owner, CitizenComponent citizenComponent, int period) 
+            : base(owner, citizenComponent, period)
         {
         }
 

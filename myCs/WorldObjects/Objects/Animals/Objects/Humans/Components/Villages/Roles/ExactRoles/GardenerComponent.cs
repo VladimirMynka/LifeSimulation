@@ -24,8 +24,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private static readonly WoodResource SampleWoodResource = new WoodResource(10);
 
         
-        public GardenerComponent(WorldObject owner, int period) 
-            : base(owner, period)
+        public GardenerComponent(WorldObject owner, CitizenComponent citizenComponent, int period) 
+            : base(owner, citizenComponent, period)
         {
         }
 
@@ -67,15 +67,12 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             ConfigureEaterBehaviour(10, 5, 5);
             ConfigureMatingBehaviour(5, 3, 15);
             ConfigurePetsOwnerBehaviour(8, 2, 6, 0);
+            ConfigureInstrumentsOwnerBehaviour(0, 0);
             ConfigureWarehousesOwnerBehaviour(50, 35);
-            
+            ConfigureBuilderBehaviour(0);
+
             humanEaterComponent.CollectingTypes.Clear();
             humanEaterComponent.CollectingTypes.Add(MealType.Plant);
-            
-            WorldObject.RemoveComponent(builderComponent);
-            WorldObject.RemoveComponent(instrumentsOwnerComponent);
-            builderComponent = null;
-            instrumentsOwnerComponent = null;
         }
 
         public int GetPriorityInBehaviour()

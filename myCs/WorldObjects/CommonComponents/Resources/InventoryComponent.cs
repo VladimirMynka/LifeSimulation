@@ -11,10 +11,10 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
     {
         private readonly List<T> _reserves;
         private int _currentCount;
-        private readonly int _maxCount;
+        public int MaxCount;
         public InventoryComponent(WorldObject owner, int maxCount) : base(owner)
         {
-            _maxCount = maxCount;
+            MaxCount = maxCount;
             _currentCount = 0;
             _reserves = new List<T>();
         }
@@ -105,7 +105,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         public int Add(Resource resource)
         {
             var reserve = GetReserveWithType(resource.GetType());
-            var addingCount = Math.Min(_maxCount - _currentCount, resource.GetCount());
+            var addingCount = Math.Min(MaxCount - _currentCount, resource.GetCount());
             if (reserve == null)
             {
                 reserve = (T)resource;
@@ -120,7 +120,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         
         public int Add<TExact>(int addingCount) where TExact : T, new()
         {
-            var excess = addingCount + _currentCount - _maxCount;
+            var excess = addingCount + _currentCount - MaxCount;
             if (excess == addingCount)
                 return 0;
             if (excess > 0)
@@ -145,7 +145,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         private int SetTo(T resource, int count)
         {
             _currentCount -= resource.GetCount();
-            resource.Set(Math.Min(count, _maxCount - _currentCount));
+            resource.Set(Math.Min(count, MaxCount - _currentCount));
             _currentCount += resource.GetCount();
             return count - resource.GetCount();
         }
@@ -166,12 +166,12 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
 
         public bool IsFilled()
         {
-            return _currentCount == _maxCount;
+            return _currentCount == MaxCount;
         }
 
         public bool IsHalfFull()
         {
-            return _currentCount >= _maxCount / 2;
+            return _currentCount >= MaxCount / 2;
         }
 
         public Resource GetTheLargestResource()
@@ -202,7 +202,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
                 int commonCount = taken1 + taken2;
                 
                 var part1 = commonCount / 2;
-                var excess1 = reserve.AddWithExcess(part1, _maxCount - _currentCount);
+                var excess1 = reserve.AddWithExcess(part1, MaxCount - _currentCount);
 
                 var excess2 = other.SetTo(otherReserve, commonCount - part1);
 
@@ -302,7 +302,7 @@ namespace LifeSimulation.myCs.WorldObjects.CommonComponents.Resources
         {
             var info = "Inventory: ";
             foreach (var reserve in _reserves)
-                info += '\n' + reserve.ToString() +  '/' + _maxCount;
+                info += '\n' + reserve.ToString() +  '/' + MaxCount;
             return info;
         }
 

@@ -149,6 +149,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         {
             if (warehouse.GetWorldObject() is House)
                 House = warehouse;
+            if (warehouse.GetWorldObject() is Barn)
+                _warehouses.Insert(0, warehouse);
             else
                 _warehouses.Add(warehouse);
         }
