@@ -208,9 +208,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         }
 
         public static ProfessionalRole[] MenRoles = new ProfessionalRole[]{
-            ProfessionalRole.Hunter,
             ProfessionalRole.Mainer,
             ProfessionalRole.Builder,
+            ProfessionalRole.Hunter,
             ProfessionalRole.Shepherd,
             ProfessionalRole.Doctor
         };
@@ -225,10 +225,10 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public static ProfessionalRole[] OnlyWinterRoles = new ProfessionalRole[]{
             ProfessionalRole.Doctor
         };
-        
+
         public static ProfessionalRole[] OnlySummerRoles = new ProfessionalRole[]{
             ProfessionalRole.Gardener
-        }
+        };
 
         public static ProfessionalComponent CreateRandomWithGender(
             bool isMale,

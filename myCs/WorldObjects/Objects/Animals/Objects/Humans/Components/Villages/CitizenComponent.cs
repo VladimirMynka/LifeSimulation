@@ -165,14 +165,15 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public int GetRiches()
         {
-            var count = _warehousesOwnerComponent.House.GetAllCount();
+            var count = _warehousesOwnerComponent.House == null ? 0 : 
+                _warehousesOwnerComponent.House.GetAllCount();
             count += _inventoryComponent.GetAllCount();
             count += _instrumentsOwnerComponent == null 
                 ? 0 
                 : _instrumentsOwnerComponent.GetInstrumentsCount() * 20;
             count += _petsOwnerComponent == null
                 ? 0
-                : _petsOwnerComponent.GetPetsCount() * 30;
+                : _petsOwnerComponent.GetPetsCount() * 10;
             return count;
         }
 

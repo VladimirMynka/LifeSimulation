@@ -127,6 +127,18 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             return true;
         }
 
+        public bool SetPuttingResourceAndWarehouse(Resource resource, IInventory<Resource> warehouse)
+        {
+            if (_neededResource == resource && _takeMod == false)
+                return true;
+            if (_targetWarehouse != null && _neededResource != null)
+                return false;
+            _neededResource = resource;
+            _targetWarehouse = warehouse;
+            _takeMod = false;
+            return true;
+        }
+
         public void AddWarehouse(IInventory<Resource> warehouse)
         {
             if (warehouse.GetWorldObject() is House)

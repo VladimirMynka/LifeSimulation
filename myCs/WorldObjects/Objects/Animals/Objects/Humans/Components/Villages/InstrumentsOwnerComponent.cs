@@ -16,6 +16,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         private WarehousesOwnerComponent _warehousesOwnerComponent;
         private readonly List<Instrument> _instruments;
         private VisibilityComponent _visibilityComponent;
+        public bool AlwaysSearch;
+        public int MaxInstrumentsCount = Defaults.InstrumentsMax;
 
         private IResourceKeeper<Resource> _target;
 
@@ -37,10 +39,13 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             base.Update();
             if (_target != null && _target.CheckWereDestroyed())
                 _target = null;
+            if (_target == null && AlwaysSearch)
+                SearchResource();
             if (ResourceHere())
                 Extract();
             CheckAndRemoveInstruments();
             CreateNewInstrument();
+            
         }
 
         private void SearchResource()
@@ -101,7 +106,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         private void CreateNewInstrument()
         {
-            if (_instruments.Count >= Defaults.InstrumentsMax) return;
+            if (_instruments.Count >= MaxInstrumentsCount) return;
             int random = World.Random.Next(1, (int) InstrumentType.Shovel + 1);
             var type = (InstrumentType) random;
             var needed = Instrument.CheckCanCreate(type, _inventoryComponent);

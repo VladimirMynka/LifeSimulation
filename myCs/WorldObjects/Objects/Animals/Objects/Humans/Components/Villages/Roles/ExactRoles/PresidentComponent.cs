@@ -98,7 +98,8 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             {
                 if (citizen == requester) continue;
                 int index = Array.IndexOf(accessArray, GetEnumByType(citizen.GetRoleType()));
-                currentDistribution[index]++;
+                if (index != -1)
+                    currentDistribution[index]++;
             }
 
             return currentDistribution;
