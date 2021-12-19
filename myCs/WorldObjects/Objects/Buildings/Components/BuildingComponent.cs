@@ -38,18 +38,18 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Buildings.Components
         {
             Resources = new Resource[][][]{
                 new Resource[][]{
-                    new Resource[]{new CompostResource(20)},
-                    new Resource[]{new WoodResource(20), new IronResource(10)}
+                    new Resource[]{new WoodResource(20)},
+                    new Resource[]{new WoodResource(20)}
                 },
                 new Resource[][]{
-                    new Resource[]{new CompostResource(20)},
-                    new Resource[]{new CompostResource(10), new WoodResource(10)},
-                    new Resource[]{new IronResource(15), new WoodResource(5)}
+                    new Resource[]{new WoodResource(20)},
+                    new Resource[]{new WoodResource(20)},
+                    new Resource[]{new WoodResource(20)}
                 },
                 new Resource[][]{
-                    new Resource[]{new CompostResource(10)},
-                    new Resource[]{new CompostResource(10), new WoodResource(5)},
-                    new Resource[]{new IronResource(2)}
+                    new Resource[]{new WoodResource(20)},
+                    new Resource[]{new WoodResource(20)},
+                    new Resource[]{new WoodResource(20)}
                 }
             };
         }

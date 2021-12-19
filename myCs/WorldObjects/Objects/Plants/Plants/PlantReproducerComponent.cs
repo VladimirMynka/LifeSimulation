@@ -1,6 +1,4 @@
-﻿using System;
-using LifeSimulation.myCs.Resources.UneatableResources;
-using LifeSimulation.myCs.Settings;
+﻿using LifeSimulation.myCs.Settings;
 using LifeSimulation.myCs.WorldObjects.Objects.Plants.Fruits;
 using LifeSimulation.myCs.WorldStructure;
 

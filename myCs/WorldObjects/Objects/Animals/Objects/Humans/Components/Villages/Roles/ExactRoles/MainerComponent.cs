@@ -40,7 +40,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public bool SetMission(Resource resource, ProfessionalBuilderComponent requester)
         {
-            if (!_inventoryComponent.CheckHave(resource)) 
+            if (_inventoryComponent == null || !_inventoryComponent.CheckHave(resource)) 
                 return false;
             
             if (warehousesOwnerComponent.SetTakingOrPuttingResource(resource, false)) 

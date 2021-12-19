@@ -56,7 +56,7 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
         public override void OnDestroy()
         {
             base.OnDestroy();
-            if (WorldObject.IsDestroyed)
+            if (CheckWereDestroyed(WorldObject))
                 return;
             ConfigureWithDefaults();
             citizenComponent.DeclareEndOfWork();

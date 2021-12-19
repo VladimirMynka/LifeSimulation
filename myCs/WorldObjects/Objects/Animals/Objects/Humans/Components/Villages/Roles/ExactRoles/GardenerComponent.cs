@@ -55,11 +55,26 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
             else if (fromInventory.GetCreatureType() == CreatureType.UneatableBrownPlant)
                 _targetWarehouseForPlanting = _warehousesOwnerComponent
                     .GetNearestWarehouseOfType(SampleWoodResource);
-            
-            else 
+
+            else
+            {
+                _targetWarehouseForPlanting = null;
                 return;
+            }
 
             _inventoryComponent.Add(fromInventory);
+
+            if (_targetWarehouseForPlanting != null &&
+                GetSqrLengthWith(_targetWarehouseForPlanting.GetWorldObject()) < 4)
+                Plant();
+        }
+
+        private void Plant()
+        {
+            var seedResource = _inventoryComponent.Remove<SeedResource>();
+            Plants.Plants.Plant.SpawnPlantByType(WorldObject.Cell, seedResource.GetCreatureType());
+            seedResource.Take(10);
+            _inventoryComponent.Add(seedResource);
         }
 
         protected override void ConfigureBehaviour()
