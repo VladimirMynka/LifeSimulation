@@ -162,7 +162,9 @@ namespace LifeSimulation.myCs.WorldObjects.Objects.Animals.Objects.Humans.Compon
 
         public override string ToString()
         {
-            return GetType().Name;
+            return "Role: " + GetType().Name.Substring(0, GetType().Name.Length - 9)
+                + _timer;
+            
         }
 
         protected static ProfessionalComponent CreateComponentForRole(
